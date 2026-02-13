@@ -1,0 +1,679 @@
+openapi: 3.0.3
+info:
+  title: SafeHi Admin Dashboard - Detail Pages API
+  description: 관리자 대시보드 상세 페이지 API 명세
+  version: 1.0.0
+
+servers:
+  - url: /api/admin
+    description: Admin API
+
+paths:
+  /care-logs/{id}:
+    get:
+      summary: 돌봄 일지 상세 조회
+      operationId: getCareLogDetail
+      tags:
+        - CareLog
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CareLogDetail'
+        '404':
+          description: 돌봄 일지를 찾을 수 없음
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /care-logs/{id}/approve:
+    post:
+      summary: 돌봄 일지 승인
+      operationId: approveCareLog
+      tags:
+        - CareLog
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 승인 완료
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalResponse'
+        '400':
+          description: 승인 불가 상태
+        '404':
+          description: 돌봄 일지를 찾을 수 없음
+
+  /care-logs/{id}/reject:
+    post:
+      summary: 돌봄 일지 반려
+      operationId: rejectCareLog
+      tags:
+        - CareLog
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RejectRequest'
+      responses:
+        '200':
+          description: 반려 완료
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalResponse'
+        '400':
+          description: 반려 불가 상태 또는 사유 누락
+        '404':
+          description: 돌봄 일지를 찾을 수 없음
+
+  /recipients/{id}:
+    get:
+      summary: 대상자 상세 조회
+      operationId: getRecipientDetail
+      tags:
+        - Recipient
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipientDetail'
+        '404':
+          description: 대상자를 찾을 수 없음
+
+  /recipients/{id}/memos:
+    get:
+      summary: 담당자 메모 목록 조회
+      operationId: getMemos
+      tags:
+        - Memo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 대상자 ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemosResponse'
+        '404':
+          description: 대상자를 찾을 수 없음
+
+    post:
+      summary: 담당자 메모 작성
+      operationId: createMemo
+      tags:
+        - Memo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 대상자 ID
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMemoRequest'
+      responses:
+        '201':
+          description: 메모 생성 완료
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memo'
+        '400':
+          description: 잘못된 요청
+        '404':
+          description: 대상자를 찾을 수 없음
+
+  /recipients/{id}/visits:
+    get:
+      summary: 방문 기록 목록 조회
+      operationId: getVisits
+      tags:
+        - Visit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 대상자 ID
+          schema:
+            type: string
+            format: uuid
+        - name: startDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: 시작 날짜 필터
+        - name: endDate
+          in: query
+          schema:
+            type: string
+            format: date
+          description: 종료 날짜 필터
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisitsResponse'
+        '404':
+          description: 대상자를 찾을 수 없음
+
+  /recipients/{id}/policies:
+    get:
+      summary: AI 복지 정책 추천 조회
+      operationId: getPolicyRecommendations
+      tags:
+        - Policy
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 대상자 ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyRecommendationsResponse'
+        '404':
+          description: 대상자를 찾을 수 없음
+
+    post:
+      summary: AI 복지 정책 추천 새로고침
+      operationId: refreshPolicyRecommendations
+      tags:
+        - Policy
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 대상자 ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: 추천 갱신 완료
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PolicyRecommendationsResponse'
+        '404':
+          description: 대상자를 찾을 수 없음
+
+components:
+  schemas:
+    CareLogStatus:
+      type: string
+      enum: [pending, urgent, approved, rejected]
+      description: 돌봄 일지 상태
+
+    VisitType:
+      type: string
+      enum: [visit, call]
+      description: 방문 유형
+
+    CareConditionStatus:
+      type: string
+      enum: [good, normal, warning, bad]
+      description: 돌봄 상태 레벨
+
+    CareCondition:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CareConditionStatus'
+        label:
+          type: string
+        description:
+          type: string
+      required:
+        - status
+        - label
+
+    CareLogDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        recipientId:
+          type: string
+          format: uuid
+        recipientName:
+          type: string
+        status:
+          $ref: '#/components/schemas/CareLogStatus'
+        createdAt:
+          type: string
+          format: date-time
+        visitInfo:
+          type: object
+          properties:
+            visitDate:
+              type: string
+              format: date-time
+            visitType:
+              $ref: '#/components/schemas/VisitType'
+            managerName:
+              type: string
+            centerName:
+              type: string
+          required:
+            - visitDate
+            - visitType
+            - managerName
+            - centerName
+        careContent:
+          type: object
+          properties:
+            healthStatus:
+              $ref: '#/components/schemas/CareCondition'
+            mealStatus:
+              $ref: '#/components/schemas/CareCondition'
+            emotionalStatus:
+              $ref: '#/components/schemas/CareCondition'
+            livingEnvironment:
+              $ref: '#/components/schemas/CareCondition'
+          required:
+            - healthStatus
+            - mealStatus
+            - emotionalStatus
+            - livingEnvironment
+        notes:
+          type: string
+        photos:
+          type: array
+          items:
+            type: string
+            format: uri
+        rejectionReason:
+          type: string
+        rejectedAt:
+          type: string
+          format: date-time
+        rejectedBy:
+          type: string
+      required:
+        - id
+        - recipientId
+        - recipientName
+        - status
+        - createdAt
+        - visitInfo
+        - careContent
+        - notes
+        - photos
+
+    RecipientDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        age:
+          type: integer
+        gender:
+          type: string
+          enum: [male, female]
+        status:
+          type: string
+          enum: [normal, caution, urgent, unvisited]
+        basicInfo:
+          type: object
+          properties:
+            address:
+              type: string
+            dong:
+              type: string
+            phone:
+              type: string
+            emergencyContact:
+              type: object
+              properties:
+                name:
+                  type: string
+                relationship:
+                  type: string
+                phone:
+                  type: string
+              required:
+                - name
+                - relationship
+                - phone
+          required:
+            - address
+            - dong
+            - phone
+            - emergencyContact
+        manager:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            phone:
+              type: string
+            centerName:
+              type: string
+          required:
+            - id
+            - name
+            - phone
+            - centerName
+        healthInfo:
+          type: object
+          properties:
+            diseases:
+              type: array
+              items:
+                type: string
+            medications:
+              type: array
+              items:
+                type: string
+            notes:
+              type: string
+          required:
+            - diseases
+            - medications
+            - notes
+        recentVisits:
+          type: array
+          items:
+            $ref: '#/components/schemas/VisitSummary'
+      required:
+        - id
+        - name
+        - age
+        - gender
+        - status
+        - basicInfo
+        - manager
+        - healthInfo
+        - recentVisits
+
+    VisitSummary:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        careLogId:
+          type: string
+          format: uuid
+        visitDate:
+          type: string
+          format: date-time
+        visitType:
+          $ref: '#/components/schemas/VisitType'
+        managerName:
+          type: string
+        summary:
+          type: string
+      required:
+        - id
+        - careLogId
+        - visitDate
+        - visitType
+        - managerName
+        - summary
+
+    Memo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        recipientId:
+          type: string
+          format: uuid
+        authorId:
+          type: string
+          format: uuid
+        authorName:
+          type: string
+        content:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - recipientId
+        - authorId
+        - authorName
+        - content
+        - createdAt
+
+    CreateMemoRequest:
+      type: object
+      properties:
+        content:
+          type: string
+          minLength: 1
+          maxLength: 1000
+      required:
+        - content
+
+    MemosResponse:
+      type: object
+      properties:
+        memos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Memo'
+        totalCount:
+          type: integer
+      required:
+        - memos
+        - totalCount
+
+    Visit:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        recipientId:
+          type: string
+          format: uuid
+        careLogId:
+          type: string
+          format: uuid
+        visitDate:
+          type: string
+          format: date-time
+        visitType:
+          $ref: '#/components/schemas/VisitType'
+        managerName:
+          type: string
+        summary:
+          type: string
+      required:
+        - id
+        - recipientId
+        - careLogId
+        - visitDate
+        - visitType
+        - managerName
+        - summary
+
+    VisitsResponse:
+      type: object
+      properties:
+        visits:
+          type: array
+          items:
+            $ref: '#/components/schemas/Visit'
+        totalCount:
+          type: integer
+      required:
+        - visits
+        - totalCount
+
+    Policy:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        summary:
+          type: string
+        matchScore:
+          type: integer
+          minimum: 0
+          maximum: 100
+        applicationMethod:
+          type: string
+        details:
+          type: object
+          properties:
+            description:
+              type: string
+            eligibility:
+              type: array
+              items:
+                type: string
+            benefits:
+              type: array
+              items:
+                type: string
+            documents:
+              type: array
+              items:
+                type: string
+            contactInfo:
+              type: string
+          required:
+            - description
+            - eligibility
+            - benefits
+            - documents
+            - contactInfo
+      required:
+        - id
+        - name
+        - summary
+        - matchScore
+        - applicationMethod
+        - details
+
+    PolicyRecommendationsResponse:
+      type: object
+      properties:
+        recipientId:
+          type: string
+          format: uuid
+        recommendations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Policy'
+        generatedAt:
+          type: string
+          format: date-time
+      required:
+        - recipientId
+        - recommendations
+        - generatedAt
+
+    RejectRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          minLength: 10
+          maxLength: 500
+      required:
+        - reason
+
+    ApprovalResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        careLogId:
+          type: string
+          format: uuid
+        newStatus:
+          $ref: '#/components/schemas/CareLogStatus'
+        processedAt:
+          type: string
+          format: date-time
+        processedBy:
+          type: string
+      required:
+        - success
+        - careLogId
+        - newStatus
+        - processedAt
+        - processedBy
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message

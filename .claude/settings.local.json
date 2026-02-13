@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(npm run build:*)"
+    ]
+  }
+}
