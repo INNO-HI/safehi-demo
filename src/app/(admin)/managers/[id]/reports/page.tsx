@@ -20,8 +20,7 @@ import {
   getReportStatusLabel,
 } from '@/lib/utils/status';
 import { formatDate } from '@/lib/utils/date';
-import { getManagerDetail } from '@/lib/api/managers';
-import { getManagerReports } from '@/lib/mock-data/managers';
+import { getManagerDetail, getManagerReports } from '@/lib/api/managers';
 import type { ManagerReport, ReportStatus, PageSize } from '@/types/dashboard';
 
 // ============================================================

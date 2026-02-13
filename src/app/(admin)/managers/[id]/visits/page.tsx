@@ -16,8 +16,7 @@ import {
 } from '@/components/ui/Table';
 import { managerVisitTypeTabOptions } from '@/lib/utils/status';
 import { formatDate } from '@/lib/utils/date';
-import { getManagerDetail } from '@/lib/api/managers';
-import { getManagerVisits } from '@/lib/mock-data/managers';
+import { getManagerDetail, getManagerVisits } from '@/lib/api/managers';
 import type { ManagerVisit, ManagerVisitType, PageSize } from '@/types/dashboard';
 
 // ============================================================
