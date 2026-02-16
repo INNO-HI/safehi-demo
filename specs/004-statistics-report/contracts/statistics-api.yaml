@@ -1,0 +1,549 @@
+# Statistics API Contract
+# Feature: 004-statistics-report
+# Date: 2026-02-16
+# Note: 프론트엔드 전용 프로젝트이므로 Mock API 인터페이스를 정의합니다.
+#       추후 백엔드 API 연동 시 이 계약을 기준으로 구현합니다.
+
+openapi: 3.0.3
+info:
+  title: SafeHi Statistics API
+  description: 통계/리포트 페이지용 API 계약
+  version: 1.0.0
+
+servers:
+  - url: /api/statistics
+    description: Mock API (클라이언트 사이드)
+
+paths:
+  /overview:
+    get:
+      operationId: getStatisticsOverview
+      summary: 통계 개요 데이터 조회
+      description: 선택한 월의 KPI, 차트, 테이블 데이터를 일괄 조회
+      parameters:
+        - name: month
+          in: query
+          required: true
+          description: 조회 대상 연월 (YYYY-MM 형식)
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}$'
+            example: '2025-01'
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatisticsOverviewResponse'
+        '400':
+          description: 잘못된 요청 (잘못된 월 형식)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /kpi:
+    get:
+      operationId: getStatisticsKPI
+      summary: KPI 데이터만 조회
+      parameters:
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}$'
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KPIResponse'
+
+  /visit-trend:
+    get:
+      operationId: getVisitTrend
+      summary: 월별 방문 추이 조회
+      parameters:
+        - name: endMonth
+          in: query
+          required: true
+          description: 조회 종료 연월
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}$'
+        - name: period
+          in: query
+          required: false
+          description: 조회 기간 (개월)
+          schema:
+            type: integer
+            enum: [6, 12]
+            default: 6
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VisitTrendResponse'
+
+  /report-status:
+    get:
+      operationId: getReportStatus
+      summary: 보고서 처리 현황 조회
+      parameters:
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}$'
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportStatusResponse'
+
+  /district-visits:
+    get:
+      operationId: getDistrictVisits
+      summary: 동별 방문 현황 조회
+      parameters:
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}$'
+        - name: limit
+          in: query
+          required: false
+          description: 조회할 동 수 (기본값 전체)
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DistrictVisitsResponse'
+
+  /manager-ranking:
+    get:
+      operationId: getManagerRanking
+      summary: 매니저 활동 순위 조회
+      parameters:
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}$'
+        - name: limit
+          in: query
+          required: false
+          description: 조회할 매니저 수 (기본값 10)
+          schema:
+            type: integer
+            minimum: 1
+            default: 10
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagerRankingResponse'
+
+  /recipient-status:
+    get:
+      operationId: getRecipientStatus
+      summary: 대상자 상태 분포 조회
+      parameters:
+        - name: month
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: '^\d{4}-\d{2}$'
+      responses:
+        '200':
+          description: 성공
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipientStatusResponse'
+
+components:
+  schemas:
+    # === Response Wrappers ===
+
+    StatisticsOverviewResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/StatisticsOverview'
+        error:
+          type: string
+
+    KPIResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/StatisticsKPI'
+        error:
+          type: string
+
+    VisitTrendResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthlyVisitTrend'
+        error:
+          type: string
+
+    ReportStatusResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/ReportStatusDistribution'
+        error:
+          type: string
+
+    DistrictVisitsResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DistrictVisit'
+        error:
+          type: string
+
+    ManagerRankingResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagerRanking'
+        error:
+          type: string
+
+    RecipientStatusResponse:
+      type: object
+      required:
+        - success
+      properties:
+        success:
+          type: boolean
+        data:
+          $ref: '#/components/schemas/RecipientStatusDistribution'
+        error:
+          type: string
+
+    ErrorResponse:
+      type: object
+      required:
+        - success
+        - error
+      properties:
+        success:
+          type: boolean
+          enum: [false]
+        error:
+          type: string
+
+    # === Data Models ===
+
+    StatisticsOverview:
+      type: object
+      required:
+        - kpi
+        - visitTrend
+        - reportStatus
+        - districtVisits
+        - managerRanking
+        - recipientStatus
+      properties:
+        kpi:
+          $ref: '#/components/schemas/StatisticsKPI'
+        visitTrend:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthlyVisitTrend'
+        reportStatus:
+          $ref: '#/components/schemas/ReportStatusDistribution'
+        districtVisits:
+          type: array
+          items:
+            $ref: '#/components/schemas/DistrictVisit'
+        managerRanking:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManagerRanking'
+        recipientStatus:
+          $ref: '#/components/schemas/RecipientStatusDistribution'
+
+    StatisticsKPI:
+      type: object
+      required:
+        - totalRecipients
+        - monthlyVisits
+        - processedReports
+        - emergencyCases
+        - activeManagers
+      properties:
+        totalRecipients:
+          type: integer
+          minimum: 0
+          description: 전체 대상자 수
+          example: 892
+        monthlyVisits:
+          type: integer
+          minimum: 0
+          description: 이번 달 방문 횟수
+          example: 2847
+        processedReports:
+          type: integer
+          minimum: 0
+          description: 보고서 처리 건수
+          example: 2654
+        emergencyCases:
+          type: integer
+          minimum: 0
+          description: 긴급 케이스 수
+          example: 12
+        activeManagers:
+          type: integer
+          minimum: 0
+          description: 활동 매니저 수
+          example: 156
+
+    MonthlyVisitTrend:
+      type: object
+      required:
+        - month
+        - label
+        - visits
+      properties:
+        month:
+          type: string
+          pattern: '^\d{4}-\d{2}$'
+          description: 연월 (YYYY-MM)
+          example: '2025-01'
+        label:
+          type: string
+          description: 표시 레이블
+          example: '1월'
+        visits:
+          type: integer
+          minimum: 0
+          description: 방문 횟수
+          example: 2847
+
+    ReportStatusDistribution:
+      type: object
+      required:
+        - approved
+        - pending
+        - urgent
+        - rejected
+        - total
+      properties:
+        approved:
+          type: integer
+          minimum: 0
+          description: 승인 건수
+          example: 2124
+        pending:
+          type: integer
+          minimum: 0
+          description: 대기 건수
+          example: 265
+        urgent:
+          type: integer
+          minimum: 0
+          description: 긴급 건수
+          example: 133
+        rejected:
+          type: integer
+          minimum: 0
+          description: 반려 건수
+          example: 132
+        total:
+          type: integer
+          minimum: 0
+          description: 전체 건수
+          example: 2654
+
+    DistrictVisit:
+      type: object
+      required:
+        - district
+        - visits
+        - rank
+      properties:
+        district:
+          type: string
+          description: 동 이름
+          example: '목동 5동'
+        visits:
+          type: integer
+          minimum: 0
+          description: 방문 횟수
+          example: 324
+        rank:
+          type: integer
+          minimum: 1
+          description: 순위
+          example: 1
+
+    ManagerRanking:
+      type: object
+      required:
+        - id
+        - rank
+        - name
+        - initials
+        - avatarColor
+        - visits
+        - reports
+        - approvalRate
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 매니저 고유 ID
+        rank:
+          type: integer
+          minimum: 1
+          description: 순위
+          example: 1
+        name:
+          type: string
+          description: 매니저 이름
+          example: '이영희'
+        initials:
+          type: string
+          minLength: 1
+          maxLength: 2
+          description: 이니셜
+          example: '이영'
+        avatarColor:
+          type: string
+          pattern: '^#[0-9A-Fa-f]{6}$'
+          description: 아바타 배경색
+          example: '#FCD34D'
+        visits:
+          type: integer
+          minimum: 0
+          description: 방문 횟수
+          example: 48
+        reports:
+          type: integer
+          minimum: 0
+          description: 보고서 건수
+          example: 48
+        approvalRate:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: 승인률 (%)
+          example: 98
+
+    RecipientStatusDistribution:
+      type: object
+      required:
+        - normal
+        - caution
+        - urgent
+        - unvisited
+        - total
+        - trends
+      properties:
+        normal:
+          type: integer
+          minimum: 0
+          description: 정상 상태 인원
+          example: 872
+        caution:
+          type: integer
+          minimum: 0
+          description: 주의 상태 인원
+          example: 12
+        urgent:
+          type: integer
+          minimum: 0
+          description: 긴급 상태 인원
+          example: 3
+        unvisited:
+          type: integer
+          minimum: 0
+          description: 미방문 인원
+          example: 5
+        total:
+          type: integer
+          minimum: 0
+          description: 전체 인원
+          example: 892
+        trends:
+          $ref: '#/components/schemas/RecipientTrends'
+
+    RecipientTrends:
+      type: object
+      required:
+        - normalChange
+        - cautionChange
+        - urgentChange
+        - unvisitedChange
+      properties:
+        normalChange:
+          type: integer
+          description: 정상 전환 수 (양수/음수)
+          example: 24
+        cautionChange:
+          type: integer
+          description: 주의 변화 수
+          example: -5
+        urgentChange:
+          type: integer
+          description: 긴급 해제 수
+          example: -2
+        unvisitedChange:
+          type: integer
+          description: 미방문 변화 수
+          example: -3

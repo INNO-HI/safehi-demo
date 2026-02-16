@@ -63,6 +63,23 @@ pnpm lint         # ESLint 실행
 ## Recent Features
 
 - 001-auth-system: 인증 시스템 (로그인, 회원가입, 비밀번호 찾기, 기관 인증)
+- 004-statistics-report: 통계/리포트 페이지 (KPI, 차트, PDF 생성)
+
+## Development Rules (FROM PAST MISTAKES)
+
+### 1. 기존 코드베이스 확인 필수
+- 새 컴포넌트 작성 전 `dashboard-web` 저장소에 동일/유사 구현이 있는지 확인
+- 경로: `/Users/aboutime/Desktop/developer/dashboard-web`
+- 특히 레이아웃, 사이드바, 공통 컴포넌트는 반드시 기존 구현 참조 후 복사/수정
+
+### 2. 공유 컴포넌트 참조
+- Sidebar: `dashboard-web/src/components/layout/Sidebar.tsx` (다크 테마)
+- 타입: `dashboard-web/src/types/dashboard.ts`
+- 사이드바 기본값: `dashboard-web/src/lib/utils/sidebar-defaults.ts`
+
+### 3. API 패턴
+- dashboard-web: 실제 백엔드 연동 (`localhost:4100/core/dashboard`)
+- safehi 신규 기능: Mock 데이터로 먼저 구현, 나중에 백엔드 연동
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->
