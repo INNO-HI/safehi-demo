@@ -24,4 +24,6 @@ export const defaultSidebarMenuItems: SidebarMenuItem[] = [
   { id: 'care-logs', label: '돌봄 일지', href: '/care-logs', icon: 'document', badge: 5 },
   { id: 'recipients', label: '대상자 관리', href: '/recipients', icon: 'users' },
   { id: 'managers', label: '매니저 관리', href: '/managers', icon: 'briefcase' },
+  { id: 'statistics', label: '통계/리포트', href: '/statistics', icon: 'chart' },
+  { id: 'settings', label: '설정', href: '/settings', icon: 'settings' },
 ];

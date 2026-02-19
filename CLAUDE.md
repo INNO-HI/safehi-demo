@@ -10,6 +10,8 @@ SafeHi는 지자체 돌봄 매니저를 위한 웹 대시보드입니다.
 ## Active Technologies
 - [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION] + [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION] (002-admin-dashboard)
 - [if applicable, e.g., PostgreSQL, CoreData, files or N/A] (002-admin-dashboard)
+- TypeScript 5.x + Next.js 14 (App Router) + React, Tailwind CSS, Zustand, React Hook Form + Zod, clsx, tailwind-merge (005-admin-settings)
+- 클라이언트 사이드 (Zustand persist → localStorage), 추후 백엔드 API 교체 예정 (005-admin-settings)
 
 - TypeScript 5.x + Next.js 14 (App Router)
 - Tailwind CSS

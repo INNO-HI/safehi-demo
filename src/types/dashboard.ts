@@ -198,7 +198,7 @@ export interface SidebarMenuItem {
   id: string;
   label: string;
   href: string;
-  icon: 'dashboard' | 'document' | 'users' | 'briefcase' | 'settings';
+  icon: 'dashboard' | 'document' | 'users' | 'briefcase' | 'chart' | 'settings';
   badge?: number;
 }
 
