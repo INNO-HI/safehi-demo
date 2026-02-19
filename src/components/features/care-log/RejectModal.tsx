@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Modal } from '@/components/ui/Modal';
+import { DialogModal } from '@/components/ui/Modal';
 import { Button } from '@/components/ui/Button';
 
 interface RejectModalProps {
@@ -55,7 +55,7 @@ export function RejectModal({
   };
 
   return (
-    <Modal
+    <DialogModal
       open={open}
       onClose={handleClose}
       title={title}
@@ -110,6 +110,6 @@ export function RejectModal({
           </div>
         </div>
       </div>
-    </Modal>
+    </DialogModal>
   );
 }

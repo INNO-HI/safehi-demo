@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Modal } from '@/components/ui/Modal';
+import { DialogModal } from '@/components/ui/Modal';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { changePassword } from '@/lib/mock-data/settings';
@@ -75,7 +75,7 @@ export function PasswordChangeModal({ open, onClose }: PasswordChangeModalProps)
   };
 
   return (
-    <Modal
+    <DialogModal
       open={open}
       onClose={handleClose}
       title="비밀번호 변경"
@@ -133,6 +133,6 @@ export function PasswordChangeModal({ open, onClose }: PasswordChangeModalProps)
           />
         </div>
       )}
-    </Modal>
+    </DialogModal>
   );
 }
