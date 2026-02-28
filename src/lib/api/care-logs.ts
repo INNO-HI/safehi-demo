@@ -4,7 +4,7 @@
  */
 
 import type { CareLog, CareLogStatus, CareLogFilters, CareLogDetailExtended, Feedback } from '@/types/dashboard';
-import { apiGet, apiPatch, apiPost } from './client';
+import { apiGet, apiPatch, apiPost, ApiError } from './client';
 
 export interface CareLogsResult {
   logs: CareLog[];
@@ -38,8 +38,11 @@ export async function getCareLogs(
 export async function getCareLogDetailById(id: string): Promise<CareLogDetailExtended | null> {
   try {
     return await apiGet<CareLogDetailExtended>(`/care-logs/${id}`);
-  } catch {
-    return null;
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 404) {
+      return null;
+    }
+    throw err;
   }
 }
 

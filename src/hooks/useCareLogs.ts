@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { CareLog, CareLogStatus, CareLogFilters, PageSize } from '@/types/dashboard';
 import { getCareLogs, updateBulkCareLogStatus } from '@/lib/api/care-logs';
 import { usePagination } from './usePagination';
@@ -75,6 +75,7 @@ export function useCareLogs(options: UseCareLogsOptions = {}): UseCareLogsReturn
     ...initialFilters,
   });
   const [allLogs, setAllLogs] = useState<CareLog[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [statusCounts, setStatusCounts] = useState<Record<CareLogStatus | 'all', number>>({
     all: 0,
     pending: 0,
@@ -85,16 +86,15 @@ export function useCareLogs(options: UseCareLogsOptions = {}): UseCareLogsReturn
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
-  // 페이지네이션
+  // 페이지네이션 (서버 사이드 페이지네이션 사용)
   const {
     currentPage,
     pageSize,
     totalPages,
     goToPage,
     setPageSize,
-    paginate,
   } = usePagination({
-    totalItems: allLogs.length,
+    totalItems: totalCount,
     initialPageSize,
     onPageChange: () => {
       // 페이지 변경 시 선택 초기화
@@ -102,8 +102,8 @@ export function useCareLogs(options: UseCareLogsOptions = {}): UseCareLogsReturn
     },
   });
 
-  // 현재 페이지 데이터
-  const logs = useMemo(() => paginate(allLogs), [paginate, allLogs]);
+  // 서버에서 이미 페이지네이션된 데이터를 직접 사용
+  const logs = allLogs;
 
   // 선택 상태
   const selection = useSelection({
@@ -119,6 +119,7 @@ export function useCareLogs(options: UseCareLogsOptions = {}): UseCareLogsReturn
     try {
       const result = await getCareLogs(filters, currentPage, pageSize);
       setAllLogs(result.logs);
+      setTotalCount(result.totalCount);
       setStatusCounts(result.statusCounts);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('데이터를 불러오는데 실패했습니다'));
@@ -209,7 +210,7 @@ export function useCareLogs(options: UseCareLogsOptions = {}): UseCareLogsReturn
   return {
     // 데이터
     logs,
-    totalCount: allLogs.length,
+    totalCount,
     statusCounts,
 
     // 필터

@@ -4,7 +4,7 @@
  */
 
 import type { Recipient, RecipientDetailExtended, RecipientStatus, RecipientFilters } from '@/types/dashboard';
-import { apiGet } from './client';
+import { apiGet, ApiError } from './client';
 
 export interface RecipientsResult {
   recipients: Recipient[];
@@ -46,7 +46,10 @@ export async function getRecipientKPIs(): Promise<RecipientKPIs> {
 export async function getRecipientDetailById(id: string): Promise<RecipientDetailExtended | null> {
   try {
     return await apiGet<RecipientDetailExtended>(`/recipients/${id}`);
-  } catch {
-    return null;
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 404) {
+      return null;
+    }
+    throw err;
   }
 }

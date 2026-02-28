@@ -45,8 +45,25 @@ export function useMemos(recipientId: string): UseMemosReturn {
 
   // 초기 로드
   useEffect(() => {
-    fetchMemos();
-  }, [fetchMemos]);
+    let cancelled = false;
+
+    const doFetch = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const data = await getMemosByRecipientId(recipientId);
+        if (!cancelled) setMemos(data);
+      } catch (err) {
+        if (!cancelled) setError(err instanceof Error ? err : new Error('메모를 불러오는데 실패했습니다.'));
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    };
+
+    doFetch();
+
+    return () => { cancelled = true; };
+  }, [recipientId]);
 
   // 새 메모 추가
   const addMemo = useCallback(

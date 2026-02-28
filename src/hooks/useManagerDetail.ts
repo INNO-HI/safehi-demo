@@ -19,13 +19,14 @@ export function useManagerDetail(id: string): UseManagerDetailReturn {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
     setIsLoading(true);
     setError(null);
 
-    // API 호출 시뮬레이션 (200ms 지연)
     const fetchData = async () => {
       try {
         const manager = await getManagerDetail(id);
+        if (cancelled) return;
         if (manager) {
           setData(manager);
           setError(null);
@@ -33,13 +34,15 @@ export function useManagerDetail(id: string): UseManagerDetailReturn {
           setError(new Error('매니저를 찾을 수 없습니다'));
         }
       } catch (err) {
-        setError(err instanceof Error ? err : new Error('데이터를 불러오는데 실패했습니다'));
+        if (!cancelled) setError(err instanceof Error ? err : new Error('데이터를 불러오는데 실패했습니다'));
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
 
     fetchData();
+
+    return () => { cancelled = true; };
   }, [id]);
 
   return {

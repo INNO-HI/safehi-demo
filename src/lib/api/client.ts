@@ -39,9 +39,13 @@ export async function apiFetch<T>(
   }
 
   const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
     ...(init?.headers as Record<string, string>),
   };
+
+  // Content-Type은 body가 있는 요청에만 설정
+  if (init?.body) {
+    headers['Content-Type'] = headers['Content-Type'] || 'application/json';
+  }
 
   if (token) {
     headers['Authorization'] = `Bearer ${token}`;
@@ -52,7 +56,16 @@ export async function apiFetch<T>(
     headers,
   });
 
-  const body: ApiEnvelope<T> = await res.json();
+  let body: ApiEnvelope<T>;
+  try {
+    body = await res.json();
+  } catch {
+    throw new ApiError(
+      `서버 응답을 파싱할 수 없습니다 (HTTP ${res.status})`,
+      'PARSE_ERROR',
+      res.status
+    );
+  }
 
   if (!body.ok) {
     throw new ApiError(
@@ -91,6 +104,7 @@ export function apiGet<T>(path: string): Promise<T> {
 export function apiPost<T>(path: string, body?: unknown): Promise<T> {
   return apiFetch<T>(path, {
     method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
 }
@@ -98,6 +112,7 @@ export function apiPost<T>(path: string, body?: unknown): Promise<T> {
 export function apiPatch<T>(path: string, body?: unknown): Promise<T> {
   return apiFetch<T>(path, {
     method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
 }

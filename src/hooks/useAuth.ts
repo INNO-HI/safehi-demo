@@ -44,18 +44,32 @@ export const useAuthStore = create<AuthStore>()(
 
         // rememberMe가 false면 sessionStorage 사용 (브라우저 닫으면 삭제)
         if (!rememberMe) {
-          // persist middleware가 localStorage를 사용하므로
-          // 브라우저 닫을 때 삭제되도록 beforeunload 이벤트 등록
           if (typeof window !== 'undefined') {
+            // 이전 리스너 교체를 위해 기존 핸들러 제거
+            if (useAuthStore._unloadHandler) {
+              window.removeEventListener('beforeunload', useAuthStore._unloadHandler);
+            }
             const handleUnload = () => {
               localStorage.removeItem('auth-storage');
             };
+            useAuthStore._unloadHandler = handleUnload;
             window.addEventListener('beforeunload', handleUnload);
+          }
+        } else {
+          // rememberMe=true면 기존 unload 핸들러 제거
+          if (typeof window !== 'undefined' && useAuthStore._unloadHandler) {
+            window.removeEventListener('beforeunload', useAuthStore._unloadHandler);
+            useAuthStore._unloadHandler = undefined;
           }
         }
       },
 
       logout: () => {
+        // beforeunload 리스너 정리
+        if (typeof window !== 'undefined' && useAuthStore._unloadHandler) {
+          window.removeEventListener('beforeunload', useAuthStore._unloadHandler);
+          useAuthStore._unloadHandler = undefined;
+        }
         set({
           user: null,
           token: null,
@@ -71,9 +85,20 @@ export const useAuthStore = create<AuthStore>()(
         token: state.token,
         isAuthenticated: state.isAuthenticated,
       }),
+      onRehydrateStorage: () => {
+        return (state) => {
+          // 스토리지 복원 후 isLoading을 false로 설정
+          if (state) {
+            state.isLoading = false;
+          }
+        };
+      },
     }
   )
 );
+
+// beforeunload 핸들러 레퍼런스 저장
+(useAuthStore as any)._unloadHandler = undefined as (() => void) | undefined;
 
 /**
  * 인증 상태 훅

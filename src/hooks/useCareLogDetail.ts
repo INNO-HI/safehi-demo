@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { CareLogDetailExtended } from '@/types/dashboard';
 import { getCareLogDetailById, updateCareLogStatus, addCareLogFeedback } from '@/lib/api/care-logs';
+import { useAuthStore } from '@/hooks/useAuth';
 
 interface UseCareLogDetailReturn {
   data: CareLogDetailExtended | null;
@@ -61,6 +62,9 @@ export function useCareLogDetail(id: string): UseCareLogDetailReturn {
     try {
       await updateCareLogStatus(data.id, 'approved');
       setData({ ...data, status: 'approved' });
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('승인 처리에 실패했습니다'));
+      throw err;
     } finally {
       setIsProcessing(false);
     }
@@ -80,13 +84,17 @@ export function useCareLogDetail(id: string): UseCareLogDetailReturn {
       setIsProcessing(true);
       try {
         await updateCareLogStatus(data.id, 'rejected', reason.trim());
+        const { user } = useAuthStore.getState();
         setData({
           ...data,
           status: 'rejected',
           rejectionReason: reason.trim(),
           rejectedAt: new Date(),
-          rejectedBy: '김담당',
+          rejectedBy: user?.name ?? '담당자',
         });
+      } catch (err) {
+        setError(err instanceof Error ? err : new Error('반려 처리에 실패했습니다'));
+        throw err;
       } finally {
         setIsProcessing(false);
       }

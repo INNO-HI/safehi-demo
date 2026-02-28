@@ -47,8 +47,28 @@ export function usePolicies(recipientId: string): UsePoliciesReturn {
 
   // 초기 로드
   useEffect(() => {
-    fetchPolicies();
-  }, [fetchPolicies]);
+    let cancelled = false;
+
+    const doFetch = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const data = await getPoliciesForRecipient(recipientId);
+        if (!cancelled) {
+          setPolicies(data);
+          setLastUpdated(new Date());
+        }
+      } catch (err) {
+        if (!cancelled) setError(err instanceof Error ? err : new Error('정책 추천을 불러오는데 실패했습니다.'));
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    };
+
+    doFetch();
+
+    return () => { cancelled = true; };
+  }, [recipientId]);
 
   // AI 재분석 (새로고침)
   const refresh = useCallback(async () => {
