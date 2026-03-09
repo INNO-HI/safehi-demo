@@ -84,7 +84,11 @@ export default function ManagerVisitsPage() {
       if (managerData) {
         setManagerName(managerData.name);
       }
-      setVisits(visitsData.visits);
+      setVisits(visitsData.visits.map((v) => ({
+        ...v,
+        visitDate: new Date(v.visitDate),
+        visitType: v.visitType as ManagerVisitType,
+      })));
       setTypeCounts(visitsData.typeCounts);
     } finally {
       setIsLoading(false);

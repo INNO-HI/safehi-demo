@@ -70,7 +70,12 @@ export default function ManagerReportsPage() {
       if (managerData) {
         setManagerName(managerData.name);
       }
-      setReports(reportsData.reports);
+      setReports(reportsData.reports.map((r) => ({
+        ...r,
+        visitDate: new Date(r.visitDate),
+        registeredAt: new Date(r.registeredAt),
+        status: r.status as ReportStatus,
+      })));
       setStatusCounts(reportsData.statusCounts);
     } finally {
       setIsLoading(false);
