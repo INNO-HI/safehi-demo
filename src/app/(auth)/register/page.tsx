@@ -1,3 +1,6 @@
+'use client';
+
+import dynamic from 'next/dynamic';
 import {
   Card,
   CardHeader,
@@ -5,12 +8,11 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui';
-import { RegisterForm } from '@/components/features/auth/RegisterForm';
 
-export const metadata = {
-  title: '회원가입 - SafeHi',
-  description: 'SafeHi 돌봄 관리 시스템에 가입하세요.',
-};
+const RegisterForm = dynamic(
+  () => import('@/components/features/auth/RegisterForm').then(mod => ({ default: mod.RegisterForm })),
+  { ssr: false }
+);
 
 /**
  * 회원가입 페이지

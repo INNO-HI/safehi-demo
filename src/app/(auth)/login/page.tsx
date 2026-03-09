@@ -1,3 +1,6 @@
+'use client';
+
+import dynamic from 'next/dynamic';
 import {
   Card,
   CardHeader,
@@ -5,12 +8,11 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui';
-import { LoginForm } from '@/components/features/auth/LoginForm';
 
-export const metadata = {
-  title: '로그인 - SafeHi',
-  description: 'SafeHi 돌봄 관리 시스템에 로그인하세요.',
-};
+const LoginForm = dynamic(
+  () => import('@/components/features/auth/LoginForm').then(mod => ({ default: mod.LoginForm })),
+  { ssr: false }
+);
 
 /**
  * 로그인 페이지

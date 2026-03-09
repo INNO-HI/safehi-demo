@@ -133,46 +133,28 @@ export async function register(
 
 /**
  * 이메일 인증 코드 발송 API
+ * [메일 인증 기능 비활성화됨]
  */
-export async function sendEmailVerification(
-  email: string
-): Promise<ApiResponse<{ code: string }>> {
-  await delay(500);
-
-  // 이미 가입된 이메일 확인
-  if (mockUsers.some((u) => u.email === email.toLowerCase())) {
-    return {
-      success: false,
-      error: '이미 사용 중인 이메일입니다.',
-    };
-  }
-
-  // 테스트용 인증 코드 반환 (실제로는 이메일로 발송)
-  return {
-    success: true,
-    data: { code: '123456' },
-  };
-}
+// export async function sendEmailVerification(
+//   email: string
+// ): Promise<ApiResponse<{ code: string }>> {
+//   return wrap(() =>
+//     apiPost<{ code: string }>('/auth/send-verification', { email })
+//   );
+// }
 
 /**
  * 이메일 인증 코드 확인 API
+ * [메일 인증 기능 비활성화됨]
  */
-export async function verifyEmailCode(
-  email: string,
-  code: string
-): Promise<ApiResponse> {
-  await delay(300);
-
-  // 테스트용 코드: 123456
-  if (code === '123456') {
-    return { success: true };
-  }
-
-  return {
-    success: false,
-    error: '인증 코드가 올바르지 않습니다.',
-  };
-}
+// export async function verifyEmailCode(
+//   email: string,
+//   code: string
+// ): Promise<ApiResponse> {
+//   return wrap(() =>
+//     apiPost('/auth/verify-code', { email, code })
+//   );
+// }
 
 /**
  * 비밀번호 재설정 링크 발송 API

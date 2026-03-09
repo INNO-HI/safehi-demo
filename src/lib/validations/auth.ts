@@ -69,7 +69,10 @@ export const organizationVerifySchema = z.object({
   districtId: z.string().min(1, '구/군을 선택해주세요'),
   organizationId: z.string().min(1, '기관을 선택해주세요'),
   memo: z.string().max(500, '메모는 500자 이하여야 합니다').optional(),
-  document: z.instanceof(File).optional(),
+  document: z.any().optional().refine(
+    (val) => val === undefined || (typeof File !== 'undefined' && val instanceof File),
+    { message: '올바른 파일을 업로드해주세요' }
+  ),
 });
 
 // 이메일 인증 코드 스키마

@@ -193,7 +193,7 @@ export function OrganizationVerifyForm() {
             maxSize={10 * 1024 * 1024}
             value={field.value || null}
             onChange={field.onChange}
-            error={errors.document?.message}
+            error={typeof errors.document?.message === 'string' ? errors.document.message : undefined}
           />
         )}
       />

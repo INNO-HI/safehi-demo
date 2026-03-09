@@ -29,22 +29,6 @@ export function usePolicies(recipientId: string): UsePoliciesReturn {
   const [error, setError] = useState<Error | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  // 정책 목록 조회
-  const fetchPolicies = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const data = await getPoliciesForRecipient(recipientId);
-      setPolicies(data);
-      setLastUpdated(new Date());
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('정책 추천을 불러오는데 실패했습니다.'));
-    } finally {
-      setIsLoading(false);
-    }
-  }, [recipientId]);
-
   // 초기 로드
   useEffect(() => {
     let cancelled = false;

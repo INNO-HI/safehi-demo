@@ -12,6 +12,9 @@ interface AuthStore extends AuthState {
   logout: () => void;
 }
 
+// 전역 핸들러 참조 저장소
+const unloadHandlers: { handler?: (() => void) } = {};
+
 /**
  * 인증 상태 관리 스토어
  * zustand + persist로 세션 유지 관리
@@ -46,29 +49,29 @@ export const useAuthStore = create<AuthStore>()(
         if (!rememberMe) {
           if (typeof window !== 'undefined') {
             // 이전 리스너 교체를 위해 기존 핸들러 제거
-            if (useAuthStore._unloadHandler) {
-              window.removeEventListener('beforeunload', useAuthStore._unloadHandler);
+            if (unloadHandlers.handler) {
+              window.removeEventListener('beforeunload', unloadHandlers.handler);
             }
             const handleUnload = () => {
               localStorage.removeItem('auth-storage');
             };
-            useAuthStore._unloadHandler = handleUnload;
+            unloadHandlers.handler = handleUnload;
             window.addEventListener('beforeunload', handleUnload);
           }
         } else {
           // rememberMe=true면 기존 unload 핸들러 제거
-          if (typeof window !== 'undefined' && useAuthStore._unloadHandler) {
-            window.removeEventListener('beforeunload', useAuthStore._unloadHandler);
-            useAuthStore._unloadHandler = undefined;
+          if (typeof window !== 'undefined' && unloadHandlers.handler) {
+            window.removeEventListener('beforeunload', unloadHandlers.handler);
+            unloadHandlers.handler = undefined;
           }
         }
       },
 
       logout: () => {
         // beforeunload 리스너 정리
-        if (typeof window !== 'undefined' && useAuthStore._unloadHandler) {
-          window.removeEventListener('beforeunload', useAuthStore._unloadHandler);
-          useAuthStore._unloadHandler = undefined;
+        if (typeof window !== 'undefined' && unloadHandlers.handler) {
+          window.removeEventListener('beforeunload', unloadHandlers.handler);
+          unloadHandlers.handler = undefined;
         }
         set({
           user: null,
@@ -96,9 +99,6 @@ export const useAuthStore = create<AuthStore>()(
     }
   )
 );
-
-// beforeunload 핸들러 레퍼런스 저장
-(useAuthStore as any)._unloadHandler = undefined as (() => void) | undefined;
 
 /**
  * 인증 상태 훅

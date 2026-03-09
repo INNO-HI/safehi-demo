@@ -3,7 +3,7 @@
  * /core/dashboard/managers/*
  */
 
-import type { Manager, ManagerDetailExtended, ManagerStatus, ManagerFilters, ManagerKPIs } from '@/types/dashboard';
+import type { Manager, ManagerDetailExtended, ManagerStatus, ManagerFilters, ManagerKPIs, ReportStatus, ManagerVisitType } from '@/types/dashboard';
 import { apiGet } from './client';
 
 export interface ManagersResult {
@@ -50,7 +50,7 @@ export async function getManagerReports(
   managerId: string,
   filters: { status: string; dateRange: { start: Date | null; end: Date | null } }
 ): Promise<{
-  reports: Array<{ id: string; recipientId: string; recipientName: string; visitDate: string; registeredAt: string; status: string }>;
+  reports: Array<{ id: string; recipientId: string; recipientName: string; visitDate: Date; registeredAt: Date; status: ReportStatus }>;
   totalCount: number;
   statusCounts: Record<string, number>;
 }> {
@@ -59,7 +59,23 @@ export async function getManagerReports(
   if (filters.dateRange?.start) params.set('dateStart', filters.dateRange.start.toISOString());
   if (filters.dateRange?.end) params.set('dateEnd', filters.dateRange.end.toISOString());
 
-  return apiGet(`/managers/${managerId}/reports?${params.toString()}`);
+  const response = await apiGet<{
+    reports: Array<{ id: string; recipientId: string; recipientName: string; visitDate: string; registeredAt: string; status: string }>;
+    totalCount: number;
+    statusCounts: Record<string, number>;
+  }>(`/managers/${managerId}/reports?${params.toString()}`);
+
+  return {
+    ...response,
+    reports: response.reports.map(report => ({
+      id: report.id,
+      recipientId: report.recipientId,
+      recipientName: report.recipientName,
+      visitDate: new Date(report.visitDate),
+      registeredAt: new Date(report.registeredAt),
+      status: report.status as ReportStatus,
+    })) as Array<{ id: string; recipientId: string; recipientName: string; visitDate: Date; registeredAt: Date; status: ReportStatus }>,
+  };
 }
 
 /**
@@ -69,7 +85,7 @@ export async function getManagerVisits(
   managerId: string,
   filters: { visitType: string; search: string; dateRange: { start: Date | null; end: Date | null } }
 ): Promise<{
-  visits: Array<{ id: string; recipientId: string; recipientName: string; visitDate: string; visitType: string; result: string }>;
+  visits: Array<{ id: string; recipientId: string; recipientName: string; visitDate: Date; visitType: ManagerVisitType; result: string }>;
   totalCount: number;
   typeCounts: Record<string, number>;
 }> {
@@ -79,5 +95,21 @@ export async function getManagerVisits(
   if (filters.dateRange?.start) params.set('dateStart', filters.dateRange.start.toISOString());
   if (filters.dateRange?.end) params.set('dateEnd', filters.dateRange.end.toISOString());
 
-  return apiGet(`/managers/${managerId}/visits?${params.toString()}`);
+  const response = await apiGet<{
+    visits: Array<{ id: string; recipientId: string; recipientName: string; visitDate: string; visitType: string; result: string }>;
+    totalCount: number;
+    typeCounts: Record<string, number>;
+  }>(`/managers/${managerId}/visits?${params.toString()}`);
+
+  return {
+    ...response,
+    visits: response.visits.map(visit => ({
+      id: visit.id,
+      recipientId: visit.recipientId,
+      recipientName: visit.recipientName,
+      visitDate: new Date(visit.visitDate),
+      visitType: visit.visitType as ManagerVisitType,
+      result: visit.result,
+    })) as Array<{ id: string; recipientId: string; recipientName: string; visitDate: Date; visitType: ManagerVisitType; result: string }>,
+  };
 }

@@ -1,3 +1,6 @@
+'use client';
+
+import dynamic from 'next/dynamic';
 import {
   Card,
   CardHeader,
@@ -5,12 +8,11 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui';
-import { ForgotPasswordForm } from '@/components/features/auth/ForgotPasswordForm';
 
-export const metadata = {
-  title: '비밀번호 찾기 - SafeHi',
-  description: '비밀번호를 잊으셨나요? 재설정 링크를 발송해 드립니다.',
-};
+const ForgotPasswordForm = dynamic(
+  () => import('@/components/features/auth/ForgotPasswordForm').then(mod => ({ default: mod.ForgotPasswordForm })),
+  { ssr: false }
+);
 
 /**
  * 비밀번호 찾기 페이지

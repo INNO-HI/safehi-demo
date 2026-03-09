@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 import { Button, Input, Alert } from '@/components/ui';
 import { PasswordStrengthIndicator } from './PasswordStrengthIndicator';
-import { EmailVerification } from './EmailVerification';
+// import { EmailVerification } from './EmailVerification';  // [메일 인증 기능 비활성화]
 import { AgreementCheckbox, defaultAgreements } from './AgreementCheckbox';
 import { registerSchema, type RegisterFormData } from '@/lib/validations/auth';
 import { register as registerApi } from '@/lib/api/auth';
@@ -26,6 +26,10 @@ export function RegisterForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  void emailVerified;
+  void setEmailVerified;
 
   const {
     register,
@@ -53,6 +57,9 @@ export function RegisterForm() {
 
   const password = watch('password');
   const email = watch('email');
+  
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  void email;
 
   // 전화번호 자동 포맷팅
   const handlePhoneChange = useCallback(
@@ -64,11 +71,11 @@ export function RegisterForm() {
   );
 
   const onSubmit = async (data: RegisterFormData) => {
-    // 이메일 인증 확인
-    if (!emailVerified) {
-      setServerError('이메일 인증을 완료해주세요.');
-      return;
-    }
+    // 이메일 인증 확인 [메일 인증 기능 비활성화 - 체크 제거]
+    // if (!emailVerified) {
+    //   setServerError('이메일 인증을 완료해주세요.');
+    //   return;
+    // }
 
     // 필수 약관 동의 확인
     if (!data.agreements.terms || !data.agreements.privacy) {
@@ -136,14 +143,14 @@ export function RegisterForm() {
           autoComplete="email"
           required
           error={errors.email?.message}
-          disabled={emailVerified}
           {...register('email')}
         />
-        <EmailVerification
+        {/* 메일 인증 기능 비활성화 */}
+        {/* <EmailVerification
           email={email}
           onVerified={() => setEmailVerified(true)}
           disabled={!email || !!errors.email || emailVerified}
-        />
+        /> */}
       </div>
 
       {/* 비밀번호 */}
