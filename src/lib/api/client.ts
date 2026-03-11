@@ -23,6 +23,7 @@ export async function apiFetch<T>(
   init?: RequestInit
 ): Promise<T> {
   const url = `${BASE_URL}${path}`;
+  const method = init?.method || 'GET';
 
   // 저장된 토큰 읽기
   let token: string | null = null;
@@ -51,15 +52,39 @@ export async function apiFetch<T>(
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const res = await fetch(url, {
-    ...init,
-    headers,
-  });
+  // ── 요청 로깅 ──
+  console.log(`[API 요청] ${method} ${url}`);
+  if (init?.body) {
+    try {
+      console.log('[API 요청 Body]', JSON.parse(init.body as string));
+    } catch {
+      console.log('[API 요청 Body]', init.body);
+    }
+  }
+
+  let res: Response;
+  try {
+    res = await fetch(url, {
+      ...init,
+      headers,
+    });
+  } catch (networkErr) {
+    console.error(`[API 네트워크 에러] ${method} ${url}`, networkErr);
+    throw new ApiError(
+      '서버에 연결할 수 없습니다. 네트워크를 확인해주세요.',
+      'NETWORK_ERROR',
+      0
+    );
+  }
+
+  // ── 응답 로깅 ──
+  console.log(`[API 응답] ${method} ${url} → ${res.status}`);
 
   let body: ApiEnvelope<T>;
   try {
     body = await res.json();
   } catch {
+    console.error(`[API 파싱 에러] ${method} ${url} → HTTP ${res.status} (JSON 파싱 실패)`);
     throw new ApiError(
       `서버 응답을 파싱할 수 없습니다 (HTTP ${res.status})`,
       'PARSE_ERROR',
@@ -67,7 +92,10 @@ export async function apiFetch<T>(
     );
   }
 
+  console.log(`[API 응답 Body]`, body);
+
   if (!body.ok) {
+    console.warn(`[API 실패] ${method} ${url} →`, body.error);
     throw new ApiError(
       body.error?.message || `API error (${res.status})`,
       body.error?.code || 'UNKNOWN',

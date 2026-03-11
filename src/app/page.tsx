@@ -14,7 +14,7 @@ export default function Home() {
 
     // 인증되어 있으면 대시보드로 이동
     if (isAuthenticated) {
-      router.push('/admin/dashboard');
+      router.push('/dashboard');
     } else {
       // 인증 안 되어 있으면 로그인 페이지로 이동
       router.push('/login');
