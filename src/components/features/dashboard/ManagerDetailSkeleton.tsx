@@ -14,30 +14,28 @@ function SkeletonBox({ className = '' }: { className?: string }) {
  */
 export function ManagerDetailSkeleton() {
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <>
       {/* 헤더 스켈레톤 */}
-      <div className="bg-white border-b border-neutral-200 px-6 py-5">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <SkeletonBox className="w-11 h-11" />
-              <div>
-                <SkeletonBox className="w-24 h-4 mb-2" />
-                <SkeletonBox className="w-32 h-7" />
-              </div>
+      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-6 mt-4 px-6 py-5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <SkeletonBox className="w-11 h-11" />
+            <div>
+              <SkeletonBox className="w-24 h-4 mb-2" />
+              <SkeletonBox className="w-32 h-7" />
             </div>
-            <SkeletonBox className="w-20 h-7" />
           </div>
+          <SkeletonBox className="w-20 h-7" />
         </div>
       </div>
 
       {/* 콘텐츠 스켈레톤 */}
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="px-8 pb-8 pt-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* 좌측 컬럼 */}
           <div className="space-y-6">
             {/* 프로필 카드 */}
-            <div className="bg-white rounded-xl border border-neutral-200 p-5">
+            <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
               <div className="flex items-start gap-5">
                 <SkeletonBox className="w-20 h-20 rounded-full flex-shrink-0" />
                 <div className="flex-1">
@@ -53,7 +51,7 @@ export function ManagerDetailSkeleton() {
             </div>
 
             {/* 업무 통계 */}
-            <div className="bg-white rounded-xl border border-neutral-200 p-5">
+            <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
               <SkeletonBox className="w-24 h-6 mb-4" />
               <div className="grid grid-cols-2 gap-3">
                 <SkeletonBox className="h-20" />
@@ -67,7 +65,7 @@ export function ManagerDetailSkeleton() {
           {/* 우측 컬럼 */}
           <div className="space-y-6">
             {/* 최근 보고서 */}
-            <div className="bg-white rounded-xl border border-neutral-200 p-5">
+            <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
               <div className="flex items-center justify-between mb-4">
                 <SkeletonBox className="w-28 h-6" />
                 <SkeletonBox className="w-20 h-5" />
@@ -86,7 +84,7 @@ export function ManagerDetailSkeleton() {
             </div>
 
             {/* 최근 방문 기록 */}
-            <div className="bg-white rounded-xl border border-neutral-200 p-5">
+            <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
               <div className="flex items-center justify-between mb-4">
                 <SkeletonBox className="w-32 h-6" />
                 <SkeletonBox className="w-20 h-5" />
@@ -107,7 +105,7 @@ export function ManagerDetailSkeleton() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

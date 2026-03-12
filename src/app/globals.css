@@ -2,12 +2,56 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 에이투지체 폰트 등록 */
+@font-face {
+  font-family: 'A2G';
+  src: url('/fonts/에이투지체-4Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'A2G';
+  src: url('/fonts/에이투지체-5Medium.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'A2G';
+  src: url('/fonts/에이투지체-6SemiBold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'A2G';
+  src: url('/fonts/에이투지체-7Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'A2G';
+  src: url('/fonts/에이투지체-8ExtraBold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'A2G';
+  src: url('/fonts/에이투지체-9Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* CSS Variables for Theme Switching */
 :root {
-  --color-primary: #2E6AB3;
-  --color-primary-light: #4A8AD4;
-  --color-primary-dark: #1E4A7A;
-  --color-primary-bg: #EBF4FF;
+  --color-primary: #448CFF;
+  --color-primary-light: #6BA3FF;
+  --color-primary-dark: #2B6AD9;
+  --color-primary-bg: #EBF2FF;
 }
 
 [data-theme="nature-green"] {
@@ -40,13 +84,13 @@
 
 @layer base {
   html {
-    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+    font-family: 'A2G', -apple-system, BlinkMacSystemFont,
       'Malgun Gothic', sans-serif;
   }
 
   body {
     @apply bg-neutral-bg text-neutral-text antialiased;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
   }
 }
@@ -67,8 +111,10 @@
 
   /* 입력 필드 에러 상태 */
   .input-field-error {
-    @apply border-status-danger bg-status-danger-light
-           focus:border-status-danger focus:ring-status-danger;
+    @apply min-h-input w-full rounded-input border px-4 py-3 text-body text-neutral-text
+           placeholder-neutral-text-tertiary
+           border-neutral-text-sub bg-[#F8F9FA]
+           focus:border-neutral-text-sub focus:outline-none focus:ring-1 focus:ring-neutral-text-tertiary;
   }
 
   /* 버튼 기본 스타일 */
@@ -105,12 +151,12 @@
 
   /* 폼 라벨 */
   .form-label {
-    @apply mb-2 block text-label text-neutral-text;
+    @apply mb-2 block text-[14px] font-normal text-neutral-text;
   }
 
   /* 폼 에러 메시지 */
   .form-error {
-    @apply mt-1 text-caption text-status-danger;
+    @apply mt-1 text-caption text-neutral-text-sub;
   }
 
   /* 링크 스타일 */

@@ -75,7 +75,7 @@ export function ReportStatusChart({
       <h2 className="text-h3 text-neutral-text mb-4">보고서 처리 현황</h2>
 
       {/* 차트 영역 */}
-      <div className="relative h-48">
+      <div className="relative h-64">
         {data.total === 0 ? (
           <div className="h-full flex items-center justify-center text-neutral-text-sub">
             데이터가 없습니다
@@ -88,8 +88,8 @@ export function ReportStatusChart({
                   data={chartData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={55}
-                  outerRadius={75}
+                  innerRadius={70}
+                  outerRadius={100}
                   paddingAngle={2}
                   dataKey="value"
                 >
@@ -104,7 +104,7 @@ export function ReportStatusChart({
             {/* 중앙 레이블 */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <div className="text-center">
-                <p className="text-h2 font-semibold text-neutral-text">
+                <p className="text-[24px] font-semibold text-neutral-text">
                   {data.total.toLocaleString()}
                 </p>
                 <p className="text-caption text-neutral-text-sub">총 건수</p>

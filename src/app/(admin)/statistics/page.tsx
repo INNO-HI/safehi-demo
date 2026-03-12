@@ -2,21 +2,19 @@
 
 import { useStatistics } from '@/hooks/useStatistics';
 import { useReportGenerator } from '@/hooks/useReportGenerator';
-import { generateAvailableMonths } from '@/lib/constants/statistics';
 import {
   StatisticsHeader,
   KPICardGrid,
   VisitTrendChart,
   ReportStatusChart,
   DistrictVisitChart,
-  ManagerRankingTable,
   RecipientStatusCards,
   QuickReportCards,
 } from '@/components/features/statistics';
 
 /**
  * 통계/리포트 페이지
- * 관리자용 KPI, 차트, 테이블 대시보드
+ * 중간관리자용: 위험/문제 → 업무 처리 → 매니저 성과 → 지역 운영 → 통계
  */
 export default function StatisticsPage() {
   const {
@@ -34,44 +32,27 @@ export default function StatisticsPage() {
 
   const { generateReport } = useReportGenerator(selectedMonth, data);
 
-  const availableMonths = generateAvailableMonths();
-
   // 로딩 상태
   if (isLoading) {
     return (
       <div className="p-6">
         <div className="animate-pulse space-y-6">
-          {/* 헤더 스켈레톤 */}
           <div className="flex items-center justify-between">
-            <div className="h-8 w-48 bg-neutral-200 rounded" />
-            <div className="flex gap-3">
-              <div className="h-11 w-36 bg-neutral-200 rounded-lg" />
-              <div className="h-11 w-32 bg-neutral-200 rounded-lg" />
-            </div>
+            <div className="h-8 w-48 bg-neutral-bg rounded" />
+            <div className="h-11 w-40 bg-neutral-bg rounded-lg" />
           </div>
-
-          {/* KPI 카드 스켈레톤 */}
-          <div className="grid grid-cols-5 gap-4">
-            {[1, 2, 3, 4, 5].map((i) => (
-              <div key={i} className="h-24 bg-neutral-200 rounded-lg" />
+          <div className="grid grid-cols-4 gap-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="h-24 bg-neutral-bg rounded-lg" />
             ))}
           </div>
-
-          {/* 차트 영역 스켈레톤 */}
-          <div className="grid grid-cols-3 gap-4">
-            <div className="col-span-2 h-80 bg-neutral-200 rounded-lg" />
-            <div className="h-80 bg-neutral-200 rounded-lg" />
-          </div>
-
-          {/* 하단 영역 스켈레톤 */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="h-64 bg-neutral-200 rounded-lg" />
-            <div className="h-64 bg-neutral-200 rounded-lg" />
+            <div className="h-80 bg-neutral-bg rounded-lg" />
+            <div className="h-80 bg-neutral-bg rounded-lg" />
           </div>
-
           <div className="grid grid-cols-2 gap-4">
-            <div className="h-48 bg-neutral-200 rounded-lg" />
-            <div className="h-48 bg-neutral-200 rounded-lg" />
+            <div className="h-64 bg-neutral-bg rounded-lg" />
+            <div className="h-64 bg-neutral-bg rounded-lg" />
           </div>
         </div>
       </div>
@@ -84,18 +65,7 @@ export default function StatisticsPage() {
       <div className="p-6">
         <div className="bg-status-error/10 border border-status-error rounded-lg p-8 text-center max-w-md mx-auto">
           <div className="w-12 h-12 bg-status-error/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-status-error"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-status-error">
               <circle cx="12" cy="12" r="10" />
               <line x1="12" y1="8" x2="12" y2="12" />
               <line x1="12" y1="16" x2="12.01" y2="16" />
@@ -119,19 +89,8 @@ export default function StatisticsPage() {
     return (
       <div className="p-6">
         <div className="bg-neutral-bg border border-neutral-border rounded-lg p-8 text-center max-w-md mx-auto">
-          <div className="w-12 h-12 bg-neutral-200 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="text-neutral-text-sub"
-            >
+          <div className="w-12 h-12 bg-neutral-bg rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-neutral-text-sub">
               <line x1="18" y1="20" x2="18" y2="10" />
               <line x1="12" y1="20" x2="12" y2="4" />
               <line x1="6" y1="20" x2="6" y2="14" />
@@ -147,41 +106,44 @@ export default function StatisticsPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-8 space-y-8">
       {/* 헤더 */}
       <StatisticsHeader
         selectedMonth={selectedMonth}
-        availableMonths={availableMonths}
         onMonthChange={setSelectedMonth}
       />
 
       {/* PDF 캡처 영역 */}
-      <div id="statistics-content" className="space-y-6">
-        {/* KPI 카드 그리드 */}
-        <KPICardGrid kpi={data.kpi} />
+      <div id="statistics-content" className="space-y-8">
+        {/* 1. KPI 카드 + 빠른 리포트 생성 */}
+        <section className="grid grid-cols-2 gap-6">
+          <KPICardGrid
+            className="bg-status-success-light rounded-2xl p-6"
+            recipientStatus={data.recipientStatus}
+            reportStatus={data.reportStatus}
+          />
+          <QuickReportCards
+            className="bg-status-success-light rounded-2xl p-6"
+            onGenerateReport={generateReport}
+          />
+        </section>
 
-        {/* 차트 영역: 방문 추이 + 보고서 현황 */}
-        <section className="grid grid-cols-3 gap-4">
+        {/* 3. 보고서 현황 + 대상자 상태 분포 */}
+        <section className="grid grid-cols-5 gap-6">
+          <ReportStatusChart className="col-span-2" data={data.reportStatus} />
+          <RecipientStatusCards className="col-span-3" data={data.recipientStatus} />
+        </section>
+
+        {/* 4. 동별 방문(좁게) + 월별 추이(넓게) */}
+        <section className="grid grid-cols-5 gap-6">
+          <DistrictVisitChart className="col-span-2" data={data.districtVisits} displayLimit={7} />
           <VisitTrendChart
-            className="col-span-2"
+            className="col-span-3"
             data={visitTrendData}
             period={trendPeriod}
             onPeriodChange={setTrendPeriod}
             isLoading={isVisitTrendLoading}
           />
-          <ReportStatusChart data={data.reportStatus} />
-        </section>
-
-        {/* 중간 영역: 동별 방문 + 매니저 순위 */}
-        <section className="grid grid-cols-2 gap-4">
-          <DistrictVisitChart data={data.districtVisits} displayLimit={7} />
-          <ManagerRankingTable data={data.managerRanking} displayLimit={5} />
-        </section>
-
-        {/* 하단 영역: 대상자 상태 + 빠른 리포트 */}
-        <section className="grid grid-cols-2 gap-4">
-          <RecipientStatusCards data={data.recipientStatus} />
-          <QuickReportCards onGenerateReport={generateReport} />
         </section>
       </div>
     </div>

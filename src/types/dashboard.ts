@@ -8,7 +8,7 @@
 // ============================================================
 
 /** KPI 카드 프로그레스 바 색상 */
-export type KPIProgressColor = 'blue' | 'yellow' | 'purple' | 'green';
+export type KPIProgressColor = 'blue' | 'yellow' | 'purple' | 'green' | 'neutral';
 
 /** 증감 방향 */
 export type ChangeDirection = 'up' | 'down' | 'none';
@@ -130,6 +130,12 @@ export interface Notification {
 // 최근 보고서(RecentReport) 관련 타입
 // ============================================================
 
+/** 보고서 유형 */
+export type ReportType = 'visit' | 'health_check' | 'call_consult';
+
+/** 위험도 */
+export type RiskLevel = 'normal' | 'caution' | 'danger';
+
 /** 최근 보고서 요약 데이터 */
 export interface RecentReport {
   id: string;
@@ -138,6 +144,9 @@ export interface RecentReport {
   registeredAt: Date;
   status: CareLogStatus;
   isUrgent: boolean;
+  reportType?: ReportType;
+  riskLevel?: RiskLevel;
+  dong?: string;
 }
 
 // ============================================================

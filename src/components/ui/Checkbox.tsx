@@ -23,18 +23,18 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         <label
           htmlFor={checkboxId}
           className={cn(
-            'flex items-start gap-3 cursor-pointer',
+            'flex items-center gap-3 cursor-pointer',
             'min-h-[44px] py-2', // 최소 클릭 영역 보장
             props.disabled && 'cursor-not-allowed opacity-50'
           )}
         >
-          <div className="relative flex items-center justify-center w-5 h-5 mt-0.5">
+          <div className="relative flex items-center justify-center w-5 h-5">
             <input
               ref={ref}
               type="checkbox"
               id={checkboxId}
               className={cn(
-                'peer w-5 h-5 rounded-checkbox border-2',
+                'peer w-5 h-5 rounded-checkbox border-2 appearance-none',
                 'border-neutral-border bg-white',
                 'checked:bg-primary checked:border-primary',
                 'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',

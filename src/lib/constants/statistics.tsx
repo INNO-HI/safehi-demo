@@ -2,29 +2,29 @@
 
 import type { ReportTemplate } from '@/types/statistics';
 
-// 대상자 상태별 색상
+// 대상자 상태별 색상 (디자인 시스템 기반)
 export const STATUS_COLORS = {
-  normal: '#3D8B6E',     // 정상 - 초록
-  caution: '#C4940A',    // 주의 - 노랑
-  urgent: '#C45A5A',     // 긴급 - 빨강
-  unvisited: '#64748B',  // 미방문 - 회색
+  normal: '#6EA8FE',     // 정상 - 승인 블루
+  caution: '#F6C56F',    // 주의 - 경고 앰버
+  urgent: '#F08C8C',     // 긴급 - 위험 코랄
+  unvisited: '#B9C3CF',  // 미방문 - 뮤트 그레이
 } as const;
 
-// 보고서 상태별 색상
+// 보고서 상태별 색상 (디자인 시스템 기반)
 export const REPORT_STATUS_COLORS = {
-  approved: '#3D8B6E',   // 승인 - 초록
-  pending: '#C4940A',    // 대기 - 노랑
-  urgent: '#C45A5A',     // 긴급 - 빨강
-  rejected: '#64748B',   // 반려 - 회색
+  approved: '#6EA8FE',   // 승인 - 블루
+  pending: '#F6C56F',    // 대기 - 앰버
+  urgent: '#F08C8C',     // 긴급 - 코랄
+  rejected: '#B9C3CF',   // 반려 - 그레이
 } as const;
 
-// KPI 카드 아이콘 색상
+// KPI 카드 아이콘 색상 (디자인 시스템 기반)
 export const KPI_ICON_COLORS = {
-  totalRecipients: '#2E6AB3',    // 파랑
-  monthlyVisits: '#3D8B6E',      // 초록
-  processedReports: '#C4940A',   // 노랑
-  emergencyCases: '#C45A5A',     // 빨강
-  activeManagers: '#7C6B9E',     // 보라
+  totalRecipients: '#6EA8FE',    // 승인 블루
+  monthlyVisits: '#6EA8FE',      // 승인 블루
+  processedReports: '#F6C56F',   // 경고 앰버
+  emergencyCases: '#F08C8C',     // 위험 코랄
+  activeManagers: '#6EA8FE',     // 승인 블루
 } as const;
 
 // 메달 순위 색상
@@ -81,32 +81,57 @@ export const REPORT_TEMPLATES: ReportTemplate[] = [
     type: 'monthly',
     title: '월간 종합 리포트',
     description: '방문, 보고서, 대상자 현황',
-    icon: '📊',
-    iconBgColor: '#2E6AB3',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="3" y="3" width="18" height="18" rx="2" opacity="0.25" />
+        <rect x="6" y="13" width="3" height="5" rx="0.5" />
+        <rect x="10.5" y="9" width="3" height="9" rx="0.5" />
+        <rect x="15" y="6" width="3" height="12" rx="0.5" />
+      </svg>
+    ),
+    iconBgColor: '#6EA8FE',
   },
   {
     id: 'manager-performance',
     type: 'manager',
     title: '매니저 실적 리포트',
     description: '방문 횟수, 승인률 분석',
-    icon: '👥',
-    iconBgColor: '#3D8B6E',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="9" cy="6" r="3" />
+        <path d="M2 19c0-3 2.5-5.5 7-5.5s7 2.5 7 5.5H2z" />
+        <circle cx="17" cy="7.5" r="2.2" opacity="0.45" />
+        <path d="M16 19c0-1.8.6-3.4 1.8-4.6.4-.15.8-.25 1.2-.25 2.2 0 4 1.8 4 4H16z" opacity="0.45" />
+      </svg>
+    ),
+    iconBgColor: '#6EA8FE',
   },
   {
     id: 'recipient-status',
     type: 'recipient',
     title: '대상자 현황 리포트',
     description: '상태별, 지역별 분포',
-    icon: '🏠',
-    iconBgColor: '#C4940A',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 10.5L12 3l9 7.5V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V10.5z" />
+        <rect x="9" y="13" width="6" height="9" rx="1" fill="white" />
+      </svg>
+    ),
+    iconBgColor: '#F6C56F',
   },
   {
     id: 'emergency-cases',
     type: 'emergency',
     title: '긴급 케이스 리포트',
     description: '긴급/주의 대상자 목록',
-    icon: '🚨',
-    iconBgColor: '#C45A5A',
+    icon: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+        <rect x="11" y="9" width="2" height="5" rx="1" fill="white" />
+        <circle cx="12" cy="17" r="1.2" fill="white" />
+      </svg>
+    ),
+    iconBgColor: '#F08C8C',
   },
 ];
 

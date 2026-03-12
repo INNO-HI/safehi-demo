@@ -195,10 +195,8 @@ export default function PoliciesPage() {
   // 로딩 상태
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-7xl mx-auto p-6">
-          <PolicySkeleton />
-        </div>
+      <div className="px-8 pb-8 pt-4">
+        <PolicySkeleton />
       </div>
     );
   }
@@ -206,18 +204,16 @@ export default function PoliciesPage() {
   // 에러 상태
   if (error || !recipient) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-7xl mx-auto p-6">
-          <Alert variant="danger" className="mb-4">
-            {error?.message || '대상자 정보를 불러올 수 없습니다.'}
-          </Alert>
-          <button
-            onClick={handleBack}
-            className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
-          >
-            대상자 정보로 돌아가기
-          </button>
-        </div>
+      <div className="px-8 pb-8 pt-4">
+        <Alert variant="danger" className="mb-4">
+          {error?.message || '대상자 정보를 불러올 수 없습니다.'}
+        </Alert>
+        <button
+          onClick={handleBack}
+          className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
+        >
+          대상자 정보로 돌아가기
+        </button>
       </div>
     );
   }
@@ -226,11 +222,10 @@ export default function PoliciesPage() {
   const bottomPolicies = mockPoliciesExtended.slice(3);
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <>
       {/* 헤더 */}
-      <div className="bg-white border-b border-neutral-200 px-6 py-5">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
+      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-6 mt-4 px-6 py-5">
+        <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleBack}
@@ -252,8 +247,8 @@ export default function PoliciesPage() {
             </div>
 
             {/* 대상자 태그 */}
-            <div className="flex items-center gap-2 px-4 py-2 bg-[#E8F0F8] rounded-full">
-              <span className="text-sm font-medium text-[#2E6AB3]">
+            <div className="flex items-center gap-2 px-4 py-2 bg-[#EBF2FF] rounded-full">
+              <span className="text-sm font-medium text-[#448CFF]">
                 {recipient.basicInfo.dong}
               </span>
               <span className="text-sm font-medium text-[#C45A5A]">
@@ -261,13 +256,12 @@ export default function PoliciesPage() {
               </span>
             </div>
           </div>
-        </div>
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className="max-w-7xl mx-auto p-6 space-y-6">
+      <div className="px-8 pb-8 pt-4 space-y-6">
         {/* AI 분석 결과 박스 */}
-        <div className="bg-gradient-to-r from-[#2E6AB3] to-[#5A8FD4] rounded-xl p-6 text-white">
+        <div className="bg-gradient-to-r from-[#448CFF] to-[#6BA3FF] rounded-xl p-6 text-white">
           <div className="flex items-start justify-between">
             <div className="flex items-start gap-3">
               <span className="text-2xl">🔍</span>
@@ -305,21 +299,21 @@ export default function PoliciesPage() {
 
         {/* 통계 카드 */}
         <div className="grid grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">분석 기반 조건</p>
             <p className="text-lg font-semibold text-neutral-900">
               만 {mockAnalysisResult.condition.age}세, {mockAnalysisResult.condition.gender === 'male' ? '남성' : '여성'}, {mockAnalysisResult.condition.livingStatus}
             </p>
           </div>
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">건강 상태</p>
             <p className="text-lg font-semibold text-neutral-900">{mockAnalysisResult.healthSummary}</p>
           </div>
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">추천 정책 수</p>
-            <p className="text-3xl font-bold text-[#2E6AB3]">{mockAnalysisResult.policyCount}개</p>
+            <p className="text-3xl font-bold text-[#448CFF]">{mockAnalysisResult.policyCount}개</p>
           </div>
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">마지막 분석</p>
             <p className="text-lg font-semibold text-neutral-900">{formatLastAnalyzed(mockAnalysisResult.lastAnalyzedAt)}</p>
           </div>
@@ -346,14 +340,14 @@ export default function PoliciesPage() {
                 {/* 콘텐츠 */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-lg font-bold text-[#2E6AB3]">{policy.name}</span>
+                    <span className="text-lg font-bold text-[#448CFF]">{policy.name}</span>
                     {policy.badge === 'best' && (
                       <span className="px-2 py-0.5 bg-[#3D8B6E] text-white text-xs font-medium rounded">
                         최적합
                       </span>
                     )}
                     {policy.badge === 'recommended' && (
-                      <span className="px-2 py-0.5 bg-[#2E6AB3] text-white text-xs font-medium rounded">
+                      <span className="px-2 py-0.5 bg-[#448CFF] text-white text-xs font-medium rounded">
                         추천
                       </span>
                     )}
@@ -379,7 +373,7 @@ export default function PoliciesPage() {
                 </div>
 
                 {/* 신청 안내 버튼 */}
-                <button className="flex-shrink-0 px-5 py-2.5 bg-[#2E6AB3] text-white font-medium rounded-lg hover:bg-[#245a96] transition-colors min-h-[44px]">
+                <button className="flex-shrink-0 px-5 py-2.5 bg-[#448CFF] text-white font-medium rounded-lg hover:bg-[#2B6AD9] transition-colors min-h-[44px]">
                   신청 안내
                 </button>
               </div>
@@ -392,7 +386,7 @@ export default function PoliciesPage() {
           {bottomPolicies.map((policy) => (
             <div
               key={policy.id}
-              className="bg-white rounded-xl border border-neutral-200 p-5"
+              className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5"
             >
               <div className="flex items-start gap-4">
                 {/* 아이콘 */}
@@ -428,6 +422,6 @@ export default function PoliciesPage() {
           </p>
         </div>
       </div>
-    </div>
+    </>
   );
 }

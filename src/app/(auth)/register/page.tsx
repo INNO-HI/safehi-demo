@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import {
   Card,
   CardHeader,
@@ -8,11 +7,7 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui';
-
-const RegisterForm = dynamic(
-  () => import('@/components/features/auth/RegisterForm').then(mod => ({ default: mod.RegisterForm })),
-  { ssr: false }
-);
+import { RegisterForm } from '@/components/features/auth/RegisterForm';
 
 /**
  * 회원가입 페이지
@@ -23,7 +18,7 @@ export default function RegisterPage() {
       <CardHeader>
         <CardTitle>회원가입</CardTitle>
         <CardDescription>
-          SafeHi 서비스 이용을 위해 계정을 생성해주세요
+          안심하이 서비스 이용을 위해 계정을 생성해주세요
         </CardDescription>
       </CardHeader>
       <CardContent>

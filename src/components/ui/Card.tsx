@@ -21,7 +21,7 @@ function Card({
   ...props
 }: CardProps) {
   const variants = {
-    default: 'bg-white border border-neutral-border',
+    default: 'bg-white border border-neutral-border/30 shadow-sm',
     elevated: 'bg-white shadow-card',
   };
 
@@ -29,7 +29,7 @@ function Card({
     none: '',
     sm: 'p-4',
     md: 'p-6',
-    lg: 'p-8',
+    lg: 'px-12 py-10',
   };
 
   return (
@@ -53,7 +53,7 @@ export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {
 
 function CardHeader({ className, children, ...props }: CardHeaderProps) {
   return (
-    <div className={cn('mb-6', className)} {...props}>
+    <div className={cn('mb-12', className)} {...props}>
       {children}
     </div>
   );
@@ -72,7 +72,7 @@ function CardTitle({
 }: CardTitleProps) {
   return (
     <Component
-      className={cn('text-h1 text-neutral-text text-center', className)}
+      className={cn('text-[22px] leading-tight text-[#2B2F36] font-semibold', className)}
       {...props}
     >
       {children}
@@ -92,7 +92,7 @@ function CardDescription({
 }: CardDescriptionProps) {
   return (
     <p
-      className={cn('text-body text-neutral-text-sub text-center mt-2', className)}
+      className={cn('text-body text-neutral-text-sub mt-2', className)}
       {...props}
     >
       {children}

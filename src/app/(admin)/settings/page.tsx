@@ -59,16 +59,16 @@ export default function SettingsPage() {
 
   // 계정 문의
   const handleInquiry = () => {
-    window.location.href = 'mailto:safeinnohi@gmail.com?subject=[SafeHi] 계정 문의';
+    window.location.href = 'mailto:safeinnohi@gmail.com?subject=[안심하이] 계정 문의';
   };
 
   // 로딩 상태
   if (isLoading || !profile) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-neutral-50">
+      <div className="flex-1 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-4 border-primary-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-base text-neutral-500">로딩 중...</p>
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-neutral-text-sub">로딩 중...</p>
         </div>
       </div>
     );
@@ -84,10 +84,10 @@ export default function SettingsPage() {
       />
 
       {/* 메인 콘텐츠 */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
-          {/* 행1: 내 프로필 + 관할 구역 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      <div className="flex-1 overflow-y-auto px-8 pb-8 pt-2">
+        <div className="space-y-6">
+          {/* 행1: 내 프로필 (좁게) + 관할 구역 + 알림 설정 */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             <ProfileSection
               profile={profile}
               onSave={updateProfileBatch}
@@ -96,13 +96,11 @@ export default function SettingsPage() {
             {jurisdiction && (
               <JurisdictionSection jurisdiction={jurisdiction} />
             )}
+            <NotificationSection
+              notifications={notifications}
+              onToggle={updateNotification}
+            />
           </div>
-
-          {/* 행2: 알림 설정 (전체 폭) */}
-          <NotificationSection
-            notifications={notifications}
-            onToggle={updateNotification}
-          />
 
           {/* 행3: 시스템 설정 + 계정 관리 */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

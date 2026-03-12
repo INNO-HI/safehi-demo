@@ -28,9 +28,9 @@ interface KPIItemProps {
   bgColor: string;
 }
 
-function KPIItem({ label, value, color, bgColor }: KPIItemProps) {
+function KPIItem({ label, value, color }: KPIItemProps) {
   return (
-    <div className={`p-4 rounded-lg ${bgColor}`}>
+    <div className="p-4 rounded-xl bg-white shadow-elevated border border-neutral-border/30">
       <p className={`text-sm font-medium ${color}`}>{label}</p>
       <p className="text-2xl font-bold text-neutral-900 mt-1">
         {value.toLocaleString()}
@@ -78,32 +78,32 @@ export const RecipientKPIGrid = forwardRef<HTMLDivElement, RecipientKPIGridProps
         <KPIItem
           label="전체 대상자"
           value={kpis.total}
-          color="text-neutral-600"
-          bgColor="bg-neutral-100"
+          color="text-neutral-text-sub"
+          bgColor=""
         />
         <KPIItem
           label="정상"
           value={kpis.normal}
-          color="text-green-600"
-          bgColor="bg-green-50"
+          color="text-status-success"
+          bgColor=""
         />
         <KPIItem
           label="주의"
           value={kpis.caution}
-          color="text-yellow-600"
-          bgColor="bg-yellow-50"
+          color="text-status-warning"
+          bgColor=""
         />
         <KPIItem
           label="긴급"
           value={kpis.urgent}
-          color="text-red-600"
-          bgColor="bg-red-50"
+          color="text-status-danger"
+          bgColor=""
         />
         <KPIItem
           label="미방문"
           value={kpis.unvisited}
-          color="text-gray-600"
-          bgColor="bg-gray-100"
+          color="text-status-muted"
+          bgColor=""
         />
       </div>
     );

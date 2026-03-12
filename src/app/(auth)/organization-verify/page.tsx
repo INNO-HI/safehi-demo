@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
@@ -11,11 +10,7 @@ import {
   CardContent,
 } from '@/components/ui';
 import { useAuth } from '@/hooks/useAuth';
-
-const OrganizationVerifyForm = dynamic(
-  () => import('@/components/features/auth/OrganizationVerifyForm').then(mod => ({ default: mod.OrganizationVerifyForm })),
-  { ssr: false }
-);
+import { OrganizationVerifyForm } from '@/components/features/auth/OrganizationVerifyForm';
 
 /**
  * 기관 소속 인증 페이지

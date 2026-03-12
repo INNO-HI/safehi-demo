@@ -19,18 +19,18 @@ export const careLogStatusLabels: Record<CareLogStatus, string> = {
 
 /** 돌봄 일지 상태별 색상 클래스 */
 export const careLogStatusColors: Record<CareLogStatus, string> = {
-  pending: 'bg-yellow-100 text-yellow-800',
-  urgent: 'bg-red-100 text-red-800',
-  approved: 'bg-green-100 text-green-800',
-  rejected: 'bg-gray-100 text-gray-800',
+  pending: 'bg-status-warning-light text-status-warning',
+  urgent: 'bg-status-danger-light text-status-danger',
+  approved: 'bg-status-success-light text-status-success',
+  rejected: 'bg-status-muted-light text-status-muted',
 };
 
 /** 돌봄 일지 상태별 Tailwind 배경색 */
 export const careLogStatusBgColors: Record<CareLogStatus, string> = {
-  pending: 'bg-yellow-500',
-  urgent: 'bg-red-500',
-  approved: 'bg-green-500',
-  rejected: 'bg-gray-500',
+  pending: 'bg-status-warning',
+  urgent: 'bg-status-danger',
+  approved: 'bg-status-success',
+  rejected: 'bg-status-muted',
 };
 
 /** 돌봄 일지 상태 레이블 반환 */
@@ -57,18 +57,18 @@ export const recipientStatusLabels: Record<RecipientStatus, string> = {
 
 /** 대상자 상태별 색상 클래스 */
 export const recipientStatusColors: Record<RecipientStatus, string> = {
-  normal: 'bg-green-100 text-green-800',
-  caution: 'bg-yellow-100 text-yellow-800',
-  urgent: 'bg-red-100 text-red-800',
-  unvisited: 'bg-gray-100 text-gray-800',
+  normal: 'bg-status-success-light text-status-success',
+  caution: 'bg-status-warning-light text-status-warning',
+  urgent: 'bg-status-danger-light text-status-danger',
+  unvisited: 'bg-status-muted-light text-status-muted',
 };
 
 /** 대상자 상태별 Tailwind 배경색 */
 export const recipientStatusBgColors: Record<RecipientStatus, string> = {
-  normal: 'bg-green-500',
-  caution: 'bg-yellow-500',
-  urgent: 'bg-red-500',
-  unvisited: 'bg-gray-500',
+  normal: 'bg-status-success',
+  caution: 'bg-status-warning',
+  urgent: 'bg-status-danger',
+  unvisited: 'bg-status-muted',
 };
 
 /** 대상자 상태 레이블 반환 */
@@ -123,22 +123,30 @@ export function getGenderLabel(gender: 'male' | 'female'): string {
 // 탭 필터 옵션
 // ============================================================
 
-/** 돌봄 일지 상태 탭 옵션 */
-export const careLogStatusTabOptions: Array<{ value: CareLogStatus | 'all'; label: string }> = [
+/** 돌봄 일지 상태 탭 옵션 (색상 뱃지 포함) */
+export const careLogStatusTabOptions: Array<{
+  value: CareLogStatus | 'all';
+  label: string;
+  badgeColor?: { active: string; inactive: string };
+}> = [
   { value: 'all', label: '전체' },
-  { value: 'pending', label: '대기' },
-  { value: 'urgent', label: '긴급' },
-  { value: 'approved', label: '승인' },
-  { value: 'rejected', label: '반려' },
+  { value: 'pending', label: '대기', badgeColor: { active: 'bg-status-warning-light text-status-warning', inactive: 'bg-status-warning-light text-status-warning' } },
+  { value: 'urgent', label: '긴급', badgeColor: { active: 'bg-status-danger-light text-status-danger', inactive: 'bg-status-danger-light text-status-danger' } },
+  { value: 'approved', label: '승인', badgeColor: { active: 'bg-status-success-light text-status-success', inactive: 'bg-status-success-light text-status-success' } },
+  { value: 'rejected', label: '반려', badgeColor: { active: 'bg-status-muted-light text-status-muted', inactive: 'bg-status-muted-light text-status-muted' } },
 ];
 
-/** 대상자 상태 탭 옵션 */
-export const recipientStatusTabOptions: Array<{ value: RecipientStatus | 'all'; label: string }> = [
+/** 대상자 상태 탭 옵션 (색상 뱃지 포함) */
+export const recipientStatusTabOptions: Array<{
+  value: RecipientStatus | 'all';
+  label: string;
+  badgeColor?: { active: string; inactive: string };
+}> = [
   { value: 'all', label: '전체' },
-  { value: 'normal', label: '정상' },
-  { value: 'caution', label: '주의' },
-  { value: 'urgent', label: '긴급' },
-  { value: 'unvisited', label: '미방문' },
+  { value: 'normal', label: '정상', badgeColor: { active: 'bg-status-success-light text-status-success', inactive: 'bg-status-success-light text-status-success' } },
+  { value: 'caution', label: '주의', badgeColor: { active: 'bg-status-warning-light text-status-warning', inactive: 'bg-status-warning-light text-status-warning' } },
+  { value: 'urgent', label: '긴급', badgeColor: { active: 'bg-status-danger-light text-status-danger', inactive: 'bg-status-danger-light text-status-danger' } },
+  { value: 'unvisited', label: '미방문', badgeColor: { active: 'bg-status-muted-light text-status-muted', inactive: 'bg-status-muted-light text-status-muted' } },
 ];
 
 // ============================================================

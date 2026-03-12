@@ -102,8 +102,8 @@ export default function CareLogsPage() {
       />
 
       {/* 메인 콘텐츠 */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <div className="flex-1 overflow-y-auto px-8 pb-8 pt-2">
+        <div className="space-y-6">
           {/* 필터 영역 */}
           <CareLogFilters
             filters={filters}
@@ -116,13 +116,15 @@ export default function CareLogsPage() {
           {/* 테이블 (PDF 내보내기 대상) */}
           <div
             ref={printRef}
-            className="bg-white rounded-xl shadow-sm border border-neutral-200"
+            className="bg-white rounded-2xl shadow-elevated border border-neutral-border/30"
           >
             <CareLogTable
               logs={logs}
               statusCounts={statusCounts}
               currentStatus={filters.status}
               onStatusChange={setStatus}
+              currentDong={filters.dong}
+              onDongChange={setDong}
               currentPage={currentPage}
               pageSize={pageSize}
               totalPages={totalPages}

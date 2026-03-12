@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import {
   Card,
   CardHeader,
@@ -8,11 +7,7 @@ import {
   CardDescription,
   CardContent,
 } from '@/components/ui';
-
-const ForgotPasswordForm = dynamic(
-  () => import('@/components/features/auth/ForgotPasswordForm').then(mod => ({ default: mod.ForgotPasswordForm })),
-  { ssr: false }
-);
+import { ForgotPasswordForm } from '@/components/features/auth/ForgotPasswordForm';
 
 /**
  * 비밀번호 찾기 페이지

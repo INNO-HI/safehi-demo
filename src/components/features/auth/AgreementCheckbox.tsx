@@ -68,7 +68,7 @@ export function AgreementCheckbox({
       {/* 개별 약관 */}
       <div className="space-y-2 pl-2">
         {agreements.map((agreement) => (
-          <div key={agreement.id} className="flex items-center justify-between">
+          <div key={agreement.id} className="flex items-center justify-between flex-nowrap gap-2">
             <Checkbox
               id={`agreement-${agreement.id}`}
               label={
@@ -90,7 +90,7 @@ export function AgreementCheckbox({
                 href={agreement.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-caption text-neutral-text-sub hover:text-primary underline"
+                className="text-caption text-neutral-text-sub hover:text-primary underline shrink-0 whitespace-nowrap"
               >
                 보기
               </a>
@@ -99,12 +99,14 @@ export function AgreementCheckbox({
         ))}
       </div>
 
-      {/* 에러 메시지 */}
-      {error && (
-        <p className="form-error" role="alert">
-          {error}
-        </p>
-      )}
+      {/* 에러 메시지 - 고정 높이로 레이아웃 밀림 방지 */}
+      <div className="min-h-[1.5rem]">
+        {error && (
+          <p className="form-error" role="alert">
+            {error}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

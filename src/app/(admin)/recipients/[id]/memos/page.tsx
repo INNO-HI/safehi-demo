@@ -130,10 +130,8 @@ export default function MemosPage() {
   // 로딩 상태
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-7xl mx-auto p-6">
-          <MemoSkeleton />
-        </div>
+      <div className="px-8 pb-8 pt-4">
+        <MemoSkeleton />
       </div>
     );
   }
@@ -141,28 +139,25 @@ export default function MemosPage() {
   // 에러 상태
   if (error || !recipient) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-7xl mx-auto p-6">
-          <Alert variant="danger" className="mb-4">
-            {error?.message || '대상자 정보를 불러올 수 없습니다.'}
-          </Alert>
-          <button
-            onClick={handleBack}
-            className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
-          >
-            대상자 정보로 돌아가기
-          </button>
-        </div>
+      <div className="px-8 pb-8 pt-4">
+        <Alert variant="danger" className="mb-4">
+          {error?.message || '대상자 정보를 불러올 수 없습니다.'}
+        </Alert>
+        <button
+          onClick={handleBack}
+          className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
+        >
+          대상자 정보로 돌아가기
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <>
       {/* 헤더 */}
-      <div className="bg-white border-b border-neutral-200 px-6 py-5">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
+      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-6 mt-4 px-6 py-5">
+        <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleBack}
@@ -183,8 +178,8 @@ export default function MemosPage() {
 
             {/* 대상자 태그 + 메모 추가 버튼 */}
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#E8F0F8] rounded-full">
-                <span className="text-sm font-medium text-[#2E6AB3]">
+              <div className="flex items-center gap-2 px-4 py-2 bg-[#EBF2FF] rounded-full">
+                <span className="text-sm font-medium text-[#448CFF]">
                   {recipient.basicInfo.dong}
                 </span>
                 <span className="text-sm font-medium text-[#C45A5A]">
@@ -194,7 +189,7 @@ export default function MemosPage() {
 
               <Link
                 href={`/recipients/${recipientId}/memos/new`}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#2E6AB3] rounded-lg hover:bg-[#245a96] transition-colors min-h-[44px]"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#448CFF] rounded-lg hover:bg-[#2B6AD9] transition-colors min-h-[44px]"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -203,33 +198,32 @@ export default function MemosPage() {
               </Link>
             </div>
           </div>
-        </div>
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className="max-w-7xl mx-auto p-6 space-y-6">
+      <div className="px-8 pb-8 pt-4 space-y-6">
         {/* 통계 카드 */}
         <div className="grid grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">전체 메모</p>
             <p className="text-3xl font-bold text-neutral-900">{mockMemoStats.totalMemos}개</p>
           </div>
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">주의사항</p>
             <p className="text-3xl font-bold text-[#C4940A]">{mockMemoStats.warningMemos}개</p>
           </div>
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">일반 메모</p>
             <p className="text-3xl font-bold text-neutral-900">{mockMemoStats.normalMemos}개</p>
           </div>
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">작성자</p>
             <p className="text-3xl font-bold text-neutral-900">{mockMemoStats.authorCount}명</p>
           </div>
         </div>
 
         {/* 필터 영역 */}
-        <div className="bg-white rounded-xl border border-neutral-200 p-4">
+        <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4">
           <div className="flex items-center gap-4">
             {/* 검색창 */}
             <div className="flex-1 relative">
@@ -268,7 +262,7 @@ export default function MemosPage() {
               <option value="박철수">박철수</option>
             </select>
 
-            <button className="px-6 py-2 bg-[#2E6AB3] text-white font-medium rounded-lg hover:bg-[#245a96] transition-colors min-h-[44px]">
+            <button className="px-6 py-2 bg-[#448CFF] text-white font-medium rounded-lg hover:bg-[#2B6AD9] transition-colors min-h-[44px]">
               검색
             </button>
           </div>
@@ -280,7 +274,7 @@ export default function MemosPage() {
             onClick={() => setActiveTab('all')}
             className={`px-5 py-2 rounded-full text-sm font-medium transition-colors min-h-[44px] ${
               activeTab === 'all'
-                ? 'bg-[#2E6AB3] text-white'
+                ? 'bg-[#448CFF] text-white'
                 : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
             }`}
           >
@@ -300,7 +294,7 @@ export default function MemosPage() {
             onClick={() => setActiveTab('normal')}
             className={`px-5 py-2 rounded-full text-sm font-medium transition-colors min-h-[44px] ${
               activeTab === 'normal'
-                ? 'bg-[#2E6AB3] text-white'
+                ? 'bg-[#448CFF] text-white'
                 : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
             }`}
           >
@@ -384,13 +378,13 @@ export default function MemosPage() {
           <div className="text-center">
             <button
               onClick={handleLoadMore}
-              className="text-[#2E6AB3] text-sm font-medium hover:underline"
+              className="text-[#448CFF] text-sm font-medium hover:underline"
             >
               + {remainingCount}개 메모 더 불러오기
             </button>
           </div>
         )}
       </div>
-    </div>
+    </>
   );
 }

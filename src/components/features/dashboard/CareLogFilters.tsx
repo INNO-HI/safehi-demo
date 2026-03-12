@@ -48,16 +48,13 @@ export const CareLogFilters = forwardRef<HTMLDivElement, CareLogFiltersProps>(
       <div
         ref={ref}
         className={`
-          flex flex-wrap items-end gap-4 p-4
-          bg-white rounded-lg border border-neutral-200
+          flex items-center gap-4 p-4
+          bg-white rounded-2xl shadow-sm border border-neutral-border/30
           ${className}
         `}
       >
         {/* 검색 */}
-        <div className="flex-1 min-w-[200px]">
-          <label className="block text-sm font-medium text-neutral-600 mb-1.5">
-            검색
-          </label>
+        <div className="w-[300px] shrink-0">
           <SearchInput
             value={filters.search}
             onChange={onSearchChange}
@@ -67,10 +64,7 @@ export const CareLogFilters = forwardRef<HTMLDivElement, CareLogFiltersProps>(
         </div>
 
         {/* 날짜 범위 */}
-        <div className="min-w-[300px]">
-          <label className="block text-sm font-medium text-neutral-600 mb-1.5">
-            방문일
-          </label>
+        <div className="shrink-0">
           <DateRangePicker
             value={filters.dateRange}
             onChange={(range: DateRange) =>
@@ -81,10 +75,7 @@ export const CareLogFilters = forwardRef<HTMLDivElement, CareLogFiltersProps>(
         </div>
 
         {/* 동 필터 */}
-        <div className="min-w-[150px]">
-          <label className="block text-sm font-medium text-neutral-600 mb-1.5">
-            동
-          </label>
+        <div className="shrink-0 w-[140px]">
           <Select
             value={filters.dong}
             onChange={(e) => onDongChange(e.target.value as string | 'all')}
@@ -92,21 +83,27 @@ export const CareLogFilters = forwardRef<HTMLDivElement, CareLogFiltersProps>(
           />
         </div>
 
+        {/* 스페이서 */}
+        <div className="flex-1" />
+
         {/* 초기화 버튼 */}
-        {hasActiveFilters && (
+        <div className="shrink-0">
           <button
             type="button"
             onClick={onReset}
-            className="
+            disabled={!hasActiveFilters}
+            className={`
               h-11 px-4 text-sm font-medium
-              text-neutral-600 hover:text-neutral-900
-              hover:bg-neutral-100 rounded-lg
-              transition-colors duration-200
-            "
+              rounded-lg transition-colors duration-200
+              ${hasActiveFilters
+                ? 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'
+                : 'text-neutral-300 cursor-default'
+              }
+            `}
           >
-            필터 초기화
+            초기화
           </button>
-        )}
+        </div>
       </div>
     );
   }

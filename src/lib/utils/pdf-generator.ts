@@ -34,7 +34,7 @@ function generateFilename(month: string, reportType?: ReportType): string {
     : '통계리포트';
 
   const [year, monthNum] = month.split('-');
-  return `SafeHi_${typeLabel}_${year}년${monthNum}월.pdf`;
+  return `안심하이_${typeLabel}_${year}년${monthNum}월.pdf`;
 }
 
 // 월 라벨 생성
@@ -89,7 +89,7 @@ export async function generatePDF(
     // 헤더 추가
     pdf.setFontSize(16);
     pdf.setTextColor(31, 41, 55); // neutral-text 색상
-    pdf.text(`SafeHi 통계 리포트`, 10, 15);
+    pdf.text(`안심하이 통계 리포트`, 10, 15);
 
     pdf.setFontSize(12);
     pdf.setTextColor(100, 116, 139); // neutral-text-sub 색상

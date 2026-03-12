@@ -12,6 +12,13 @@ import type {
 
 // KPI 데이터 (월별)
 export const mockKPIData: Record<string, StatisticsKPI> = {
+  '2026-03': {
+    totalRecipients: 1263,
+    monthlyVisits: 912,
+    processedReports: 798,
+    emergencyCases: 9,
+    activeManagers: 24,
+  },
   '2026-02': {
     totalRecipients: 1248,
     monthlyVisits: 856,
@@ -100,17 +107,16 @@ export const mockKPIData: Record<string, StatisticsKPI> = {
 
 // 월별 방문 추이 데이터 (6개월)
 export const mockVisitTrend6Months: MonthlyVisitTrend[] = [
-  { month: '2025-09', label: '9월', visits: 812 },
   { month: '2025-10', label: '10월', visits: 798 },
   { month: '2025-11', label: '11월', visits: 834 },
   { month: '2025-12', label: '12월', visits: 756 },
   { month: '2026-01', label: '1월', visits: 892 },
   { month: '2026-02', label: '2월', visits: 856 },
+  { month: '2026-03', label: '3월', visits: 912 },
 ];
 
 // 월별 방문 추이 데이터 (12개월)
 export const mockVisitTrend12Months: MonthlyVisitTrend[] = [
-  { month: '2025-03', label: '3월', visits: 712 },
   { month: '2025-04', label: '4월', visits: 745 },
   { month: '2025-05', label: '5월', visits: 789 },
   { month: '2025-06', label: '6월', visits: 756 },
@@ -122,10 +128,18 @@ export const mockVisitTrend12Months: MonthlyVisitTrend[] = [
   { month: '2025-12', label: '12월', visits: 756 },
   { month: '2026-01', label: '1월', visits: 892 },
   { month: '2026-02', label: '2월', visits: 856 },
+  { month: '2026-03', label: '3월', visits: 912 },
 ];
 
 // 보고서 처리 현황 데이터 (월별)
 export const mockReportStatusData: Record<string, ReportStatusDistribution> = {
+  '2026-03': {
+    approved: 512,
+    pending: 168,
+    urgent: 38,
+    rejected: 80,
+    total: 798,
+  },
   '2026-02': {
     approved: 456,
     pending: 187,
@@ -184,7 +198,7 @@ export const mockManagerRankingData: ManagerRanking[] = [
     rank: 1,
     name: '이영희',
     initials: '이영',
-    avatarColor: '#FCD34D',
+    avatarColor: '#448CFF',
     visits: 89,
     reports: 82,
     approvalRate: 96,
@@ -194,7 +208,7 @@ export const mockManagerRankingData: ManagerRanking[] = [
     rank: 2,
     name: '박수현',
     initials: '박수',
-    avatarColor: '#D1D5DB',
+    avatarColor: '#5B9BD5',
     visits: 84,
     reports: 78,
     approvalRate: 94,
@@ -204,7 +218,7 @@ export const mockManagerRankingData: ManagerRanking[] = [
     rank: 3,
     name: '최민수',
     initials: '최민',
-    avatarColor: '#F59E0B',
+    avatarColor: '#6BA3D6',
     visits: 78,
     reports: 72,
     approvalRate: 92,
@@ -283,6 +297,23 @@ export const mockManagerRankingData: ManagerRanking[] = [
 
 // 대상자 상태 분포 데이터 (월별)
 export const mockRecipientStatusData: Record<string, RecipientStatusDistribution> = {
+  '2026-03': {
+    normal: 878,
+    caution: 221,
+    urgent: 82,
+    unvisited: 82,
+    total: 1263,
+    trends: {
+      normalChange: 22,
+      cautionChange: -13,
+      urgentChange: 4,
+      unvisitedChange: 2,
+    },
+    transition: {
+      toNormal: 21,
+      fromNormal: 9,
+    },
+  },
   '2026-02': {
     normal: 856,
     caution: 234,

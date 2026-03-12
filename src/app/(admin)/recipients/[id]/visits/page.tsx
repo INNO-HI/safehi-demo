@@ -147,10 +147,8 @@ export default function VisitsPage() {
   // 로딩 상태
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-7xl mx-auto p-6">
-          <VisitTimelineSkeleton />
-        </div>
+      <div className="px-8 pb-8 pt-4">
+        <VisitTimelineSkeleton />
       </div>
     );
   }
@@ -158,18 +156,16 @@ export default function VisitsPage() {
   // 에러 상태
   if (error || !recipient) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-7xl mx-auto p-6">
-          <Alert variant="danger" className="mb-4">
-            {error?.message || '대상자 정보를 불러올 수 없습니다.'}
-          </Alert>
-          <button
-            onClick={handleBack}
-            className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
-          >
-            대상자 정보로 돌아가기
-          </button>
-        </div>
+      <div className="px-8 pb-8 pt-4">
+        <Alert variant="danger" className="mb-4">
+          {error?.message || '대상자 정보를 불러올 수 없습니다.'}
+        </Alert>
+        <button
+          onClick={handleBack}
+          className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
+        >
+          대상자 정보로 돌아가기
+        </button>
       </div>
     );
   }
@@ -179,11 +175,10 @@ export default function VisitsPage() {
   const totalPages = Math.ceil(totalItems / pageSize);
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <>
       {/* 헤더 */}
-      <div className="bg-white border-b border-neutral-200 px-6 py-5">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between">
+      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-6 mt-4 px-6 py-5">
+        <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleBack}
@@ -204,8 +199,8 @@ export default function VisitsPage() {
 
             {/* 대상자 태그 */}
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#E8F0F8] rounded-full">
-                <span className="text-sm font-medium text-[#2E6AB3]">
+              <div className="flex items-center gap-2 px-4 py-2 bg-[#EBF2FF] rounded-full">
+                <span className="text-sm font-medium text-[#448CFF]">
                   {recipient.basicInfo.dong}
                 </span>
                 <span className="text-sm font-medium text-[#C45A5A]">
@@ -224,18 +219,17 @@ export default function VisitsPage() {
               </button>
             </div>
           </div>
-        </div>
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className="max-w-7xl mx-auto p-6 space-y-6">
+      <div className="px-8 pb-8 pt-4 space-y-6">
         {/* 통계 카드 */}
         <div className="grid grid-cols-4 gap-4">
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">총 방문 횟수</p>
             <p className="text-3xl font-bold text-neutral-900">{mockVisitStats.totalVisits}회</p>
           </div>
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">이번 달 방문</p>
             <div className="flex items-baseline gap-2">
               <p className="text-3xl font-bold text-neutral-900">{mockVisitStats.monthlyVisits}회</p>
@@ -244,18 +238,18 @@ export default function VisitsPage() {
               )}
             </div>
           </div>
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">긴급 방문</p>
             <p className="text-3xl font-bold text-[#C45A5A]">{mockVisitStats.emergencyVisits}회</p>
           </div>
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">평균 방문 시간</p>
             <p className="text-3xl font-bold text-neutral-900">{mockVisitStats.avgDuration}분</p>
           </div>
         </div>
 
         {/* 필터 영역 */}
-        <div className="bg-white rounded-xl border border-neutral-200 p-4">
+        <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4">
           <div className="flex items-center gap-4">
             {/* 기간 선택 */}
             <div className="flex items-center gap-2 px-3 py-2 border border-neutral-200 rounded-lg">
@@ -288,21 +282,21 @@ export default function VisitsPage() {
               <option value="call">전화 상담</option>
             </select>
 
-            <button className="ml-auto px-6 py-2 bg-[#2E6AB3] text-white font-medium rounded-lg hover:bg-[#245a96] transition-colors min-h-[44px]">
+            <button className="ml-auto px-6 py-2 bg-[#448CFF] text-white font-medium rounded-lg hover:bg-[#2B6AD9] transition-colors min-h-[44px]">
               검색
             </button>
           </div>
         </div>
 
         {/* 타임라인 리스트 */}
-        <div className="bg-white rounded-xl border border-neutral-200">
+        <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30">
           {Array.from(groupedVisits.entries()).map(([dateLabel, visits]) => (
             <div key={dateLabel}>
               {/* 날짜 헤더 */}
               <div className="px-6 py-3">
                 <span className={`inline-block px-4 py-1.5 rounded-full text-sm font-medium ${
                   dateLabel === '오늘'
-                    ? 'bg-[#2E6AB3] text-white'
+                    ? 'bg-[#448CFF] text-white'
                     : 'bg-neutral-100 text-neutral-700'
                 }`}>
                   {dateLabel}
@@ -325,7 +319,7 @@ export default function VisitsPage() {
                       ? 'bg-[#C45A5A] text-white'
                       : visit.visitType === 'call'
                         ? 'bg-purple-100 text-purple-600'
-                        : 'bg-[#2E6AB3] text-white'
+                        : 'bg-[#448CFF] text-white'
                   }`}>
                     {visit.visitType === 'emergency' ? (
                       <span className="text-lg font-bold">!</span>
@@ -428,7 +422,7 @@ export default function VisitsPage() {
                   onClick={() => setCurrentPage(page)}
                   className={`w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium ${
                     currentPage === page
-                      ? 'bg-[#2E6AB3] text-white'
+                      ? 'bg-[#448CFF] text-white'
                       : 'border border-neutral-200 text-neutral-700 hover:bg-neutral-50'
                   }`}
                 >
@@ -461,6 +455,6 @@ export default function VisitsPage() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

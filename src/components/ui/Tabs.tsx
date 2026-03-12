@@ -12,6 +12,8 @@ export interface TabOption<T extends string = string> {
   label: string;
   count?: number;
   disabled?: boolean;
+  /** 카운트 뱃지 색상 (활성/비활성 모두) */
+  badgeColor?: { active: string; inactive: string };
 }
 
 export interface TabsProps<T extends string = string> {
@@ -58,7 +60,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs<T extend
       role="tablist"
       aria-label={ariaLabel}
       className={`
-        flex gap-1 p-1 rounded-lg bg-neutral-100
+        flex gap-1.5 p-1 rounded-xl bg-neutral-100
         ${fullWidth ? 'w-full' : 'w-fit'}
         ${className}
       `}
@@ -79,14 +81,14 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs<T extend
             onClick={() => onChange(option.value as T)}
             className={`
               relative flex items-center justify-center gap-1.5
-              rounded-md font-medium transition-all duration-200
+              rounded-lg font-medium transition-all duration-200
               focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2
               min-w-[44px] min-h-[44px]
               ${sizeStyles[size]}
               ${fullWidth ? 'flex-1' : ''}
               ${
                 isSelected
-                  ? 'bg-white text-neutral-900 shadow-sm'
+                  ? 'bg-white text-neutral-900 shadow-sm ring-1 ring-black/5'
                   : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-200/50'
               }
               ${option.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
@@ -99,7 +101,11 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs<T extend
                   inline-flex items-center justify-center
                   min-w-[20px] h-5 px-1.5
                   rounded-full text-xs font-medium
-                  ${isSelected ? 'bg-primary-100 text-primary-700' : 'bg-neutral-200 text-neutral-600'}
+                  ${
+                    option.badgeColor
+                      ? (isSelected ? option.badgeColor.active : option.badgeColor.inactive)
+                      : (isSelected ? 'bg-primary-100 text-primary-700' : 'bg-neutral-200 text-neutral-600')
+                  }
                 `}
               >
                 {option.count > 99 ? '99+' : option.count}

@@ -105,7 +105,7 @@ export const TableHeader = forwardRef<HTMLTableRowElement, TableHeaderProps>(
         {showCheckbox && (
           <th
             scope="col"
-            className="px-4 py-3 w-12"
+            className="px-3 py-3 w-10"
           >
             <div className="flex items-center justify-center">
               <input
@@ -114,7 +114,7 @@ export const TableHeader = forwardRef<HTMLTableRowElement, TableHeaderProps>(
                 onChange={onSelectAll}
                 aria-label="전체 선택"
                 className="
-                  w-5 h-5 rounded border-neutral-300
+                  w-4 h-4 rounded border-neutral-300
                   text-primary-600 focus:ring-primary-500
                   cursor-pointer
                 "

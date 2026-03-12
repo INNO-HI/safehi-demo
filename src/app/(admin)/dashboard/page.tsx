@@ -8,6 +8,7 @@ import { PageHeader } from '@/components/layout/PageHeader';
 import { KPIGrid } from '@/components/features/dashboard/KPIGrid';
 import { RecentReportList } from '@/components/features/dashboard/RecentReportList';
 import { NotificationPanel } from '@/components/features/dashboard/NotificationPanel';
+import JejuDongMap from '@/components/features/dashboard/JejuDongMap';
 import { logout as logoutApi } from '@/lib/api/auth';
 
 // ============================================================
@@ -21,34 +22,20 @@ export default function DashboardPage() {
   const { kpi, recentReports, notifications, unreadCount, isLoading: dataLoading } = useDashboardKPI();
 
   useEffect(() => {
-    // 로딩 완료 후 인증되지 않은 사용자는 로그인으로 리다이렉트
     if (!authLoading && !isAuthenticated) {
       router.push('/login');
     }
   }, [isAuthenticated, authLoading, router]);
 
-  const handleLogout = async () => {
-    await logoutApi();
-    logout();
-    router.push('/login');
-  };
-
-  const handleNotificationClick = () => {
-    // 알림 패널 표시 또는 알림 페이지로 이동
-    console.log('알림 클릭');
-  };
-
-  const handleProfileClick = () => {
-    // 프로필 메뉴 표시 또는 프로필 페이지로 이동
-    handleLogout();
-  };
+  void logout;
+  void logoutApi;
 
   if (authLoading) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-neutral-50">
+      <div className="flex-1 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-4 border-primary-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-base text-neutral-500">로딩 중...</p>
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-neutral-text-sub">로딩 중...</p>
         </div>
       </div>
     );
@@ -66,24 +53,27 @@ export default function DashboardPage() {
         description={`안녕하세요, ${user?.name}님! 오늘도 좋은 하루 되세요.`}
         userName={user?.name}
         notificationCount={unreadCount}
-        onNotificationClick={handleNotificationClick}
-        onProfileClick={handleProfileClick}
       />
 
       {/* 메인 콘텐츠 */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
-          {/* KPI 카드 그리드 */}
-          {kpi && <KPIGrid data={kpi} isLoading={dataLoading} />}
+      <div className="flex-1 overflow-y-auto px-8 pb-8 pt-2">
+        <div className="space-y-4">
+          {/* KPI + 알림 */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-4">
+            {/* 좌측: KPI */}
+            <div>
+              {kpi && <KPIGrid data={kpi} isLoading={dataLoading} />}
+            </div>
 
-          {/* 하단 영역: 최근 보고서 + 알림 */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* 최근 보고서 */}
-            <RecentReportList reports={recentReports} isLoading={dataLoading} />
-
-            {/* 알림 패널 */}
+            {/* 우측: 알림 */}
             <NotificationPanel notifications={notifications} isLoading={dataLoading} />
           </div>
+
+          {/* 제주 동단위 돌봄 현황 지도 */}
+          <JejuDongMap />
+
+          {/* 최근 보고서 */}
+          <RecentReportList reports={recentReports} isLoading={dataLoading} />
         </div>
       </div>
     </>

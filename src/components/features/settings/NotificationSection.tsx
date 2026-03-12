@@ -24,7 +24,7 @@ const notificationItems: NotificationItem[] = [
  */
 export function NotificationSection({ notifications, onToggle }: NotificationSectionProps) {
   return (
-    <Card variant="default" padding="md">
+    <Card variant="default" padding="md" className="h-full">
       {/* 헤더 */}
       <h2 className="text-h3 font-semibold text-neutral-text flex items-center gap-2 mb-5 whitespace-nowrap">
         <svg className="w-5 h-5 flex-shrink-0 text-neutral-text-sub" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -33,10 +33,10 @@ export function NotificationSection({ notifications, onToggle }: NotificationSec
         알림 설정
       </h2>
 
-      {/* 토글 그리드: 1행 3개 + 2행 2개 */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* 토글 목록 */}
+      <div className="divide-y divide-neutral-100">
         {notificationItems.map((item) => (
-          <div key={item.key} className="p-3 rounded-lg border border-neutral-border bg-neutral-50">
+          <div key={item.key} className="py-3">
             <Toggle
               label={item.title}
               description={item.description}

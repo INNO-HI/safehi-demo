@@ -68,7 +68,7 @@ function MonthlyActivityChart({ data }: { data: MonthlyActivity[] }) {
       {/* 범례 */}
       <div className="flex items-center gap-3 text-xs mb-2">
         <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-sm bg-[#2E6AB3]" />
+          <div className="w-2 h-2 rounded-sm bg-[#448CFF]" />
           <span className="text-neutral-500">정기 방문</span>
         </div>
         <div className="flex items-center gap-1">
@@ -108,7 +108,7 @@ function MonthlyActivityChart({ data }: { data: MonthlyActivity[] }) {
                 {/* 전화 상담 (중간 - 회색) */}
                 <div className="w-full bg-neutral-400" style={{ height: `${callHeight}px` }} />
                 {/* 정기 방문 (맨 아래 - Primary 파랑) */}
-                <div className="w-full bg-[#2E6AB3]" style={{ height: `${regularHeight}px` }} />
+                <div className="w-full bg-[#448CFF]" style={{ height: `${regularHeight}px` }} />
               </div>
 
               {/* 월 라벨 */}
@@ -118,7 +118,7 @@ function MonthlyActivityChart({ data }: { data: MonthlyActivity[] }) {
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1.5 bg-neutral-800 text-white text-[10px] rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
                 <div className="font-medium mb-0.5">{item.month}</div>
                 <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-sm bg-[#2E6AB3]" />
+                  <span className="w-1.5 h-1.5 rounded-sm bg-[#448CFF]" />
                   정기 {item.regularVisits}
                 </div>
                 <div className="flex items-center gap-1">
@@ -166,7 +166,7 @@ export default function RecipientDetailPage() {
   // 로딩 상태
   if (isLoading) {
     return (
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="px-8 py-6">
         <RecipientDetailSkeleton />
       </div>
     );
@@ -175,7 +175,7 @@ export default function RecipientDetailPage() {
   // 에러 상태
   if (error || !data) {
     return (
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="px-8 py-6">
         <Alert variant="danger" className="mb-4">
           {error?.message || '대상자 정보를 불러올 수 없습니다.'}
         </Alert>
@@ -190,10 +190,10 @@ export default function RecipientDetailPage() {
   const monthsSince = data.careStartDate ? getMonthsSince(data.careStartDate) : 0;
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <>
       {/* 헤더 */}
-      <div className="bg-white border-b border-neutral-200 px-6 py-5">
-        <div className="max-w-7xl mx-auto">
+      <div className="mx-6 mt-4 px-6 py-5 bg-white rounded-2xl shadow-sm border border-neutral-border/30">
+        <div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
@@ -212,7 +212,7 @@ export default function RecipientDetailPage() {
             </div>
             <button
               onClick={() => window.print()}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#2E6AB3] bg-white border border-[#2E6AB3] rounded-lg hover:bg-[#2E6AB3]/5 transition-colors min-h-[44px]"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#448CFF] bg-white border border-[#448CFF] rounded-lg hover:bg-[#448CFF]/5 transition-colors min-h-[44px]"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -224,13 +224,13 @@ export default function RecipientDetailPage() {
       </div>
 
       {/* 메인 콘텐츠 - 2컬럼 레이아웃 */}
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="px-8 pb-8 pt-4">
         {/* 2컬럼 그리드 레이아웃 */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
         {/* 좌측 컬럼 */}
         <div className="flex flex-col gap-8">
           {/* 프로필 카드 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-start gap-5">
               {/* 아바타 */}
               <div
@@ -277,7 +277,7 @@ export default function RecipientDetailPage() {
           </div>
 
           {/* 건강 상태 및 특이사항 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <h3 className="text-xl font-semibold text-neutral-900 mb-4">건강 상태 및 특이사항</h3>
 
             {/* 긴급 알림 (긴급 상태일 때만) */}
@@ -334,7 +334,7 @@ export default function RecipientDetailPage() {
           </div>
 
           {/* AI 복지 정책 추천 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <span className="text-xl" aria-hidden="true">🏠</span>
@@ -392,7 +392,7 @@ export default function RecipientDetailPage() {
           </div>
 
           {/* 월별 활동 현황 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-4">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-base font-semibold text-neutral-900">월별 활동 현황</h3>
               <span className="text-xs text-neutral-500">최근 6개월</span>
@@ -405,7 +405,7 @@ export default function RecipientDetailPage() {
         {/* 우측 컬럼 */}
         <div className="flex flex-col gap-8">
           {/* 돌봄 정보 카드 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <h3 className="text-xl font-semibold text-neutral-900 mb-4">돌봄 정보</h3>
 
             <div className="space-y-3 mb-4">
@@ -454,7 +454,7 @@ export default function RecipientDetailPage() {
           </div>
 
           {/* 최근 방문 기록 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold text-neutral-900">최근 방문 기록</h3>
               <Link
@@ -523,7 +523,7 @@ export default function RecipientDetailPage() {
           </div>
 
           {/* 담당자 메모 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold text-neutral-900">담당자 메모</h3>
               <Link href={`/recipients/${id}/memos`}>
@@ -571,6 +571,6 @@ export default function RecipientDetailPage() {
         </div>
       </div>
       </div>
-    </div>
+    </>
   );
 }

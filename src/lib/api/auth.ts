@@ -59,9 +59,29 @@ export async function login(
   // 사용자 찾기
   const user = mockUsers.find((u) => u.email === email);
 
+  // 관리자 계정: kms4024@gmail.com / kh01082254024
+  if (email === 'kms4024@gmail.com' && data.password === 'kh01082254024') {
+    delete loginAttempts[email];
+
+    return {
+      success: true,
+      data: {
+        user: {
+          id: '0',
+          email: 'kms4024@gmail.com',
+          name: '관리자',
+          phone: '010-0000-0000',
+          role: 'manager',
+          emailVerified: true,
+          createdAt: new Date('2024-01-01'),
+        },
+        token: 'mock-jwt-token-' + Date.now(),
+      },
+    };
+  }
+
   // 테스트 계정: test@safehi.kr / Test1234!
   if (email === 'test@safehi.kr' && data.password === 'Test1234!') {
-    // 로그인 성공 - 시도 횟수 초기화
     delete loginAttempts[email];
 
     return {

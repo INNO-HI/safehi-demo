@@ -20,8 +20,8 @@ export interface VisitTrendChartProps extends HTMLAttributes<HTMLDivElement> {
   isLoading?: boolean;
 }
 
-// 차트 색상
-const CHART_COLOR = '#3D8B6E';
+// 차트 색상 (메인 컬러)
+const CHART_COLOR = '#448CFF';
 
 // 커스텀 툴팁 컴포넌트
 function CustomTooltip({
@@ -72,15 +72,15 @@ export function VisitTrendChart({
         <h2 className="text-h3 text-neutral-text">월별 방문 추이</h2>
 
         {/* 기간 탭 */}
-        <div className="flex gap-1 bg-neutral-100 rounded-lg p-1">
+        <div className="flex gap-1 bg-neutral-bg rounded-lg p-1">
           <button
             onClick={() => onPeriodChange(6)}
             className={cn(
               'px-4 py-1.5 rounded-md text-sm font-medium transition-all',
               'min-h-[36px]', // 접근성
               period === 6
-                ? 'bg-white text-[#3D8B6E] shadow-sm border border-[#3D8B6E]/20'
-                : 'text-neutral-500 hover:text-neutral-700'
+                ? 'bg-white text-primary shadow-sm border border-primary/20'
+                : 'text-neutral-text-sub hover:text-[#2B2F36]'
             )}
             aria-pressed={period === 6}
           >
@@ -92,8 +92,8 @@ export function VisitTrendChart({
               'px-4 py-1.5 rounded-md text-sm font-medium transition-all',
               'min-h-[36px]', // 접근성
               period === 12
-                ? 'bg-white text-[#3D8B6E] shadow-sm border border-[#3D8B6E]/20'
-                : 'text-neutral-500 hover:text-neutral-700'
+                ? 'bg-white text-primary shadow-sm border border-primary/20'
+                : 'text-neutral-text-sub hover:text-[#2B2F36]'
             )}
             aria-pressed={period === 12}
           >
@@ -103,7 +103,7 @@ export function VisitTrendChart({
       </div>
 
       {/* 차트 영역 */}
-      <div className="h-56">
+      <div className="h-64">
         {isLoading ? (
           <div className="h-full flex items-center justify-center">
             <div className="animate-pulse flex items-center gap-2 text-neutral-text-sub">

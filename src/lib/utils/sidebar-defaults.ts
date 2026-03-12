@@ -9,13 +9,13 @@ import type { SidebarUser, SidebarMenuItem } from '@/types/dashboard';
 
 export const defaultSidebarUser: SidebarUser = {
   name: '김담당',
-  organizationName: '양천구청',
+  organizationName: '제주시청',
   role: 'admin',
   roleLabel: '구/군 관리자',
   jurisdiction: {
-    region: '서울특별시 양천구',
-    dongCount: 18,
-    centerCount: 12,
+    region: '제주특별자치도 제주시',
+    dongCount: 22,
+    centerCount: 15,
   },
 };
 

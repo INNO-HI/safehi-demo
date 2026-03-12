@@ -1,6 +1,5 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -13,11 +12,7 @@ import {
   Alert,
   Button,
 } from '@/components/ui';
-
-const ResetPasswordForm = dynamic(
-  () => import('@/components/features/auth/ResetPasswordForm').then(mod => ({ default: mod.ResetPasswordForm })),
-  { ssr: false }
-);
+import { ResetPasswordForm } from '@/components/features/auth/ResetPasswordForm';
 
 /**
  * 비밀번호 재설정 내부 컴포넌트

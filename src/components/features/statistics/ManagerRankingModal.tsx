@@ -1,35 +1,13 @@
 'use client';
 
 import { Modal } from '@/components/ui/Modal';
-import { RANK_COLORS } from '@/lib/constants/statistics';
+import { cn } from '@/lib/utils/cn';
 import type { ManagerRanking } from '@/types/statistics';
 
 export interface ManagerRankingModalProps {
   isOpen: boolean;
   onClose: () => void;
   data: ManagerRanking[];
-}
-
-// 메달 아이콘 컴포넌트
-function MedalIcon({ rank }: { rank: number }) {
-  if (rank > 3) {
-    return (
-      <span className="text-body text-neutral-text-sub font-medium">
-        {rank}위
-      </span>
-    );
-  }
-
-  const color = RANK_COLORS[rank as 1 | 2 | 3];
-
-  return (
-    <div
-      className="w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold"
-      style={{ backgroundColor: color }}
-    >
-      {rank}
-    </div>
-  );
 }
 
 /**
@@ -67,7 +45,12 @@ export function ManagerRankingModal({
             >
               {/* 순위 */}
               <div>
-                <MedalIcon rank={manager.rank} />
+                <span className={cn(
+                  'text-body font-medium',
+                  manager.rank <= 3 ? 'text-primary font-semibold' : 'text-neutral-text-sub'
+                )}>
+                  {manager.rank}위
+                </span>
               </div>
 
               {/* 매니저 정보 */}
@@ -102,15 +85,15 @@ export function ManagerRankingModal({
         </div>
 
         {/* 요약 */}
-        <div className="grid grid-cols-6 gap-4 px-4 py-3 bg-primary-light/30 rounded-lg mt-4">
+        <div className="grid grid-cols-6 gap-4 px-4 py-3 bg-primary-bg rounded-lg mt-4">
           <span className="text-body text-neutral-text font-semibold">합계</span>
           <span className="col-span-2 text-body text-neutral-text">
             {data.length}명
           </span>
-          <span className="text-body text-primary-main text-right font-bold">
+          <span className="text-body text-primary text-right font-bold">
             {data.reduce((sum, m) => sum + m.visits, 0).toLocaleString()}회
           </span>
-          <span className="text-body text-primary-main text-right font-bold">
+          <span className="text-body text-primary text-right font-bold">
             {data.reduce((sum, m) => sum + m.reports, 0).toLocaleString()}건
           </span>
           <span className="text-body text-status-success text-right font-bold">

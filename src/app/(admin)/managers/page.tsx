@@ -68,8 +68,8 @@ export default function ManagersPage() {
       />
 
       {/* 메인 콘텐츠 */}
-      <div className="flex-1 overflow-y-auto p-6">
-        <div className="max-w-7xl mx-auto space-y-6">
+      <div className="flex-1 overflow-y-auto px-8 pb-8 pt-2">
+        <div className="space-y-6">
           {/* KPI 카드 그리드 */}
           <ManagerKPIGrid kpis={kpis} isLoading={isLoading} />
 
@@ -83,7 +83,7 @@ export default function ManagersPage() {
           />
 
           {/* 테이블 */}
-          <div className="bg-white rounded-xl shadow-sm border border-neutral-200">
+          <div className="bg-white rounded-2xl shadow-elevated border border-neutral-border/30">
             <ManagerTable
               managers={managers}
               statusCounts={statusCounts}

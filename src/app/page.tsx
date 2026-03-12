@@ -1,27 +1,35 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/hooks/useAuth';
 
 export default function Home() {
   const router = useRouter();
-  const { isAuthenticated, isLoading } = useAuthStore();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // 로딩 중이면 아무것도 하지 않음
-    if (isLoading) return;
+    setMounted(true);
+  }, []);
 
-    // 인증되어 있으면 대시보드로 이동
-    if (isAuthenticated) {
-      router.push('/dashboard');
-    } else {
-      // 인증 안 되어 있으면 로그인 페이지로 이동
-      router.push('/login');
+  useEffect(() => {
+    if (!mounted) return;
+
+    // 클라이언트에서 localStorage 직접 확인
+    const stored = localStorage.getItem('auth-storage');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (parsed?.state?.isAuthenticated) {
+          router.replace('/dashboard');
+          return;
+        }
+      } catch {
+        // 파싱 실패 시 로그인으로
+      }
     }
-  }, [isAuthenticated, isLoading, router]);
+    router.replace('/login');
+  }, [mounted, router]);
 
-  // 로딩 중일 때 표시
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="text-center">

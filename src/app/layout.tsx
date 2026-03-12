@@ -3,7 +3,7 @@ import 'pretendard/dist/web/variable/pretendardvariable.css';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'SafeHi - 돌봄 관리 시스템',
+  title: '안심하이 - 돌봄 관리 시스템',
   description: '지자체 돌봄 매니저를 위한 웹 대시보드',
 };
 

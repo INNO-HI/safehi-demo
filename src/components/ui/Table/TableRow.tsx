@@ -83,7 +83,7 @@ export interface TableRowCheckboxProps {
 export const TableRowCheckbox = forwardRef<HTMLInputElement, TableRowCheckboxProps>(
   function TableRowCheckbox({ checked, onChange, ariaLabel = '선택' }, ref) {
     return (
-      <td className="px-4 py-3 w-12">
+      <td className="px-3 py-3 w-10">
         <div className="flex items-center justify-center">
           <input
             ref={ref}
@@ -96,7 +96,7 @@ export const TableRowCheckbox = forwardRef<HTMLInputElement, TableRowCheckboxPro
             onClick={(e) => e.stopPropagation()}
             aria-label={ariaLabel}
             className="
-              w-5 h-5 rounded border-neutral-300
+              w-4 h-4 rounded border-neutral-300
               text-primary-600 focus:ring-primary-500
               cursor-pointer
             "
@@ -126,7 +126,7 @@ export function EmptyRow({
     <tr>
       <td
         colSpan={colSpan}
-        className="px-4 py-12 text-center text-neutral-500"
+        className="px-4 py-20 text-center text-neutral-500"
       >
         <div className="flex flex-col items-center gap-3">
           {icon || (

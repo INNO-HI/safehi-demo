@@ -141,41 +141,34 @@ export const ManagerTable = forwardRef<HTMLDivElement, ManagerTableProps>(
 
     return (
       <div ref={ref} className={className}>
-        {/* 상태 탭 + 내보내기 버튼 */}
-        <div className="flex items-center justify-between">
+        {/* 헤더 영역 */}
+        <div className="px-5 py-4 border-b border-neutral-100">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-3">
+              <h2 className="text-lg font-semibold text-neutral-text">매니저 목록</h2>
+              <span className="text-sm text-neutral-text-tertiary">총 {totalItems}명</span>
+            </div>
+            {onExportAll && (
+              <Button variant="soft" size="sm" onClick={onExportAll}>
+                <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                Excel 내보내기
+              </Button>
+            )}
+          </div>
+
+          {/* 상태 탭 */}
           <Tabs
             options={tabOptions}
             value={currentStatus}
             onChange={onStatusChange}
             ariaLabel="매니저 상태 필터"
           />
-          {onExportAll && (
-            <div className="flex items-center gap-1">
-              <Button
-                variant="soft"
-                size="sm"
-                onClick={onExportAll}
-              >
-                <svg
-                  className="w-4 h-4 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                Excel 내보내기
-              </Button>
-            </div>
-          )}
         </div>
 
         {/* 테이블 */}
+        <div className="min-h-[400px]">
         <Table ariaLabel="매니저 목록">
           <TableHead>
             <TableHeader columns={columns} />
@@ -228,18 +221,20 @@ export const ManagerTable = forwardRef<HTMLDivElement, ManagerTableProps>(
             )}
           </TableBody>
         </Table>
+        </div>
 
         {/* 페이지네이션 */}
         {!isLoading && totalPages > 0 && (
-          <TablePagination
-            className="mt-4"
-            currentPage={currentPage}
-            totalPages={totalPages}
-            pageSize={pageSize}
-            totalItems={totalItems}
-            onPageChange={onPageChange}
-            onPageSizeChange={onPageSizeChange}
-          />
+          <div className="px-5 py-3 border-t border-neutral-100">
+            <TablePagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              pageSize={pageSize}
+              totalItems={totalItems}
+              onPageChange={onPageChange}
+              onPageSizeChange={onPageSizeChange}
+            />
+          </div>
         )}
       </div>
     );

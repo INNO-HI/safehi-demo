@@ -2,29 +2,12 @@
 
 import { useState, type HTMLAttributes } from 'react';
 import { cn } from '@/lib/utils/cn';
-import { RANK_COLORS } from '@/lib/constants/statistics';
 import type { ManagerRanking } from '@/types/statistics';
 import { ManagerRankingModal } from './ManagerRankingModal';
 
 export interface ManagerRankingTableProps extends HTMLAttributes<HTMLDivElement> {
   data: ManagerRanking[];
   displayLimit?: number;
-}
-
-// 메달 아이콘 컴포넌트
-function MedalIcon({ rank }: { rank: number }) {
-  if (rank > 3) return null;
-
-  const color = RANK_COLORS[rank as 1 | 2 | 3];
-
-  return (
-    <div
-      className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
-      style={{ backgroundColor: color }}
-    >
-      {rank}
-    </div>
-  );
 }
 
 /**
@@ -57,7 +40,7 @@ export function ManagerRankingTable({
           {data.length > displayLimit && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="text-sm text-primary-main hover:underline min-h-[44px] px-2 flex items-center"
+              className="text-sm text-primary font-medium hover:underline min-h-[44px] px-2 flex items-center"
             >
               전체보기
             </button>
@@ -74,20 +57,16 @@ export function ManagerRankingTable({
             {displayData.map((manager) => (
               <div
                 key={manager.id}
-                className={cn(
-                  'flex items-center gap-3 p-3 rounded-lg transition-colors',
-                  manager.rank <= 3 ? 'bg-neutral-bg/50' : ''
-                )}
+                className="flex items-center gap-3 p-3 rounded-lg transition-colors hover:bg-neutral-bg/50"
               >
                 {/* 순위 */}
-                <div className="w-8 flex-shrink-0">
-                  {manager.rank <= 3 ? (
-                    <MedalIcon rank={manager.rank} />
-                  ) : (
-                    <span className="text-body text-neutral-text-sub font-medium">
-                      {manager.rank}
-                    </span>
-                  )}
+                <div className="w-8 flex-shrink-0 text-center">
+                  <span className={cn(
+                    'text-body font-medium',
+                    manager.rank <= 3 ? 'text-primary font-semibold' : 'text-neutral-text-sub'
+                  )}>
+                    {manager.rank}
+                  </span>
                 </div>
 
                 {/* 아바타 + 이름 */}

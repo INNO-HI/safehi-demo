@@ -91,9 +91,9 @@ export function LoginForm() {
       />
 
       {/* 로그인 유지 & 비밀번호 찾기 */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-nowrap">
         <Checkbox label="로그인 유지" {...register('rememberMe')} />
-        <Link href="/forgot-password" className="link text-body-sm">
+        <Link href="/forgot-password" className="link text-body-sm shrink-0 whitespace-nowrap">
           비밀번호 찾기
         </Link>
       </div>
@@ -110,9 +110,12 @@ export function LoginForm() {
       </Button>
 
       {/* 회원가입 링크 */}
-      <p className="text-center text-body text-neutral-text-sub">
+      <p className="text-center text-sm text-neutral-text-sub mt-6">
         계정이 없으신가요?{' '}
-        <Link href="/register" className="link font-semibold">
+        <Link
+          href="/register"
+          className="link font-medium inline-block ml-1 border border-primary text-primary rounded-full px-3 py-0.5 text-sm hover:bg-primary-bg transition-colors"
+        >
           회원가입
         </Link>
       </p>

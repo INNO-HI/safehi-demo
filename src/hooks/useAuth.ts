@@ -25,7 +25,7 @@ export const useAuthStore = create<AuthStore>()(
       user: null,
       token: null,
       isAuthenticated: false,
-      isLoading: true,
+      isLoading: false,
 
       setUser: (user) =>
         set({
@@ -89,10 +89,10 @@ export const useAuthStore = create<AuthStore>()(
         isAuthenticated: state.isAuthenticated,
       }),
       onRehydrateStorage: () => {
-        return (state) => {
+        return (_state, error) => {
           // 스토리지 복원 후 isLoading을 false로 설정
-          if (state) {
-            state.isLoading = false;
+          if (!error) {
+            useAuthStore.setState({ isLoading: false });
           }
         };
       },

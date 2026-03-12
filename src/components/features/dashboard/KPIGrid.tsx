@@ -20,18 +20,13 @@ interface KPIGridProps {
  */
 function KPICardSkeleton() {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-neutral-200 p-5 flex flex-col gap-3 animate-pulse">
-      {/* 제목 */}
-      <div className="h-4 w-20 bg-neutral-200 rounded" />
-
-      {/* 값 */}
-      <div className="flex items-end justify-between gap-2">
-        <div className="h-9 w-24 bg-neutral-200 rounded" />
-        <div className="h-6 w-16 bg-neutral-200 rounded-full" />
+    <div className="bg-white rounded-2xl shadow-elevated border border-neutral-border/30 p-4 flex flex-col justify-between h-[160px] animate-pulse">
+      <div className="h-4 w-20 bg-neutral-bg rounded" />
+      <div>
+        <div className="h-7 w-16 bg-neutral-bg rounded" />
+        <div className="h-5 w-12 bg-neutral-bg rounded-full mt-2" />
       </div>
-
-      {/* 프로그레스 바 */}
-      <div className="h-2 w-full bg-neutral-200 rounded-full" />
+      <div className="h-2 w-full bg-neutral-bg rounded-full" />
     </div>
   );
 }

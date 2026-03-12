@@ -23,11 +23,11 @@ export interface BadgeProps {
 
 // 변형별 스타일
 const variantStyles: Record<BadgeVariant, string> = {
-  default: 'bg-neutral-100 text-neutral-700',
-  success: 'bg-green-100 text-green-800',
-  warning: 'bg-yellow-100 text-yellow-800',
-  danger: 'bg-red-100 text-red-800',
-  info: 'bg-blue-100 text-blue-800',
+  default: 'bg-status-muted-light text-[#6B7685]',
+  success: 'bg-status-success-light text-status-success',
+  warning: 'bg-status-warning-light text-status-warning',
+  danger: 'bg-status-danger-light text-status-danger animate-urgent-pulse',
+  info: 'bg-status-info-light text-status-info',
 };
 
 // 크기별 스타일
@@ -39,11 +39,11 @@ const sizeStyles: Record<BadgeSize, string> = {
 
 // 점 스타일
 const dotStyles: Record<BadgeVariant, string> = {
-  default: 'bg-neutral-500',
-  success: 'bg-green-500',
-  warning: 'bg-yellow-500',
-  danger: 'bg-red-500',
-  info: 'bg-blue-500',
+  default: 'bg-status-muted',
+  success: 'bg-status-success',
+  warning: 'bg-status-warning',
+  danger: 'bg-status-danger',
+  info: 'bg-status-info',
 };
 
 /**
@@ -64,7 +64,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
           inline-flex items-center justify-center
           min-w-[20px] h-5 px-1.5
           rounded-full text-xs font-medium
-          bg-red-500 text-white
+          bg-status-danger text-white
           ${className}
         `}
       >

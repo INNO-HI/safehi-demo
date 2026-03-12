@@ -1,8 +1,6 @@
 'use client';
 
-import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
 import type { JurisdictionInfo } from '@/types/settings';
 
 interface JurisdictionSectionProps {
@@ -21,11 +19,6 @@ const statCards = [
  * 기관 정보, 통계 카드, 동 목록 (읽기 전용)
  */
 export function JurisdictionSection({ jurisdiction }: JurisdictionSectionProps) {
-  const [showAll, setShowAll] = useState(false);
-
-  // 동 목록 요약 표시
-  const visibleDongs = showAll ? jurisdiction.dongList : jurisdiction.dongList.slice(0, 7);
-  const remainingCount = jurisdiction.dongList.length - 7;
 
   return (
     <Card variant="default" padding="md" className="h-full">
@@ -38,14 +31,7 @@ export function JurisdictionSection({ jurisdiction }: JurisdictionSectionProps) 
           </svg>
           관할 구역
         </h2>
-        <Button
-          variant="secondary"
-          size="sm"
-          onClick={() => setShowAll(!showAll)}
-          className="flex-shrink-0 w-fit !min-h-0 !py-1 !px-2"
-        >
-          {showAll ? '접기' : '전체보기'}
-        </Button>
+        <span className="text-caption text-neutral-text-tertiary">{jurisdiction.dongList.length}개 동</span>
       </div>
 
       {/* 기관 정보 */}
@@ -73,13 +59,17 @@ export function JurisdictionSection({ jurisdiction }: JurisdictionSectionProps) 
         ))}
       </div>
 
-      {/* 동 목록 */}
-      <p className="text-body text-neutral-text-sub">
-        {showAll
-          ? visibleDongs.join(', ')
-          : `${visibleDongs.join(', ')}${remainingCount > 0 ? ` 외 ${remainingCount}개 동` : ''}`
-        }
-      </p>
+      {/* 동 목록 (태그 스타일) */}
+      <div className="flex flex-wrap gap-2">
+        {jurisdiction.dongList.map((dong) => (
+          <span
+            key={dong}
+            className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-bg text-primary border border-primary/20"
+          >
+            {dong}
+          </span>
+        ))}
+      </div>
     </Card>
   );
 }

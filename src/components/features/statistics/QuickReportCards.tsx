@@ -10,8 +10,8 @@ export interface QuickReportCardsProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * 빠른 리포트 생성 카드 컴포넌트
- * 4가지 사전 정의된 리포트 템플릿을 카드 형태로 표시
+ * 빠른 리포트 생성 컴포넌트
+ * 정사각형 카드 형태 + 생성 버튼
  */
 export function QuickReportCards({
   onGenerateReport,
@@ -33,84 +33,71 @@ export function QuickReportCards({
 
   return (
     <div
-      className={cn(
-        'bg-white rounded-lg p-6 border border-neutral-border',
-        className
-      )}
+      className={cn('flex flex-col gap-4', className)}
       {...props}
     >
-      {/* 헤더 */}
-      <h2 className="text-h3 text-neutral-text mb-4">빠른 리포트 생성</h2>
-
-      {/* 템플릿 카드 그리드 */}
-      <div className="grid grid-cols-2 gap-3">
+      <h2 className="text-base font-semibold text-neutral-text">빠른 리포트 생성</h2>
+      <div className="flex gap-4">
         {REPORT_TEMPLATES.map((template) => {
           const isGenerating = generatingType === template.type;
 
           return (
             <div
               key={template.id}
-              className="p-4 rounded-lg border border-neutral-border hover:shadow-sm transition-all"
+              className="w-[160px] h-[160px] bg-white rounded-xl p-5 border border-neutral-border flex flex-col justify-between flex-shrink-0 transition-all hover:shadow-md"
             >
-              <div className="flex items-start gap-3">
-                {/* 아이콘 */}
+              {/* 상단: 아이콘 + 제목 */}
+              <div>
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center text-lg flex-shrink-0"
-                  style={{ backgroundColor: `${template.iconBgColor}20` }}
+                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-2"
+                  style={{ backgroundColor: `${template.iconBgColor}15` }}
                 >
-                  {template.icon}
+                  <span style={{ color: template.iconBgColor }}>{template.icon}</span>
                 </div>
-
-                {/* 텍스트 */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="text-body font-medium text-neutral-text truncate">
-                    {template.title}
-                  </h3>
-                  <p className="text-caption text-neutral-text-sub truncate">
-                    {template.description}
-                  </p>
-                </div>
+                <p className="text-xs font-medium text-neutral-text leading-tight">{template.title}</p>
+                <p className="text-[11px] text-neutral-text-sub mt-0.5">{template.description}</p>
               </div>
 
-              {/* 생성 버튼 */}
+              {/* 하단: 생성 버튼 */}
               <button
                 onClick={() => handleGenerate(template.type)}
                 disabled={!!generatingType}
                 className={cn(
-                  'w-full mt-3 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-                  'min-h-[40px]',
+                  'w-full py-1.5 rounded-lg text-xs font-medium transition-all min-h-[32px] flex items-center justify-center gap-1',
                   isGenerating
-                    ? 'bg-neutral-200 text-neutral-text-sub cursor-not-allowed'
+                    ? 'opacity-70 cursor-not-allowed'
                     : generatingType
-                    ? 'bg-neutral-100 text-neutral-text-tertiary cursor-not-allowed'
-                    : 'bg-neutral-bg text-neutral-text hover:bg-neutral-200'
+                    ? 'opacity-40 cursor-not-allowed bg-neutral-bg text-neutral-text-sub'
+                    : 'text-white hover:opacity-90'
                 )}
+                style={
+                  !generatingType || isGenerating
+                    ? { backgroundColor: template.iconBgColor }
+                    : undefined
+                }
               >
                 {isGenerating ? (
-                  <span className="flex items-center justify-center gap-2">
+                  <>
                     <svg
-                      className="animate-spin"
+                      className="animate-spin w-3 h-3"
                       xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      strokeWidth="2"
+                      strokeWidth="2.5"
                     >
-                      <line x1="12" y1="2" x2="12" y2="6" />
-                      <line x1="12" y1="18" x2="12" y2="22" />
-                      <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
-                      <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
-                      <line x1="2" y1="12" x2="6" y2="12" />
-                      <line x1="18" y1="12" x2="22" y2="12" />
-                      <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
-                      <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
+                      <circle cx="12" cy="12" r="10" strokeDasharray="50" strokeDashoffset="15" />
                     </svg>
                     생성 중...
-                  </span>
+                  </>
                 ) : (
-                  '생성'
+                  <>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    생성하기
+                  </>
                 )}
               </button>
             </div>

@@ -117,7 +117,7 @@ export const TablePagination = forwardRef<HTMLDivElement, TablePaginationProps>(
       <div
         ref={ref}
         className={`
-          flex flex-wrap items-center justify-between gap-4
+          flex flex-wrap items-center justify-center gap-6
           px-4 py-3 border-t border-neutral-200 bg-white
           ${className}
         `}

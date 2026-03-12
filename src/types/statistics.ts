@@ -96,7 +96,7 @@ export interface ReportTemplate {
   type: ReportType;
   title: string;
   description: string;
-  icon: string;
+  icon: React.ReactNode;
   iconBgColor: string;
 }
 

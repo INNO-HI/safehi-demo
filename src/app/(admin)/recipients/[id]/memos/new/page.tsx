@@ -55,13 +55,11 @@ export default function NewMemoPage() {
   // 로딩 상태
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-3xl mx-auto p-6">
-          <div className="animate-pulse space-y-4">
-            <div className="h-8 bg-neutral-200 rounded w-1/4" />
-            <div className="h-12 bg-neutral-200 rounded" />
-            <div className="h-48 bg-neutral-200 rounded" />
-          </div>
+      <div className="px-8 pb-8 pt-4">
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 bg-neutral-200 rounded w-1/4" />
+          <div className="h-12 bg-neutral-200 rounded" />
+          <div className="h-48 bg-neutral-200 rounded" />
         </div>
       </div>
     );
@@ -70,18 +68,16 @@ export default function NewMemoPage() {
   // 에러 상태
   if (error || !recipient) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-3xl mx-auto p-6">
-          <Alert variant="danger" className="mb-4">
-            {error?.message || '대상자 정보를 불러올 수 없습니다.'}
-          </Alert>
-          <button
-            onClick={handleBack}
-            className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
-          >
-            메모 목록으로 돌아가기
-          </button>
-        </div>
+      <div className="px-8 pb-8 pt-4">
+        <Alert variant="danger" className="mb-4">
+          {error?.message || '대상자 정보를 불러올 수 없습니다.'}
+        </Alert>
+        <button
+          onClick={handleBack}
+          className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
+        >
+          메모 목록으로 돌아가기
+        </button>
       </div>
     );
   }
@@ -89,11 +85,10 @@ export default function NewMemoPage() {
   const isFormValid = title.trim().length > 0 && content.trim().length > 0;
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <>
       {/* 헤더 */}
-      <div className="bg-white border-b border-neutral-200 px-6 py-5">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center justify-between">
+      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-6 mt-4 px-6 py-5">
+        <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleBack}
@@ -113,8 +108,8 @@ export default function NewMemoPage() {
             </div>
 
             {/* 대상자 태그 */}
-            <div className="flex items-center gap-2 px-4 py-2 bg-[#E8F0F8] rounded-full">
-              <span className="text-sm font-medium text-[#2E6AB3]">
+            <div className="flex items-center gap-2 px-4 py-2 bg-[#EBF2FF] rounded-full">
+              <span className="text-sm font-medium text-[#448CFF]">
                 {recipient.basicInfo.dong}
               </span>
               <span className="text-sm font-medium text-[#C45A5A]">
@@ -122,12 +117,11 @@ export default function NewMemoPage() {
               </span>
             </div>
           </div>
-        </div>
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className="max-w-3xl mx-auto p-6">
-        <div className="bg-white rounded-xl border border-neutral-200 p-6 space-y-6">
+      <div className="px-8 pb-8 pt-4">
+        <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-6 space-y-6">
           {/* 메모 유형 선택 */}
           <div>
             <label className="block text-base font-semibold text-neutral-900 mb-3">
@@ -139,19 +133,19 @@ export default function NewMemoPage() {
                 onClick={() => setMemoType('normal')}
                 className={`flex items-center gap-3 p-4 rounded-xl border-2 transition-all ${
                   memoType === 'normal'
-                    ? 'border-[#2E6AB3] bg-[#E8F0F8]'
+                    ? 'border-[#448CFF] bg-[#EBF2FF]'
                     : 'border-neutral-200 bg-white hover:border-neutral-300'
                 }`}
               >
                 <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                  memoType === 'normal' ? 'bg-[#2E6AB3]/20' : 'bg-neutral-100'
+                  memoType === 'normal' ? 'bg-[#448CFF]/20' : 'bg-neutral-100'
                 }`}>
-                  <svg className={`w-6 h-6 ${memoType === 'normal' ? 'text-[#2E6AB3]' : 'text-neutral-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-6 h-6 ${memoType === 'normal' ? 'text-[#448CFF]' : 'text-neutral-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
                 </div>
                 <div className="text-left">
-                  <p className={`font-semibold ${memoType === 'normal' ? 'text-[#2E6AB3]' : 'text-neutral-900'}`}>
+                  <p className={`font-semibold ${memoType === 'normal' ? 'text-[#448CFF]' : 'text-neutral-900'}`}>
                     일반 메모
                   </p>
                   <p className="text-sm text-neutral-500">일반적인 기록 사항</p>
@@ -195,7 +189,7 @@ export default function NewMemoPage() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="메모 제목을 입력하세요"
-              className="w-full px-4 py-3 text-base border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2E6AB3]/20 focus:border-[#2E6AB3] transition-colors min-h-[48px]"
+              className="w-full px-4 py-3 text-base border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#448CFF]/20 focus:border-[#448CFF] transition-colors min-h-[48px]"
               maxLength={100}
             />
             <p className="mt-2 text-sm text-neutral-500 text-right">
@@ -214,7 +208,7 @@ export default function NewMemoPage() {
               onChange={(e) => setContent(e.target.value)}
               placeholder="메모 내용을 입력하세요. 다른 담당자들도 확인할 수 있습니다."
               rows={8}
-              className="w-full px-4 py-3 text-base border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2E6AB3]/20 focus:border-[#2E6AB3] transition-colors resize-none"
+              className="w-full px-4 py-3 text-base border border-neutral-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#448CFF]/20 focus:border-[#448CFF] transition-colors resize-none"
               maxLength={1000}
             />
             <p className="mt-2 text-sm text-neutral-500 text-right">
@@ -223,13 +217,13 @@ export default function NewMemoPage() {
           </div>
 
           {/* 안내 메시지 */}
-          <div className={`p-4 rounded-xl ${memoType === 'warning' ? 'bg-[#FFF8E6] border border-[#C4940A]/30' : 'bg-[#E8F0F8] border border-[#2E6AB3]/30'}`}>
+          <div className={`p-4 rounded-xl ${memoType === 'warning' ? 'bg-[#FFF8E6] border border-[#C4940A]/30' : 'bg-[#EBF2FF] border border-[#448CFF]/30'}`}>
             <div className="flex items-start gap-3">
-              <svg className={`w-5 h-5 mt-0.5 flex-shrink-0 ${memoType === 'warning' ? 'text-[#C4940A]' : 'text-[#2E6AB3]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className={`w-5 h-5 mt-0.5 flex-shrink-0 ${memoType === 'warning' ? 'text-[#C4940A]' : 'text-[#448CFF]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <div>
-                <p className={`text-sm font-medium ${memoType === 'warning' ? 'text-[#C4940A]' : 'text-[#2E6AB3]'}`}>
+                <p className={`text-sm font-medium ${memoType === 'warning' ? 'text-[#C4940A]' : 'text-[#448CFF]'}`}>
                   {memoType === 'warning' ? '주의사항 메모 안내' : '일반 메모 안내'}
                 </p>
                 <p className="text-sm text-neutral-600 mt-1">
@@ -257,7 +251,7 @@ export default function NewMemoPage() {
               className={`flex-1 py-3 px-6 text-base font-medium text-white rounded-xl transition-colors min-h-[52px] ${
                 memoType === 'warning'
                   ? 'bg-[#C4940A] hover:bg-[#a67d08] disabled:bg-[#C4940A]/50'
-                  : 'bg-[#2E6AB3] hover:bg-[#245a96] disabled:bg-[#2E6AB3]/50'
+                  : 'bg-[#448CFF] hover:bg-[#2B6AD9] disabled:bg-[#448CFF]/50'
               } disabled:cursor-not-allowed`}
             >
               {isSubmitting ? (
@@ -275,6 +269,6 @@ export default function NewMemoPage() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

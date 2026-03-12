@@ -20,6 +20,8 @@ import {
 import { Badge } from '@/components/ui/Badge';
 import { Tabs } from '@/components/ui/Tabs';
 import { Button } from '@/components/ui/Button';
+import { Select } from '@/components/ui/Select';
+import { dongOptions } from '@/lib/utils/filter-options';
 
 // ============================================================
 // CareLogTable 컴포넌트
@@ -49,6 +51,10 @@ interface CareLogTableProps {
   onToggleSelect?: (id: string) => void;
   onToggleSelectAll?: () => void;
 
+  // 동 필터
+  currentDong?: string | 'all';
+  onDongChange?: (dong: string | 'all') => void;
+
   // 일괄 처리 액션
   selectedCount?: number;
   onApprove?: () => void;
@@ -61,13 +67,13 @@ interface CareLogTableProps {
   className?: string;
 }
 
-// 테이블 컬럼 정의
+// 테이블 컬럼 정의 (내용 길이에 맞춘 넓이)
 const columns = [
-  { id: 'recipientName', label: '대상자', width: '15%' },
-  { id: 'managerName', label: '담당 종사자', width: '12%' },
-  { id: 'centerName', label: '소속 센터', width: '15%' },
-  { id: 'visitDate', label: '방문일시', width: '18%' },
-  { id: 'registeredAt', label: '등록시간', width: '15%' },
+  { id: 'recipientName', label: '대상자', width: '14%' },
+  { id: 'managerName', label: '담당 종사자', width: '13%' },
+  { id: 'centerName', label: '소속 센터', width: '16%' },
+  { id: 'visitDate', label: '방문일시', width: '20%' },
+  { id: 'registeredAt', label: '등록시간', width: '13%' },
   { id: 'status', label: '상태', width: '10%', align: 'center' as const },
 ];
 
@@ -112,6 +118,8 @@ export const CareLogTable = forwardRef<HTMLDivElement, CareLogTableProps>(
       isAllSelected = false,
       onToggleSelect,
       onToggleSelectAll,
+      currentDong = 'all',
+      onDongChange,
       selectedCount = 0,
       onApprove,
       onReject,
@@ -144,69 +152,64 @@ export const CareLogTable = forwardRef<HTMLDivElement, CareLogTableProps>(
 
     return (
       <div ref={ref} className={className}>
-        {/* 상태 탭 + 액션 버튼 */}
-        <div className="flex items-center justify-between">
-          <Tabs
-            options={tabOptions}
-            value={currentStatus}
-            onChange={onStatusChange}
-            ariaLabel="돌봄 일지 상태 필터"
-          />
-
-          {/* 선택 시 액션 버튼 */}
-          {showActions && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-neutral-600 whitespace-nowrap">
-                <span className="font-semibold text-primary-600">{selectedCount}</span>건 선택
-              </span>
-              {onApprove && (
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={onApprove}
-                  disabled={isProcessing}
-                >
-                  <span className="whitespace-nowrap">{isProcessing ? '처리 중...' : '승인'}</span>
-                </Button>
-              )}
-              {onReject && (
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={onReject}
-                  disabled={isProcessing}
-                >
-                  <span className="whitespace-nowrap">{isProcessing ? '처리 중...' : '반려'}</span>
-                </Button>
-              )}
-              {onExportPDF && (
-                <Button
-                  variant="soft"
-                  size="sm"
-                  onClick={onExportPDF}
-                  disabled={isProcessing}
-                >
-                  <svg
-                    className="w-4 h-4 mr-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                  <span className="whitespace-nowrap">PDF</span>
-                </Button>
-              )}
+        {/* 헤더 영역 */}
+        <div className="px-5 py-4 border-b border-neutral-100">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-3">
+              <h2 className="text-lg font-semibold text-neutral-text">돌봄 일지</h2>
+              <span className="text-sm text-neutral-text-tertiary">총 {totalItems}건</span>
             </div>
-          )}
+
+            {/* 선택 시 액션 버튼 */}
+            {showActions && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-neutral-600 whitespace-nowrap">
+                  <span className="font-semibold text-primary">{selectedCount}</span>건 선택
+                </span>
+                {onApprove && (
+                  <Button variant="primary" size="sm" onClick={onApprove} disabled={isProcessing}>
+                    <span className="whitespace-nowrap">{isProcessing ? '처리 중...' : '승인'}</span>
+                  </Button>
+                )}
+                {onReject && (
+                  <Button variant="secondary" size="sm" onClick={onReject} disabled={isProcessing}>
+                    <span className="whitespace-nowrap">{isProcessing ? '처리 중...' : '반려'}</span>
+                  </Button>
+                )}
+                {onExportPDF && (
+                  <Button variant="soft" size="sm" onClick={onExportPDF} disabled={isProcessing}>
+                    <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span className="whitespace-nowrap">PDF</span>
+                  </Button>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* 상태 탭 + 동 필터 */}
+          <div className="flex items-center justify-between gap-3">
+            <Tabs
+              options={tabOptions}
+              value={currentStatus}
+              onChange={onStatusChange}
+              ariaLabel="돌봄 일지 상태 필터"
+            />
+            {onDongChange && (
+              <div className="shrink-0 w-[140px]">
+                <Select
+                  value={currentDong}
+                  onChange={(e) => onDongChange(e.target.value as string | 'all')}
+                  options={dongOptions}
+                />
+              </div>
+            )}
+          </div>
         </div>
 
         {/* 테이블 */}
+        <div className="min-h-[400px]">
         <Table ariaLabel="돌봄 일지 목록">
           <TableHead>
             <TableHeader
@@ -230,7 +233,7 @@ export const CareLogTable = forwardRef<HTMLDivElement, CareLogTableProps>(
                     key={log.id}
                     isSelected={isSelected}
                     onClick={() => handleRowClick(log.id)}
-                    className="cursor-pointer hover:bg-neutral-50"
+                    className={`cursor-pointer hover:bg-neutral-50 ${log.status === 'urgent' ? 'bg-status-danger-light/50 animate-urgent-pulse' : ''}`}
                   >
                     {showCheckbox && onToggleSelect && (
                       <TableRowCheckbox
@@ -245,7 +248,7 @@ export const CareLogTable = forwardRef<HTMLDivElement, CareLogTableProps>(
                           {log.recipientName}
                         </span>
                         {log.status === 'urgent' && (
-                          <span className="w-2 h-2 rounded-full bg-red-500" />
+                          <span className="w-2 h-2 rounded-full bg-status-danger animate-urgent-pulse" />
                         )}
                       </div>
                     </TableCell>
@@ -271,18 +274,20 @@ export const CareLogTable = forwardRef<HTMLDivElement, CareLogTableProps>(
             )}
           </TableBody>
         </Table>
+        </div>
 
-        {/* 페이지네이션 - 상단 간격 추가 */}
+        {/* 페이지네이션 */}
         {!isLoading && totalPages > 0 && (
-          <TablePagination
-            className="mt-4"
-            currentPage={currentPage}
-            totalPages={totalPages}
-            pageSize={pageSize}
-            totalItems={totalItems}
-            onPageChange={onPageChange}
-            onPageSizeChange={onPageSizeChange}
-          />
+          <div className="px-5 py-3 border-t border-neutral-100">
+            <TablePagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              pageSize={pageSize}
+              totalItems={totalItems}
+              onPageChange={onPageChange}
+              onPageSizeChange={onPageSizeChange}
+            />
+          </div>
         )}
       </div>
     );

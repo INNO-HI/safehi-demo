@@ -118,16 +118,14 @@ export default function HealthPage() {
   // 로딩 상태
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-5xl mx-auto p-6">
-          <div className="animate-pulse space-y-6">
-            <div className="h-8 bg-neutral-200 rounded w-1/4" />
-            <div className="grid grid-cols-2 gap-4">
-              <div className="h-32 bg-neutral-200 rounded-xl" />
-              <div className="h-32 bg-neutral-200 rounded-xl" />
-            </div>
-            <div className="h-64 bg-neutral-200 rounded-xl" />
+      <div className="px-8 pb-8 pt-4">
+        <div className="animate-pulse space-y-6">
+          <div className="h-8 bg-neutral-200 rounded w-1/4" />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="h-32 bg-neutral-200 rounded-xl" />
+            <div className="h-32 bg-neutral-200 rounded-xl" />
           </div>
+          <div className="h-64 bg-neutral-200 rounded-xl" />
         </div>
       </div>
     );
@@ -136,28 +134,25 @@ export default function HealthPage() {
   // 에러 상태
   if (error || !recipient) {
     return (
-      <div className="min-h-screen bg-neutral-50">
-        <div className="max-w-5xl mx-auto p-6">
-          <Alert variant="danger" className="mb-4">
-            {error?.message || '대상자 정보를 불러올 수 없습니다.'}
-          </Alert>
-          <button
-            onClick={handleBack}
-            className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
-          >
-            대상자 정보로 돌아가기
-          </button>
-        </div>
+      <div className="px-8 pb-8 pt-4">
+        <Alert variant="danger" className="mb-4">
+          {error?.message || '대상자 정보를 불러올 수 없습니다.'}
+        </Alert>
+        <button
+          onClick={handleBack}
+          className="px-4 py-2 bg-neutral-100 text-neutral-700 rounded-lg hover:bg-neutral-200 transition-colors min-h-[44px]"
+        >
+          대상자 정보로 돌아가기
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <>
       {/* 헤더 */}
-      <div className="bg-white border-b border-neutral-200 px-6 py-5">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex items-center justify-between">
+      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-6 mt-4 px-6 py-5">
+        <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleBack}
@@ -177,8 +172,8 @@ export default function HealthPage() {
             </div>
 
             {/* 대상자 태그 */}
-            <div className="flex items-center gap-2 px-4 py-2 bg-[#E8F0F8] rounded-full">
-              <span className="text-sm font-medium text-[#2E6AB3]">
+            <div className="flex items-center gap-2 px-4 py-2 bg-[#EBF2FF] rounded-full">
+              <span className="text-sm font-medium text-[#448CFF]">
                 {recipient.basicInfo.dong}
               </span>
               <span className="text-sm font-medium text-[#C45A5A]">
@@ -186,11 +181,10 @@ export default function HealthPage() {
               </span>
             </div>
           </div>
-        </div>
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className="max-w-5xl mx-auto p-6 space-y-6">
+      <div className="px-8 pb-8 pt-4 space-y-6">
         {/* 긴급 알림 */}
         {recipient.urgentAlert && (
           <div className="p-4 bg-red-50 border border-red-200 rounded-xl">
@@ -207,7 +201,7 @@ export default function HealthPage() {
         {/* 기본 건강 정보 카드 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* 기저질환 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-2xl" aria-hidden="true">🏥</span>
               <h2 className="text-lg font-semibold text-neutral-900">기저질환</h2>
@@ -229,7 +223,7 @@ export default function HealthPage() {
           </div>
 
           {/* 복용 약물 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-2xl" aria-hidden="true">💊</span>
               <h2 className="text-lg font-semibold text-neutral-900">복용 약물</h2>
@@ -254,7 +248,7 @@ export default function HealthPage() {
 
         {/* 특이사항 */}
         {recipient.healthInfo.notes && (
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-2xl" aria-hidden="true">📝</span>
               <h2 className="text-lg font-semibold text-neutral-900">건강 관련 특이사항</h2>
@@ -266,7 +260,7 @@ export default function HealthPage() {
         )}
 
         {/* 건강 기록 히스토리 */}
-        <div className="bg-white rounded-xl border border-neutral-200 p-5">
+        <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <span className="text-2xl" aria-hidden="true">📋</span>
@@ -326,14 +320,14 @@ export default function HealthPage() {
 
           {/* 더보기 */}
           <div className="text-center mt-4 pt-4 border-t border-neutral-100">
-            <button className="text-[#2E6AB3] text-sm font-medium hover:underline">
+            <button className="text-[#448CFF] text-sm font-medium hover:underline">
               + 이전 기록 더보기
             </button>
           </div>
         </div>
 
         {/* 건강 관리 요약 */}
-        <div className="bg-white rounded-xl border border-neutral-200 p-5">
+        <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
           <div className="flex items-center gap-2 mb-4">
             <span className="text-2xl" aria-hidden="true">📊</span>
             <h2 className="text-lg font-semibold text-neutral-900">건강 관리 요약</h2>
@@ -363,6 +357,6 @@ export default function HealthPage() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

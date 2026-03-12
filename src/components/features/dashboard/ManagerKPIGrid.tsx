@@ -21,9 +21,9 @@ interface KPIItemProps {
   bgColor: string;
 }
 
-function KPIItem({ label, value, color, bgColor }: KPIItemProps) {
+function KPIItem({ label, value, color }: KPIItemProps) {
   return (
-    <div className={`p-4 rounded-lg ${bgColor}`}>
+    <div className="p-4 rounded-xl bg-white shadow-elevated border border-neutral-border/30">
       <p className={`text-sm font-medium ${color}`}>{label}</p>
       <p className="text-2xl font-bold text-neutral-900 mt-1">
         {value.toLocaleString()}
@@ -70,26 +70,26 @@ export const ManagerKPIGrid = forwardRef<HTMLDivElement, ManagerKPIGridProps>(
         <KPIItem
           label="전체 매니저"
           value={kpis.total}
-          color="text-neutral-600"
-          bgColor="bg-neutral-100"
+          color="text-neutral-text-sub"
+          bgColor=""
         />
         <KPIItem
           label="근무 중"
           value={kpis.active}
-          color="text-green-600"
-          bgColor="bg-green-50"
+          color="text-status-success"
+          bgColor=""
         />
         <KPIItem
           label="휴무"
           value={kpis.leave}
-          color="text-yellow-600"
-          bgColor="bg-yellow-50"
+          color="text-status-warning"
+          bgColor=""
         />
         <KPIItem
           label="퇴직"
           value={kpis.retired}
-          color="text-gray-600"
-          bgColor="bg-gray-100"
+          color="text-status-muted"
+          bgColor=""
         />
       </div>
     );

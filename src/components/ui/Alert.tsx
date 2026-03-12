@@ -28,9 +28,9 @@ function Alert({
 }: AlertProps) {
   const variants = {
     info: 'bg-status-info-light border-status-info text-status-info',
-    success: 'bg-status-success-light border-status-success text-status-success',
+    success: 'bg-primary-bg border-primary text-primary',
     warning: 'bg-status-warning-light border-status-warning text-status-warning',
-    danger: 'bg-status-danger-light border-status-danger text-status-danger',
+    danger: 'bg-[#F5F5F5] border-neutral-text-sub text-neutral-text-sub',
   };
 
   const icons = {

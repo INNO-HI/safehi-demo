@@ -46,16 +46,13 @@ export const RecipientFilters = forwardRef<HTMLDivElement, RecipientFiltersProps
       <div
         ref={ref}
         className={`
-          flex flex-wrap items-end gap-4 p-4
+          flex items-center gap-3 p-4
           bg-white rounded-lg border border-neutral-200
           ${className}
         `}
       >
         {/* 검색 */}
-        <div className="flex-1 min-w-[200px]">
-          <label className="block text-sm font-medium text-neutral-600 mb-1.5">
-            검색
-          </label>
+        <div className="w-[300px]">
           <SearchInput
             value={filters.search}
             onChange={onSearchChange}
@@ -66,9 +63,6 @@ export const RecipientFilters = forwardRef<HTMLDivElement, RecipientFiltersProps
 
         {/* 동 필터 */}
         <div className="min-w-[150px]">
-          <label className="block text-sm font-medium text-neutral-600 mb-1.5">
-            동
-          </label>
           <Select
             value={filters.dong}
             onChange={(e) => onDongChange(e.target.value as string | 'all')}
@@ -78,9 +72,6 @@ export const RecipientFilters = forwardRef<HTMLDivElement, RecipientFiltersProps
 
         {/* 담당 매니저 필터 */}
         <div className="min-w-[150px]">
-          <label className="block text-sm font-medium text-neutral-600 mb-1.5">
-            담당 매니저
-          </label>
           <Select
             value={filters.manager}
             onChange={(e) => onManagerChange(e.target.value as string | 'all')}
@@ -88,21 +79,22 @@ export const RecipientFilters = forwardRef<HTMLDivElement, RecipientFiltersProps
           />
         </div>
 
-        {/* 초기화 버튼 */}
-        {hasActiveFilters && (
-          <button
-            type="button"
-            onClick={onReset}
-            className="
-              h-11 px-4 text-sm font-medium
-              text-neutral-600 hover:text-neutral-900
-              hover:bg-neutral-100 rounded-lg
-              transition-colors duration-200
-            "
-          >
-            필터 초기화
-          </button>
-        )}
+        {/* 초기화 버튼 (항상 표시, 비활성 시 투명) */}
+        <button
+          type="button"
+          onClick={onReset}
+          disabled={!hasActiveFilters}
+          className={`
+            h-11 px-4 text-sm font-medium
+            rounded-lg transition-colors duration-200
+            ${hasActiveFilters
+              ? 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100'
+              : 'text-transparent cursor-default pointer-events-none'
+            }
+          `}
+        >
+          필터 초기화
+        </button>
       </div>
     );
   }

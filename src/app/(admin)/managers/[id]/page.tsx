@@ -46,7 +46,7 @@ function MonthlyActivityChart({ data }: { data: ManagerMonthlyActivity[] }) {
       {/* 범례 (순서: 정기 방문 → 전화 상담 → 긴급 방문) */}
       <div className="flex items-center gap-3 text-xs mb-2">
         <div className="flex items-center gap-1">
-          <div className="w-2 h-2 rounded-sm bg-[#2E6AB3]" />
+          <div className="w-2 h-2 rounded-sm bg-[#448CFF]" />
           <span className="text-neutral-500">정기 방문</span>
         </div>
         <div className="flex items-center gap-1">
@@ -86,7 +86,7 @@ function MonthlyActivityChart({ data }: { data: ManagerMonthlyActivity[] }) {
                 {/* 전화 상담 (중간 - 회색) */}
                 <div className="w-full bg-neutral-400" style={{ height: `${callHeight}px` }} />
                 {/* 정기 방문 (맨 아래 - Primary 파랑) */}
-                <div className="w-full bg-[#2E6AB3]" style={{ height: `${regularHeight}px` }} />
+                <div className="w-full bg-[#448CFF]" style={{ height: `${regularHeight}px` }} />
               </div>
 
               {/* 월 라벨 */}
@@ -96,7 +96,7 @@ function MonthlyActivityChart({ data }: { data: ManagerMonthlyActivity[] }) {
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-2 py-1.5 bg-neutral-800 text-white text-[10px] rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
                 <div className="font-medium mb-0.5">{item.month}</div>
                 <div className="flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-sm bg-[#2E6AB3]" />
+                  <span className="w-1.5 h-1.5 rounded-sm bg-[#448CFF]" />
                   정기 {item.regularVisits}
                 </div>
                 <div className="flex items-center gap-1">
@@ -139,7 +139,7 @@ export default function ManagerDetailPage() {
   // 에러 상태
   if (error || !data) {
     return (
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="px-8 py-6">
         <Alert variant="danger" className="mb-4">
           {error?.message || '매니저 정보를 불러올 수 없습니다.'}
         </Alert>
@@ -159,10 +159,10 @@ export default function ManagerDetailPage() {
   const remainingRecipientsCount = data.assignedRecipients.length - 5;
 
   return (
-    <div className="min-h-screen bg-neutral-50">
+    <>
       {/* 헤더 */}
-      <div className="bg-white border-b border-neutral-200 px-6 py-5">
-        <div className="max-w-7xl mx-auto">
+      <div className="mx-6 mt-4 px-6 py-5 bg-white rounded-2xl shadow-sm border border-neutral-border/30">
+        <div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <button
@@ -181,7 +181,7 @@ export default function ManagerDetailPage() {
             </div>
             <button
               onClick={handleExportPDF}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#2E6AB3] bg-white border border-[#2E6AB3] rounded-lg hover:bg-[#2E6AB3]/5 transition-colors min-h-[44px]"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#448CFF] bg-white border border-[#448CFF] rounded-lg hover:bg-[#448CFF]/5 transition-colors min-h-[44px]"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -193,11 +193,11 @@ export default function ManagerDetailPage() {
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className="max-w-7xl mx-auto p-6 space-y-6">
+      <div className="px-8 pb-8 pt-4 space-y-6">
         {/* 상단 섹션: 프로필 + 통계 카드 + 보고서 현황 */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
           {/* 프로필 카드 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5 flex flex-col">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5 flex flex-col">
             <div className="flex items-start gap-4 flex-1">
               {/* 아바타 */}
               <div
@@ -249,7 +249,7 @@ export default function ManagerDetailPage() {
           <div className="lg:col-span-2 flex flex-col gap-3">
             {/* 상단 통계 카드 3개 */}
             <div className="grid grid-cols-3 gap-3 flex-1">
-              <div className="bg-white rounded-xl border border-neutral-200 p-4 flex items-center gap-4">
+              <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-neutral-100 flex items-center justify-center flex-shrink-0">
                   <svg className="w-6 h-6 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -260,7 +260,7 @@ export default function ManagerDetailPage() {
                   <p className="text-2xl font-bold text-neutral-900">{data.stats.totalRecipients}명</p>
                 </div>
               </div>
-              <div className="bg-white rounded-xl border border-neutral-200 p-4 flex items-center gap-4">
+              <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-neutral-100 flex items-center justify-center flex-shrink-0">
                   <svg className="w-6 h-6 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -271,7 +271,7 @@ export default function ManagerDetailPage() {
                   <p className="text-2xl font-bold text-neutral-900">{data.stats.monthlyVisits}회</p>
                 </div>
               </div>
-              <div className="bg-white rounded-xl border border-neutral-200 p-4 flex items-center gap-4">
+              <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-neutral-100 flex items-center justify-center flex-shrink-0">
                   <svg className="w-6 h-6 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
@@ -286,15 +286,15 @@ export default function ManagerDetailPage() {
 
             {/* 보고서 현황 카드 3개 */}
             <div className="grid grid-cols-3 gap-3 flex-1">
-              <div className="bg-[#E8F0F8] rounded-xl border border-[#2E6AB3]/20 p-4 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#2E6AB3]/10 flex items-center justify-center flex-shrink-0">
-                  <svg className="w-6 h-6 text-[#2E6AB3]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="bg-[#EBF2FF] rounded-xl border border-[#448CFF]/20 p-4 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#448CFF]/10 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-6 h-6 text-[#448CFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm text-[#2E6AB3]">승인 보고서</p>
-                  <p className="text-2xl font-bold text-[#2E6AB3]">{data.reportCounts.approved}건</p>
+                  <p className="text-sm text-[#448CFF]">승인 보고서</p>
+                  <p className="text-2xl font-bold text-[#448CFF]">{data.reportCounts.approved}건</p>
                 </div>
               </div>
               <div className="bg-[#FFF8E6] rounded-xl border border-[#C4940A]/20 p-4 flex items-center gap-4">
@@ -326,7 +326,7 @@ export default function ManagerDetailPage() {
         {/* 중단 섹션: 담당 대상자 + 최근 보고서 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* 담당 대상자 박스 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-semibold text-neutral-900">담당 대상자</h3>
@@ -387,7 +387,7 @@ export default function ManagerDetailPage() {
           </div>
 
           {/* 최근 보고서 박스 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-neutral-900">최근 보고서</h3>
               <Link
@@ -442,7 +442,7 @@ export default function ManagerDetailPage() {
         {/* 하단 섹션: 월별 활동 현황 + 최근 돌봄 기록 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           {/* 월별 활동 현황 차트 (최근 6개월 고정) */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-4">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-base font-semibold text-neutral-900">월별 활동 현황</h3>
               <span className="text-xs text-neutral-500">최근 6개월</span>
@@ -452,7 +452,7 @@ export default function ManagerDetailPage() {
           </div>
 
           {/* 최근 돌봄 기록 타임라인 */}
-          <div className="bg-white rounded-xl border border-neutral-200 p-5">
+          <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-neutral-900">최근 돌봄 기록</h3>
               <Link
@@ -518,6 +518,6 @@ export default function ManagerDetailPage() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

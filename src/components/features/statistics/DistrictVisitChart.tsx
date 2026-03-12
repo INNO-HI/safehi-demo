@@ -20,8 +20,8 @@ export interface DistrictVisitChartProps extends HTMLAttributes<HTMLDivElement> 
   displayLimit?: number;
 }
 
-// 차트 색상
-const BAR_COLOR = '#3D8B6E';
+// 차트 색상 (메인 컬러)
+const BAR_COLOR = '#448CFF';
 
 // 커스텀 툴팁
 function CustomTooltip({
@@ -77,7 +77,7 @@ export function DistrictVisitChart({
           {data.length > displayLimit && (
             <button
               onClick={() => setIsModalOpen(true)}
-              className="text-sm text-primary-main hover:underline min-h-[44px] px-2 flex items-center"
+              className="text-sm text-primary font-medium hover:underline min-h-[44px] px-2 flex items-center"
             >
               전체보기
             </button>
@@ -85,7 +85,7 @@ export function DistrictVisitChart({
         </div>
 
         {/* 차트 영역 - flex-1로 남은 공간 모두 채움 */}
-        <div className="flex-1 min-h-[200px]">
+        <div className="flex-1 min-h-[260px]">
           {displayData.length === 0 ? (
             <div className="h-full flex items-center justify-center text-neutral-text-sub">
               데이터가 없습니다

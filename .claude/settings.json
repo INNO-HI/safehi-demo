@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm dev:*)",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill:*)",
+      "Bash(xargs sed:*)",
+      "Bash(npx tsc:*)",
+      "Bash(ls /Users/flareon078/Desktop/dashboard-web/src/lib/constants/statistics.*)",
+      "Bash(npx next:*)",
+      "Bash(export PATH=\"/opt/homebrew/bin:$PATH\")",
+      "Read(//opt/homebrew/**)",
+      "Read(//usr/local/bin/**)",
+      "Read(//Users/flareon078/.local/share/pnpm/**)",
+      "Read(//Users/flareon078/Library/pnpm/**)",
+      "Read(//Users/flareon078/**)",
+      "Bash(node ./node_modules/.bin/next dev -p 3000)",
+      "Bash(export PATH=\"/Users/flareon078/.nvm/versions/node/v22.21.0/bin:$PATH\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/care-logs)",
+      "Bash(find /Users/flareon078/Desktop/dashboard-web/src -path *care* -name *.ts -o -path *care* -name *.tsx)",
+      "Bash(pnpm add:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm install:*)"
+    ],
+    "additionalDirectories": [
+      "/Users/flareon078/Desktop/dashboard-web/.next"
+    ]
+  }
+}

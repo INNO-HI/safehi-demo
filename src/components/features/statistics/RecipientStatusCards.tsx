@@ -109,9 +109,9 @@ export function RecipientStatusCards({
             <div
               key={status}
               className={cn(
-                'p-5 rounded-lg border transition-all flex flex-col',
+                'p-6 rounded-lg border transition-all flex flex-col',
                 isUrgent
-                  ? 'bg-red-50/50'
+                  ? 'bg-status-danger-light'
                   : 'border-neutral-border hover:shadow-sm'
               )}
               style={isUrgent ? { borderColor: `${color}40` } : undefined}
@@ -155,7 +155,7 @@ export function RecipientStatusCards({
           <p className="text-body text-neutral-text-sub mb-3">전월 대비 상태 전환</p>
           <div className="grid grid-cols-2 gap-4">
             {/* 정상 → 주의/긴급 */}
-            <div className="flex items-center gap-3 px-4 py-4 bg-red-50/50 rounded-lg">
+            <div className="flex items-center gap-3 px-4 py-4 bg-status-danger-light rounded-lg">
               <div className="flex items-center gap-2">
                 <span className="text-body font-medium" style={{ color: STATUS_COLORS.normal }}>
                   정상
@@ -166,7 +166,7 @@ export function RecipientStatusCards({
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#94A3B8"
+                  stroke="#B9C3CF"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -189,7 +189,7 @@ export function RecipientStatusCards({
             </div>
 
             {/* 주의/긴급 → 정상 */}
-            <div className="flex items-center gap-3 px-4 py-4 bg-green-50/50 rounded-lg">
+            <div className="flex items-center gap-3 px-4 py-4 bg-status-success-light rounded-lg">
               <div className="flex items-center gap-2">
                 <span className="text-body font-medium" style={{ color: STATUS_COLORS.caution }}>
                   주의
@@ -204,7 +204,7 @@ export function RecipientStatusCards({
                   height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#94A3B8"
+                  stroke="#B9C3CF"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
