@@ -91,11 +91,6 @@ function getDominantStatus(metric: DongMetric): Status {
   return '승인';
 }
 
-function getFillColor(metric?: DongMetric) {
-  if (!metric) return '#EEF3F8';
-  const status = getDominantStatus(metric);
-  return STATUS_COLORS[status].fill;
-}
 
 function StatusBadge({ status, count }: { status: Status; count: number }) {
   const color = STATUS_COLORS[status];
@@ -225,7 +220,6 @@ export default function JejuDongMap({ className = '' }: JejuDongMapProps) {
                       geographies.map((geo) => {
                         const name = normalizeName(String(geo.properties?.adm_nm || ''));
                         const isJejuCity = name.includes('제주시');
-                        const metric = isJejuCity ? metricMap.get(name) : undefined;
                         const isSelected = isJejuCity && selectedName === name;
 
                         // 제주시 아닌 지역은 연하게 표시
