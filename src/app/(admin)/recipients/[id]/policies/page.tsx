@@ -298,7 +298,7 @@ export default function PoliciesPage() {
         </div>
 
         {/* 통계 카드 */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
           <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">분석 기반 조건</p>
             <p className="text-lg font-semibold text-neutral-900">

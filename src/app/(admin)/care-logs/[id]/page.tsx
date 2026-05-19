@@ -200,7 +200,7 @@ export default function CareLogDetailPage() {
             {/* 기본 정보 */}
             <Card className="p-6">
               <h2 className="text-lg font-semibold text-neutral-900 mb-5">기본 정보</h2>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
                 <div>
                   <p className="text-sm text-neutral-600 mb-1.5">대상자</p>
                   <p className="text-lg font-bold text-neutral-900">{data.recipientName}</p>

@@ -2,6 +2,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useEffect, useState } from 'react';
 import type { User, AuthState } from '@/types/auth';
 
 interface AuthStore extends AuthState {
@@ -90,12 +91,13 @@ export const useAuthStore = create<AuthStore>()(
       }),
       onRehydrateStorage: () => {
         return (_state, error) => {
-          // 스토리지 복원 후 isLoading을 false로 설정
-          if (!error) {
-            useAuthStore.setState({ isLoading: false });
-          }
+          // 스토리지 복원이 끝나면 항상 isLoading=false (에러 무관)
+          useAuthStore.setState({ isLoading: false });
+          void error;
         };
       },
+      // SSG 시 hydration이 클라이언트에서만 발생하므로 skipHydration은 사용하지 않음
+      // (skipHydration: false가 기본)
     }
   )
 );
@@ -115,11 +117,18 @@ export function useAuth() {
     setLoading,
   } = useAuthStore();
 
+  // Zustand persist hydration 완료까지 isLoading=true로 처리
+  // (SSG/SSR HTML과 localStorage 복원 사이의 race condition 방지)
+  const [isHydrated, setIsHydrated] = useState(false);
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
   return {
     user,
     token,
     isAuthenticated,
-    isLoading,
+    isLoading: isLoading || !isHydrated,
     login,
     logout,
     setLoading,

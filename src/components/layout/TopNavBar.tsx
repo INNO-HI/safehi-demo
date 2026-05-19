@@ -83,7 +83,7 @@ export function TopNavBar() {
     <>
       {/* 네비바 */}
       <header
-        className="flex items-center justify-between mx-6 mt-4 px-6 py-3 bg-white rounded-2xl shadow-lg border border-neutral-border"
+        className="flex items-center justify-between mx-3 lg:mx-6 mt-4 pl-16 pr-4 lg:px-6 py-3 bg-white rounded-2xl shadow-lg border border-neutral-border"
       >
         {/* 왼쪽: 검색 */}
         <div className="relative flex-1 max-w-[400px]">

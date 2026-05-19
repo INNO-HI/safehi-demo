@@ -56,7 +56,7 @@ export default function DashboardPage() {
       />
 
       {/* 메인 콘텐츠 */}
-      <div className="flex-1 overflow-y-auto px-8 pb-8 pt-2">
+      <div className="flex-1 overflow-y-auto px-3 lg:px-8 pb-8 pt-2">
         <div className="space-y-4">
           {/* KPI + 알림 */}
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-4">

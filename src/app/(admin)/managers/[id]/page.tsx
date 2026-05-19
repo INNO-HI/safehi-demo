@@ -248,7 +248,7 @@ export default function ManagerDetailPage() {
           {/* 통계 카드 + 보고서 현황 */}
           <div className="lg:col-span-2 flex flex-col gap-3">
             {/* 상단 통계 카드 3개 */}
-            <div className="grid grid-cols-3 gap-3 flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1">
               <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-neutral-100 flex items-center justify-center flex-shrink-0">
                   <svg className="w-6 h-6 text-neutral-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -285,7 +285,7 @@ export default function ManagerDetailPage() {
             </div>
 
             {/* 보고서 현황 카드 3개 */}
-            <div className="grid grid-cols-3 gap-3 flex-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 flex-1">
               <div className="bg-[#EBF2FF] rounded-xl border border-[#448CFF]/20 p-4 flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-[#448CFF]/10 flex items-center justify-center flex-shrink-0">
                   <svg className="w-6 h-6 text-[#448CFF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

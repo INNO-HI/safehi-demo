@@ -156,8 +156,8 @@ export default function MemosPage() {
   return (
     <>
       {/* 헤더 */}
-      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-6 mt-4 px-6 py-5">
-        <div className="flex items-center justify-between">
+      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-3 lg:mx-6 mt-4 px-4 lg:px-6 py-5">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleBack}
@@ -201,9 +201,9 @@ export default function MemosPage() {
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className="px-8 pb-8 pt-4 space-y-6">
+      <div className="px-3 lg:px-8 pb-8 pt-4 space-y-6">
         {/* 통계 카드 */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
           <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">전체 메모</p>
             <p className="text-3xl font-bold text-neutral-900">{mockMemoStats.totalMemos}개</p>
@@ -224,9 +224,9 @@ export default function MemosPage() {
 
         {/* 필터 영역 */}
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col md:flex-row md:items-center gap-3">
             {/* 검색창 */}
-            <div className="flex-1 relative">
+            <div className="flex-1 relative min-w-0">
               <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>

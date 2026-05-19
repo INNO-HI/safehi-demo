@@ -177,8 +177,8 @@ export default function VisitsPage() {
   return (
     <>
       {/* 헤더 */}
-      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-6 mt-4 px-6 py-5">
-        <div className="flex items-center justify-between">
+      <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 mx-3 lg:mx-6 mt-4 px-4 lg:px-6 py-5">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-4">
               <button
                 onClick={handleBack}
@@ -222,9 +222,9 @@ export default function VisitsPage() {
       </div>
 
       {/* 메인 콘텐츠 */}
-      <div className="px-8 pb-8 pt-4 space-y-6">
+      <div className="px-3 lg:px-8 pb-8 pt-4 space-y-6">
         {/* 통계 카드 */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
           <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-5">
             <p className="text-sm text-neutral-500 mb-1">총 방문 횟수</p>
             <p className="text-3xl font-bold text-neutral-900">{mockVisitStats.totalVisits}회</p>
@@ -250,7 +250,7 @@ export default function VisitsPage() {
 
         {/* 필터 영역 */}
         <div className="bg-white rounded-2xl shadow-sm border border-neutral-border/30 p-4">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-3">
             {/* 기간 선택 */}
             <div className="flex items-center gap-2 px-3 py-2 border border-neutral-200 rounded-lg">
               <svg className="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

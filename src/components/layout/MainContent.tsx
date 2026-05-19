@@ -12,7 +12,7 @@ export function MainContent({ children }: MainContentProps) {
   return (
     <main
       className="
-        fixed top-0 right-0 bottom-0 left-[320px]
+        fixed top-0 right-0 bottom-0 left-0 lg:left-[320px]
         flex flex-col
         overflow-y-auto overflow-x-hidden
       "

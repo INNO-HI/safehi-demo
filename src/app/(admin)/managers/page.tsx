@@ -68,7 +68,7 @@ export default function ManagersPage() {
       />
 
       {/* 메인 콘텐츠 */}
-      <div className="flex-1 overflow-y-auto px-8 pb-8 pt-2">
+      <div className="flex-1 overflow-y-auto px-3 lg:px-8 pb-8 pt-2">
         <div className="space-y-6">
           {/* KPI 카드 그리드 */}
           <ManagerKPIGrid kpis={kpis} isLoading={isLoading} />

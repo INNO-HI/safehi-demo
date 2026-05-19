@@ -102,7 +102,7 @@ export default function CareLogsPage() {
       />
 
       {/* 메인 콘텐츠 */}
-      <div className="flex-1 overflow-y-auto px-8 pb-8 pt-2">
+      <div className="flex-1 overflow-y-auto px-3 lg:px-8 pb-8 pt-2">
         <div className="space-y-6">
           {/* 필터 영역 */}
           <CareLogFilters

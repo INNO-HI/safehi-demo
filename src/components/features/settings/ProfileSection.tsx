@@ -104,11 +104,11 @@ export function ProfileSection({ profile, onSave, onPasswordChange }: ProfileSec
                   </svg>
                   <span className="whitespace-nowrap">{profile.phone}</span>
                 </p>
-                <p className="flex items-center gap-2">
+                <p className="flex items-center gap-2 min-w-0">
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  <span className="truncate">{profile.email}</span>
+                  <span className="truncate min-w-0 flex-1" title={profile.email}>{profile.email}</span>
                 </p>
                 <p className="text-caption text-neutral-text-tertiary whitespace-nowrap">
                   가입일: {formattedDate}
