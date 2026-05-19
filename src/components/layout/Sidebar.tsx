@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import logoImg from '../../../public/logo.png';
 import type { SidebarUser, SidebarMenuItem } from '@/types/dashboard';
 import { defaultSidebarUser, defaultSidebarMenuItems } from '@/lib/utils/sidebar-defaults';
 // ============================================================
@@ -89,7 +90,7 @@ export function Sidebar({
       >
         {/* 로고 */}
         <div className="px-5 pt-6 pb-4 flex items-center gap-2.5">
-          <Image src="/logo.png" alt="안심하이 로고" width={32} height={32} />
+          <Image src={logoImg} alt="안심하이 로고" width={32} height={32} />
           <span className="text-lg font-bold text-primary">안심하이</span>
         </div>
 

@@ -1,5 +1,6 @@
 import { type ReactNode } from 'react';
 import Image from 'next/image';
+import logoImg from '../../../public/logo.png';
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -15,7 +16,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
       {/* 상단 헤더바 */}
       <header className="bg-white border-b border-neutral-border px-6 py-4">
         <div className="flex items-center gap-2">
-          <Image src="/logo.png" alt="안심하이 로고" width={32} height={32} />
+          <Image src={logoImg} alt="안심하이 로고" width={32} height={32} />
           <h1 className="text-h2 text-primary font-bold">안심하이</h1>
         </div>
       </header>
