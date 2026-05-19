@@ -189,16 +189,16 @@ export default function JejuDongMap({ className = '' }: JejuDongMapProps) {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {(['승인', '대기', '긴급'] as Status[]).map((s) => (
-              <div key={s} className="inline-flex items-center gap-2 rounded-full bg-neutral-50 px-3 py-1.5 text-xs text-neutral-text-sub">
-                <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: STATUS_COLORS[s].fill }} />
-                {s === '승인' ? '승인 중심' : s === '대기' ? '대기 존재' : '긴급 존재'}
+              <div key={s} className="inline-flex items-center gap-1.5 rounded-full bg-neutral-50 px-2.5 py-1 text-xs text-neutral-text-sub">
+                <span className="h-2 w-2 rounded-full" style={{ backgroundColor: STATUS_COLORS[s].fill }} />
+                {s}
               </div>
             ))}
           </div>
         </div>
 
         <div className="overflow-hidden rounded-2xl bg-neutral-50 p-3">
-          <div className="h-[520px] w-full rounded-xl bg-white">
+          <div className="h-[320px] w-full rounded-xl bg-white">
             {isLoading ? (
               <div className="flex h-full items-center justify-center text-sm text-neutral-text-sub">
                 <div className="flex flex-col items-center gap-3">
@@ -252,22 +252,22 @@ export default function JejuDongMap({ className = '' }: JejuDongMapProps) {
                             onClick={() => setSelectedName(name)}
                             style={{
                               default: {
-                                fill: getFillColor(metric),
-                                stroke: '#FFFFFF',
-                                strokeWidth: isSelected ? 1.8 : 0.8,
+                                fill: isSelected ? '#E5EAF1' : '#F1F4F8',
+                                stroke: '#D5DCE5',
+                                strokeWidth: isSelected ? 1.4 : 0.6,
                                 outline: 'none',
                               },
                               hover: {
-                                fill: metric ? STATUS_COLORS[getDominantStatus(metric)].text : '#D9E7FF',
-                                stroke: '#FFFFFF',
-                                strokeWidth: 1.2,
+                                fill: '#E5EAF1',
+                                stroke: '#C7D0DC',
+                                strokeWidth: 1,
                                 outline: 'none',
                                 cursor: 'pointer',
                               },
                               pressed: {
-                                fill: metric ? STATUS_COLORS[getDominantStatus(metric)].text : '#C8DAFF',
-                                stroke: '#FFFFFF',
-                                strokeWidth: 1.2,
+                                fill: '#DCE2EB',
+                                stroke: '#C7D0DC',
+                                strokeWidth: 1,
                                 outline: 'none',
                               },
                             }}
