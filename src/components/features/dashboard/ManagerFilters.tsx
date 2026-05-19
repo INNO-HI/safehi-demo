@@ -46,13 +46,13 @@ export const ManagerFilters = forwardRef<HTMLDivElement, ManagerFiltersProps>(
       <div
         ref={ref}
         className={`
-          flex items-center gap-3 p-4
+          flex flex-wrap items-center gap-3 p-4
           bg-white rounded-2xl shadow-sm border border-neutral-border/30
           ${className}
         `}
       >
         {/* 검색 */}
-        <div className="w-[300px] shrink-0">
+        <div className="w-full sm:w-[300px] sm:shrink-0">
           <SearchInput
             value={filters.search}
             onChange={onSearchChange}

@@ -133,7 +133,7 @@ export function TopNavBar() {
             </button>
 
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-96 bg-white rounded-2xl shadow-2xl border border-neutral-border z-50">
+              <div className="absolute right-0 mt-2 w-[min(90vw,24rem)] bg-white rounded-2xl shadow-2xl border border-neutral-border z-50">
                 <div className="flex items-center justify-between px-5 py-4 border-b border-neutral-border">
                   <span className="text-base font-semibold text-[#2B2F36]">알림</span>
                   <span className="text-sm text-primary font-medium">{notificationCount}개 읽지 않음</span>

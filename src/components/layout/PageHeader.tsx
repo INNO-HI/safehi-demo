@@ -37,18 +37,18 @@ export function PageHeader({
     <header
       className={`
         flex flex-wrap items-center justify-between gap-4
-        px-8 pt-8 pb-4
+        px-3 lg:px-8 pt-6 lg:pt-8 pb-4
         ${className}
       `}
     >
       {/* 왼쪽: 제목 및 설명 */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-baseline gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4">
           {title && (
-            <h1 className="text-2xl font-bold text-neutral-text shrink-0">{title}</h1>
+            <h1 className="text-xl lg:text-2xl font-bold text-neutral-text shrink-0">{title}</h1>
           )}
           {description && (
-            <p className="text-sm text-neutral-text-sub truncate ml-1">{description}</p>
+            <p className="text-xs lg:text-sm text-neutral-text-sub truncate sm:ml-1">{description}</p>
           )}
         </div>
         {!title && !description && (

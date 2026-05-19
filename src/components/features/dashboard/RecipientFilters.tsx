@@ -46,13 +46,13 @@ export const RecipientFilters = forwardRef<HTMLDivElement, RecipientFiltersProps
       <div
         ref={ref}
         className={`
-          flex items-center gap-3 p-4
+          flex flex-wrap items-center gap-3 p-4
           bg-white rounded-lg border border-neutral-200
           ${className}
         `}
       >
         {/* 검색 */}
-        <div className="w-[300px]">
+        <div className="w-full sm:w-[300px]">
           <SearchInput
             value={filters.search}
             onChange={onSearchChange}
