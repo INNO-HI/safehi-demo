@@ -60,8 +60,8 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs<T extend
       role="tablist"
       aria-label={ariaLabel}
       className={`
-        flex gap-1.5 p-1 rounded-xl bg-neutral-100
-        ${fullWidth ? 'w-full' : 'w-fit'}
+        flex gap-1.5 p-1 rounded-xl bg-neutral-100 overflow-x-auto
+        ${fullWidth ? 'w-full' : 'max-w-full'}
         ${className}
       `}
     >
@@ -80,10 +80,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs<T extend
             disabled={option.disabled}
             onClick={() => onChange(option.value as T)}
             className={`
-              relative flex items-center justify-center gap-1.5
+              relative flex items-center justify-center gap-1.5 whitespace-nowrap
               rounded-lg font-medium transition-all duration-200
               focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2
-              min-w-[44px] min-h-[44px]
+              min-w-[44px] min-h-[44px] px-3
               ${sizeStyles[size]}
               ${fullWidth ? 'flex-1' : ''}
               ${
