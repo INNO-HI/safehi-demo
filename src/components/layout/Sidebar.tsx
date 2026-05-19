@@ -89,7 +89,7 @@ export function Sidebar({
       >
         {/* 로고 */}
         <div className="px-5 pt-6 pb-4 flex items-center gap-2.5">
-          <Image src="/logo.jpg" alt="안심하이 로고" width={32} height={32} />
+          <Image src="/logo.png" alt="안심하이 로고" width={32} height={32} />
           <span className="text-lg font-bold text-primary">안심하이</span>
         </div>
 
