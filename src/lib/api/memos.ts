@@ -5,6 +5,7 @@
 
 import type { Memo } from '@/types/dashboard';
 import { apiGet, apiPost } from './client';
+import { mockMemosFor } from '@/lib/mock-data/recipient-details';
 
 /**
  * 대상자별 메모 목록 조회
@@ -13,7 +14,7 @@ export async function getMemosByRecipientId(recipientId: string): Promise<Memo[]
   try {
     return await apiGet<Memo[]>(`/recipients/${recipientId}/memos`);
   } catch {
-    return [];
+    return mockMemosFor(recipientId);
   }
 }
 

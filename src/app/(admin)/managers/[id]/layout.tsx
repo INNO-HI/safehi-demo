@@ -1,10 +1,11 @@
 /**
- * 매니저 상세 페이지 동적 라우트 정적 빌드용 layout.
- * generateStaticParams로 빌드 타임에 페이지를 미리 생성.
+ * 매니저 상세 페이지 동적 라우트 정적 빌드.
+ * mock-data/managers.ts의 m-1 ~ m-8 모두 생성.
  */
+import { mockManagers } from '@/lib/mock-data/managers';
 
 export function generateStaticParams() {
-  return [{ id: 'm-1' }, { id: 'm-2' }, { id: 'm-3' }];
+  return mockManagers.map((m) => ({ id: m.id }));
 }
 
 export default function ManagerDetailLayout({

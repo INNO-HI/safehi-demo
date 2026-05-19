@@ -7,6 +7,7 @@
 import type { Recipient, RecipientDetailExtended, RecipientStatus, RecipientFilters } from '@/types/dashboard';
 import { apiGet, ApiError } from './client';
 import { mockRecipients, getMockStatusCounts, mockRecipientKPIs } from '@/lib/mock-data/recipients';
+import { mockRecipientDetails } from '@/lib/mock-data/recipient-details';
 
 export interface RecipientsResult {
   recipients: Recipient[];
@@ -87,6 +88,9 @@ export async function getRecipientDetailById(id: string): Promise<RecipientDetai
   try {
     return await apiGet<RecipientDetailExtended>(`/recipients/${id}`);
   } catch (err) {
+    // Mock fallback: 정확 매칭 or 첫 항목 (데모 안정)
+    const detail = mockRecipientDetails[id] || mockRecipientDetails['recipient-001'];
+    if (detail) return detail;
     if (err instanceof ApiError && err.status === 404) {
       return null;
     }

@@ -4,7 +4,6 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 
-import { ProfileButton } from './ProfileButton';
 
 // 알림 타입
 interface NotiItem {
@@ -193,12 +192,14 @@ export function TopNavBar() {
             <button
               type="button"
               onClick={handleProfileToggle}
-              className="flex items-center gap-2.5 hover:opacity-80 transition-opacity"
+              className="flex items-center gap-2.5 hover:opacity-80 transition-opacity rounded-full"
             >
-              <ProfileButton
-                name={user?.name || ''}
-                size="md"
-              />
+              <span
+                aria-hidden="true"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white font-semibold text-base"
+              >
+                {(user?.name || '').charAt(0).toUpperCase()}
+              </span>
               <span className="text-sm font-medium text-[#2B2F36]">{user?.name}</span>
             </button>
 

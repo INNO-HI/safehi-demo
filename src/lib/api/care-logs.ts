@@ -5,28 +5,13 @@
 
 import type { CareLog, CareLogStatus, CareLogFilters, CareLogDetailExtended, Feedback } from '@/types/dashboard';
 import { apiGet, apiPatch, apiPost, ApiError } from './client';
+import { mockCareLogs, mockCareLogDetails } from '@/lib/mock-data/care-logs';
 
 export interface CareLogsResult {
   logs: CareLog[];
   totalCount: number;
   statusCounts: Record<CareLogStatus | 'all', number>;
 }
-
-// Mock 데이터 (백엔드 미연결 시 사용)
-const mockCareLogs: CareLog[] = [
-  { id: 'cl-001', recipientName: '김순자', managerName: '이민수', centerName: '강남돌봄센터', visitDate: new Date('2026-03-12T09:30:00'), registeredAt: new Date('2026-03-12T10:15:00'), status: 'pending' },
-  { id: 'cl-002', recipientName: '박영희', managerName: '김지현', centerName: '서초돌봄센터', visitDate: new Date('2026-03-12T11:00:00'), registeredAt: new Date('2026-03-12T11:45:00'), status: 'approved' },
-  { id: 'cl-003', recipientName: '이복순', managerName: '이민수', centerName: '강남돌봄센터', visitDate: new Date('2026-03-11T14:00:00'), registeredAt: new Date('2026-03-11T15:20:00'), status: 'urgent' },
-  { id: 'cl-004', recipientName: '정옥분', managerName: '박서준', centerName: '송파돌봄센터', visitDate: new Date('2026-03-11T10:00:00'), registeredAt: new Date('2026-03-11T10:50:00'), status: 'approved' },
-  { id: 'cl-005', recipientName: '최말순', managerName: '김지현', centerName: '서초돌봄센터', visitDate: new Date('2026-03-10T13:30:00'), registeredAt: new Date('2026-03-10T14:10:00'), status: 'rejected' },
-  { id: 'cl-006', recipientName: '한옥자', managerName: '이민수', centerName: '강남돌봄센터', visitDate: new Date('2026-03-10T09:00:00'), registeredAt: new Date('2026-03-10T09:40:00'), status: 'pending' },
-  { id: 'cl-007', recipientName: '강순덕', managerName: '박서준', centerName: '송파돌봄센터', visitDate: new Date('2026-03-09T15:00:00'), registeredAt: new Date('2026-03-09T16:00:00'), status: 'approved' },
-  { id: 'cl-008', recipientName: '윤정숙', managerName: '김지현', centerName: '서초돌봄센터', visitDate: new Date('2026-03-09T10:30:00'), registeredAt: new Date('2026-03-09T11:20:00'), status: 'pending' },
-  { id: 'cl-009', recipientName: '임춘희', managerName: '이민수', centerName: '강남돌봄센터', visitDate: new Date('2026-03-08T14:00:00'), registeredAt: new Date('2026-03-08T14:50:00'), status: 'approved' },
-  { id: 'cl-010', recipientName: '조귀남', managerName: '박서준', centerName: '송파돌봄센터', visitDate: new Date('2026-03-08T11:00:00'), registeredAt: new Date('2026-03-08T11:30:00'), status: 'urgent' },
-  { id: 'cl-011', recipientName: '배순임', managerName: '김지현', centerName: '서초돌봄센터', visitDate: new Date('2026-03-07T09:30:00'), registeredAt: new Date('2026-03-07T10:10:00'), status: 'approved' },
-  { id: 'cl-012', recipientName: '송옥순', managerName: '이민수', centerName: '강남돌봄센터', visitDate: new Date('2026-03-07T13:00:00'), registeredAt: new Date('2026-03-07T13:45:00'), status: 'pending' },
-];
 
 function getMockCareLogs(
   filters: CareLogFilters,
@@ -99,6 +84,9 @@ export async function getCareLogDetailById(id: string): Promise<CareLogDetailExt
   try {
     return await apiGet<CareLogDetailExtended>(`/care-logs/${id}`);
   } catch (err) {
+    // Mock fallback: 우선 정확 매칭, 없으면 첫 항목 반환 (데모 안정성)
+    const detail = mockCareLogDetails[id] || mockCareLogDetails['cl-001'];
+    if (detail) return detail;
     if (err instanceof ApiError && err.status === 404) {
       return null;
     }

@@ -1,6 +1,5 @@
 /**
- * 대상자 관리 Mock 데이터
- * 백엔드 미연동 시 임시 데이터
+ * 대상자 관리 Mock 데이터 (결정적 — SSG 하이드레이션 안정성 보장)
  */
 
 import type { Recipient, RecipientStatus } from '@/types/dashboard';
@@ -10,39 +9,46 @@ const managers = ['김민수', '이영희', '박지현', '최동욱', '정수연
 const lastNames = ['김', '이', '박', '최', '정', '한', '오', '장', '윤', '조', '임', '송', '서', '강', '류'];
 const firstNames = ['순자', '영숙', '옥순', '정자', '영자', '춘자', '정숙', '영희', '순옥', '복순', '영남', '석호', '철수', '기영', '만복', '종호', '병철', '두식'];
 
-function randomDate(daysAgo: number): Date {
-  const d = new Date();
-  d.setDate(d.getDate() - Math.floor(Math.random() * daysAgo));
+// 결정적 의사난수 (인덱스 기반)
+function pseudoRandom(seed: number, max: number): number {
+  return Math.abs((seed * 9301 + 49297) % 233280) % max;
+}
+
+function deterministicDate(seed: number, maxDaysAgo: number): Date {
+  const daysAgo = pseudoRandom(seed, maxDaysAgo);
+  const d = new Date('2026-05-19T09:00:00');
+  d.setDate(d.getDate() - daysAgo);
   return d;
 }
 
-function randomStatus(): RecipientStatus {
-  const r = Math.random();
-  if (r < 0.5) return 'normal';
-  if (r < 0.7) return 'caution';
-  if (r < 0.85) return 'urgent';
+function deterministicStatus(seed: number): RecipientStatus {
+  const r = seed % 100;
+  if (r < 50) return 'normal';
+  if (r < 70) return 'caution';
+  if (r < 85) return 'urgent';
   return 'unvisited';
 }
 
-// 48명의 대상자 데이터 생성
+// 48명의 대상자 데이터 (결정적 생성)
 export const mockRecipients: Recipient[] = Array.from({ length: 48 }, (_, i) => {
+  const seed = i + 1;
   const lastName = lastNames[i % lastNames.length];
   const firstName = firstNames[i % firstNames.length];
   const dong = dongs[i % dongs.length];
   const manager = managers[i % managers.length];
-  const status = randomStatus();
+  const status = deterministicStatus(seed);
   const hasVisit = status !== 'unvisited';
 
   return {
     id: `recipient-${String(i + 1).padStart(3, '0')}`,
     name: `${lastName}${firstName}`,
-    age: 65 + Math.floor(Math.random() * 20),
-    gender: Math.random() > 0.4 ? 'female' as const : 'male' as const,
+    age: 65 + pseudoRandom(seed, 20),
+    gender: (seed % 5 === 0 ? 'male' : 'female') as 'male' | 'female',
     dong,
-    address: `서울시 강남구 ${dong} ${100 + Math.floor(Math.random() * 900)}번지`,
+    address: `서울시 강남구 ${dong} ${100 + pseudoRandom(seed * 7, 900)}번지`,
     managerName: manager,
-    lastVisitDate: hasVisit ? randomDate(30) : null,
-    visitCount: hasVisit ? Math.floor(Math.random() * 20) + 1 : 0,
+    lastVisitDate: hasVisit ? deterministicDate(seed, 30) : null,
+    visitCount: hasVisit ? (pseudoRandom(seed, 19) + 1) : 0,
     status,
   };
 });
@@ -62,11 +68,12 @@ export function getMockStatusCounts(recipients: Recipient[]): Record<RecipientSt
   return counts;
 }
 
-// Mock KPI
+// Mock KPI (실제 데이터와 일치)
+const _counts = getMockStatusCounts(mockRecipients);
 export const mockRecipientKPIs = {
-  total: 48,
-  normal: 24,
-  caution: 10,
-  urgent: 7,
-  unvisited: 7,
+  total: _counts.all,
+  normal: _counts.normal,
+  caution: _counts.caution,
+  urgent: _counts.urgent,
+  unvisited: _counts.unvisited,
 };

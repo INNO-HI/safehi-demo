@@ -5,6 +5,7 @@
 
 import type { Visit } from '@/types/dashboard';
 import { apiGet } from './client';
+import { mockVisitsFor } from '@/lib/mock-data/recipient-details';
 
 /**
  * 대상자별 방문 기록 조회
@@ -22,6 +23,6 @@ export async function getVisitsByRecipientId(
   try {
     return await apiGet<Visit[]>(`/recipients/${recipientId}/visits${qs ? '?' + qs : ''}`);
   } catch {
-    return [];
+    return mockVisitsFor(recipientId);
   }
 }

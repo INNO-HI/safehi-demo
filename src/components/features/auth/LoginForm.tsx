@@ -33,7 +33,7 @@ export function LoginForm() {
     defaultValues: {
       email: '',
       password: '',
-      rememberMe: false,
+      rememberMe: true,
     },
   });
 
