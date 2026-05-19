@@ -6,6 +6,7 @@
  */
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4100/core/dashboard';
+const USE_MOCK = process.env.NEXT_PUBLIC_USE_MOCK === 'true';
 
 export interface ApiEnvelope<T = unknown> {
   ok: boolean;
@@ -24,6 +25,13 @@ export async function apiFetch<T>(
 ): Promise<T> {
   const url = `${BASE_URL}${path}`;
   const method = init?.method || 'GET';
+
+  // ── Mock 모드: 백엔드 호출 우회 ──
+  // 각 API 모듈의 try/catch fallback이 mock 데이터를 반환하도록 즉시 에러
+  if (USE_MOCK) {
+    console.log(`[MOCK] ${method} ${path} → fallback to mock`);
+    throw new ApiError('mock mode: skipping backend', 'MOCK_MODE', 0);
+  }
 
   // 저장된 토큰 읽기
   let token: string | null = null;

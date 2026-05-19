@@ -22,14 +22,26 @@ export async function getManagers(filters: ManagerFilters): Promise<ManagersResu
   if (filters.dong && filters.dong !== 'all') params.set('dong', filters.dong);
   if (filters.center && filters.center !== 'all') params.set('center', filters.center);
 
-  return apiGet<ManagersResult>(`/managers?${params.toString()}`);
+  try {
+    return await apiGet<ManagersResult>(`/managers?${params.toString()}`);
+  } catch {
+    return {
+      managers: [],
+      totalCount: 0,
+      statusCounts: { all: 0, active: 0, leave: 0, retired: 0 },
+    };
+  }
 }
 
 /**
  * 매니저 KPI 조회
  */
 export async function getManagerKPIs(): Promise<ManagerKPIs> {
-  return apiGet<ManagerKPIs>('/managers/kpi');
+  try {
+    return await apiGet<ManagerKPIs>('/managers/kpi');
+  } catch {
+    return { total: 0, active: 0, leave: 0, retired: 0 };
+  }
 }
 
 /**
@@ -59,11 +71,20 @@ export async function getManagerReports(
   if (filters.dateRange?.start) params.set('dateStart', filters.dateRange.start.toISOString());
   if (filters.dateRange?.end) params.set('dateEnd', filters.dateRange.end.toISOString());
 
-  const response = await apiGet<{
+  let response: {
     reports: Array<{ id: string; recipientId: string; recipientName: string; visitDate: string; registeredAt: string; status: string }>;
     totalCount: number;
     statusCounts: Record<string, number>;
-  }>(`/managers/${managerId}/reports?${params.toString()}`);
+  };
+  try {
+    response = await apiGet<{
+      reports: Array<{ id: string; recipientId: string; recipientName: string; visitDate: string; registeredAt: string; status: string }>;
+      totalCount: number;
+      statusCounts: Record<string, number>;
+    }>(`/managers/${managerId}/reports?${params.toString()}`);
+  } catch {
+    response = { reports: [], totalCount: 0, statusCounts: { all: 0, pending: 0, approved: 0, rejected: 0 } };
+  }
 
   return {
     ...response,
@@ -95,11 +116,20 @@ export async function getManagerVisits(
   if (filters.dateRange?.start) params.set('dateStart', filters.dateRange.start.toISOString());
   if (filters.dateRange?.end) params.set('dateEnd', filters.dateRange.end.toISOString());
 
-  const response = await apiGet<{
+  let response: {
     visits: Array<{ id: string; recipientId: string; recipientName: string; visitDate: string; visitType: string; result: string }>;
     totalCount: number;
     typeCounts: Record<string, number>;
-  }>(`/managers/${managerId}/visits?${params.toString()}`);
+  };
+  try {
+    response = await apiGet<{
+      visits: Array<{ id: string; recipientId: string; recipientName: string; visitDate: string; visitType: string; result: string }>;
+      totalCount: number;
+      typeCounts: Record<string, number>;
+    }>(`/managers/${managerId}/visits?${params.toString()}`);
+  } catch {
+    response = { visits: [], totalCount: 0, typeCounts: { all: 0, regular: 0, emergency: 0, call: 0 } };
+  }
 
   return {
     ...response,

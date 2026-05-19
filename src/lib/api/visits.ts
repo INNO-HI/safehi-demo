@@ -19,5 +19,9 @@ export async function getVisitsByRecipientId(
   if (dateEnd) params.set('dateEnd', dateEnd.toISOString());
 
   const qs = params.toString();
-  return apiGet<Visit[]>(`/recipients/${recipientId}/visits${qs ? '?' + qs : ''}`);
+  try {
+    return await apiGet<Visit[]>(`/recipients/${recipientId}/visits${qs ? '?' + qs : ''}`);
+  } catch {
+    return [];
+  }
 }

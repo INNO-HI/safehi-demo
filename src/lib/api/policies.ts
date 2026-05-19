@@ -10,12 +10,20 @@ import { apiGet, apiPost } from './client';
  * 대상자별 정책 추천 목록 조회
  */
 export async function getPoliciesForRecipient(recipientId: string): Promise<Policy[]> {
-  return apiGet<Policy[]>(`/recipients/${recipientId}/policies`);
+  try {
+    return await apiGet<Policy[]>(`/recipients/${recipientId}/policies`);
+  } catch {
+    return [];
+  }
 }
 
 /**
  * AI 정책 재분석 (새로고침)
  */
 export async function refreshPoliciesForRecipient(recipientId: string): Promise<Policy[]> {
-  return apiPost<Policy[]>(`/recipients/${recipientId}/policies/refresh`);
+  try {
+    return await apiPost<Policy[]>(`/recipients/${recipientId}/policies/refresh`);
+  } catch {
+    return [];
+  }
 }

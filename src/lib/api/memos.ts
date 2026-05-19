@@ -10,7 +10,11 @@ import { apiGet, apiPost } from './client';
  * 대상자별 메모 목록 조회
  */
 export async function getMemosByRecipientId(recipientId: string): Promise<Memo[]> {
-  return apiGet<Memo[]>(`/recipients/${recipientId}/memos`);
+  try {
+    return await apiGet<Memo[]>(`/recipients/${recipientId}/memos`);
+  } catch {
+    return [];
+  }
 }
 
 /**
@@ -22,9 +26,20 @@ export async function addMemo(
   authorId?: string,
   authorName?: string
 ): Promise<Memo> {
-  return apiPost<Memo>(`/recipients/${recipientId}/memos`, {
-    content,
-    authorId,
-    authorName,
-  });
+  try {
+    return await apiPost<Memo>(`/recipients/${recipientId}/memos`, {
+      content,
+      authorId,
+      authorName,
+    });
+  } catch {
+    // Mock 모드: 가짜 메모 객체 반환 (실제 저장 X)
+    return {
+      id: `memo-${Date.now()}`,
+      content,
+      authorId: authorId || 'mock-user',
+      authorName: authorName || '데모 사용자',
+      createdAt: new Date(),
+    } as Memo;
+  }
 }
