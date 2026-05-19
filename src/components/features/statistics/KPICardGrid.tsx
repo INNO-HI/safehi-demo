@@ -24,7 +24,7 @@ export function KPICardGrid({ recipientStatus, reportStatus, className, ...props
       {...props}
     >
       <h2 className="text-base font-semibold text-neutral-text">전체 대상자 통계</h2>
-      <div className="flex gap-4">
+      <div className="grid grid-cols-2 gap-3">
       <KPICard
         label="전체 대상자"
         value={recipientStatus.total}

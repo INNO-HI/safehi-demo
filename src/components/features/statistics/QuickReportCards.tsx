@@ -37,14 +37,14 @@ export function QuickReportCards({
       {...props}
     >
       <h2 className="text-base font-semibold text-neutral-text">빠른 리포트 생성</h2>
-      <div className="flex gap-4">
+      <div className="grid grid-cols-2 gap-3">
         {REPORT_TEMPLATES.map((template) => {
           const isGenerating = generatingType === template.type;
 
           return (
             <div
               key={template.id}
-              className="w-[160px] h-[160px] bg-white rounded-xl p-5 border border-neutral-border flex flex-col justify-between flex-shrink-0 transition-all hover:shadow-md"
+              className="h-[160px] bg-white rounded-xl p-5 border border-neutral-border flex flex-col justify-between transition-all hover:shadow-md"
             >
               {/* 상단: 아이콘 + 제목 */}
               <div>

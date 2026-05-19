@@ -35,7 +35,7 @@ export function KPICard({
   return (
     <div
       className={cn(
-        'w-[160px] h-[160px] bg-white rounded-xl p-5 border transition-all flex flex-col justify-between flex-shrink-0',
+        'h-[160px] bg-white rounded-xl p-5 border transition-all flex flex-col justify-between',
         isHighlighted
           ? 'border bg-[#F08C8C]/5'
           : 'border-neutral-border hover:shadow-md',
