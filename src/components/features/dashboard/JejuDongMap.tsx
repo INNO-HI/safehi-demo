@@ -174,7 +174,7 @@ export default function JejuDongMap({ className = '' }: JejuDongMapProps) {
   const sortedMetrics = [...jejuCityMetrics].sort((a, b) => b.urgent - a.urgent || b.pending - a.pending || b.total - a.total);
 
   return (
-    <div className={`grid gap-4 xl:grid-cols-[1.6fr_0.9fr] ${className}`}>
+    <div className={`grid gap-4 items-start xl:grid-cols-[1.6fr_0.9fr] ${className}`}>
       {/* 지도 섹션 */}
       <section className="rounded-2xl border border-neutral-border/30 bg-white p-5 shadow-elevated">
         <div className="mb-4 flex items-start justify-between gap-3">
@@ -301,9 +301,11 @@ export default function JejuDongMap({ className = '' }: JejuDongMapProps) {
           </div>
         </div>
 
-        <div className="mt-3 flex min-h-8 items-center text-sm text-neutral-text-sub">
-          {hoverName ? `${hoverName.replace('제주특별자치도 ', '')} 선택 가능` : '제주시 권역만 노출됩니다. 동·읍·면 경계를 클릭해 현황을 확인하십시오.'}
-        </div>
+        {hoverName && (
+          <div className="mt-2 text-xs text-neutral-text-sub">
+            {hoverName.replace('제주특별자치도 ', '')} 선택 가능
+          </div>
+        )}
       </section>
 
       {/* 상세 패널 */}

@@ -12,6 +12,20 @@ import type {
 
 // KPI 데이터 (월별)
 export const mockKPIData: Record<string, StatisticsKPI> = {
+  '2026-05': {
+    totalRecipients: 1295,
+    monthlyVisits: 967,
+    processedReports: 845,
+    emergencyCases: 11,
+    activeManagers: 26,
+  },
+  '2026-04': {
+    totalRecipients: 1278,
+    monthlyVisits: 938,
+    processedReports: 821,
+    emergencyCases: 7,
+    activeManagers: 25,
+  },
   '2026-03': {
     totalRecipients: 1263,
     monthlyVisits: 912,
@@ -107,18 +121,16 @@ export const mockKPIData: Record<string, StatisticsKPI> = {
 
 // 월별 방문 추이 데이터 (6개월)
 export const mockVisitTrend6Months: MonthlyVisitTrend[] = [
-  { month: '2025-10', label: '10월', visits: 798 },
-  { month: '2025-11', label: '11월', visits: 834 },
   { month: '2025-12', label: '12월', visits: 756 },
   { month: '2026-01', label: '1월', visits: 892 },
   { month: '2026-02', label: '2월', visits: 856 },
   { month: '2026-03', label: '3월', visits: 912 },
+  { month: '2026-04', label: '4월', visits: 938 },
+  { month: '2026-05', label: '5월', visits: 967 },
 ];
 
 // 월별 방문 추이 데이터 (12개월)
 export const mockVisitTrend12Months: MonthlyVisitTrend[] = [
-  { month: '2025-04', label: '4월', visits: 745 },
-  { month: '2025-05', label: '5월', visits: 789 },
   { month: '2025-06', label: '6월', visits: 756 },
   { month: '2025-07', label: '7월', visits: 723 },
   { month: '2025-08', label: '8월', visits: 678 },
@@ -129,10 +141,26 @@ export const mockVisitTrend12Months: MonthlyVisitTrend[] = [
   { month: '2026-01', label: '1월', visits: 892 },
   { month: '2026-02', label: '2월', visits: 856 },
   { month: '2026-03', label: '3월', visits: 912 },
+  { month: '2026-04', label: '4월', visits: 938 },
+  { month: '2026-05', label: '5월', visits: 967 },
 ];
 
 // 보고서 처리 현황 데이터 (월별)
 export const mockReportStatusData: Record<string, ReportStatusDistribution> = {
+  '2026-05': {
+    approved: 568,
+    pending: 192,
+    urgent: 42,
+    rejected: 43,
+    total: 845,
+  },
+  '2026-04': {
+    approved: 542,
+    pending: 175,
+    urgent: 35,
+    rejected: 69,
+    total: 821,
+  },
   '2026-03': {
     approved: 512,
     pending: 168,
@@ -297,6 +325,40 @@ export const mockManagerRankingData: ManagerRanking[] = [
 
 // 대상자 상태 분포 데이터 (월별)
 export const mockRecipientStatusData: Record<string, RecipientStatusDistribution> = {
+  '2026-05': {
+    normal: 912,
+    caution: 218,
+    urgent: 87,
+    unvisited: 78,
+    total: 1295,
+    trends: {
+      normalChange: 18,
+      cautionChange: -5,
+      urgentChange: 2,
+      unvisitedChange: 2,
+    },
+    transition: {
+      toNormal: 24,
+      fromNormal: 11,
+    },
+  },
+  '2026-04': {
+    normal: 894,
+    caution: 223,
+    urgent: 85,
+    unvisited: 76,
+    total: 1278,
+    trends: {
+      normalChange: 16,
+      cautionChange: -8,
+      urgentChange: 3,
+      unvisitedChange: 4,
+    },
+    transition: {
+      toNormal: 22,
+      fromNormal: 10,
+    },
+  },
   '2026-03': {
     normal: 878,
     caution: 221,
