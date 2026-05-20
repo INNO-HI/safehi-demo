@@ -193,7 +193,7 @@ export default function JejuDongMap({ className = '' }: JejuDongMapProps) {
         </div>
 
         <div className="overflow-hidden rounded-2xl bg-neutral-50 p-3">
-          <div className="h-[320px] w-full rounded-xl bg-white">
+          <div className="h-[220px] w-full rounded-xl bg-white">
             {isLoading ? (
               <div className="flex h-full items-center justify-center text-sm text-neutral-text-sub">
                 <div className="flex flex-col items-center gap-3">
