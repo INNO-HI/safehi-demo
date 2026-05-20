@@ -209,6 +209,8 @@ export interface SidebarMenuItem {
   href: string;
   icon: 'dashboard' | 'document' | 'users' | 'briefcase' | 'chart' | 'settings';
   badge?: number;
+  /** 시연용 역할 표시. 'common'=공통, 'admin'=중간관리자 전용 */
+  roleScope?: 'common' | 'admin';
 }
 
 /** 사이드바 메뉴 그룹 */

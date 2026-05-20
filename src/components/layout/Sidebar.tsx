@@ -152,6 +152,22 @@ export function Sidebar({
                   >
                     <MenuIcon type={item.icon} />
                     <span className="flex-1 text-sm font-medium">{item.label}</span>
+                    {item.roleScope === 'admin' && (
+                      <span
+                        className="inline-flex items-center justify-center px-1.5 h-5 rounded-md text-[10px] font-semibold bg-amber-100 text-amber-700 border border-amber-200"
+                        title="중간관리자 전용 화면"
+                      >
+                        관리자
+                      </span>
+                    )}
+                    {item.roleScope === 'common' && (
+                      <span
+                        className="inline-flex items-center justify-center px-1.5 h-5 rounded-md text-[10px] font-medium bg-neutral-100 text-neutral-500 border border-neutral-200"
+                        title="중간관리자와 매니저 공통"
+                      >
+                        공통
+                      </span>
+                    )}
                     {item.badge !== undefined && item.badge > 0 && (
                       <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 rounded-full text-xs font-medium bg-primary text-white">
                         {item.badge > 99 ? '99+' : item.badge}
